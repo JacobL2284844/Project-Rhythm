@@ -139,7 +139,7 @@ public class ThirdPersonController : MonoBehaviour
 
     public void DoRoll(InputAction.CallbackContext context)
     {
-        if (context.started && IsGrounded())
+        if (context.started && IsGrounded() && !isRolling)
         {
             StartCoroutine(PerformRoll());
         }
@@ -160,7 +160,7 @@ public class ThirdPersonController : MonoBehaviour
 
     public void DoSlide(InputAction.CallbackContext context)
     {
-        if (context.started && IsGrounded())
+        if (context.started && IsGrounded() && !isSliding)
         {
             StartCoroutine(PerformSlide());
         }
