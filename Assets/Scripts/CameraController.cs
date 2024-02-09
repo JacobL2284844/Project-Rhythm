@@ -14,6 +14,11 @@ public class CameraController : MonoBehaviour
 
     private float currentVelocity = 0f;
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
     void Update()
     {
         DynamicFOV();
