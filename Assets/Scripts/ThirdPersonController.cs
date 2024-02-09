@@ -52,12 +52,6 @@ public class ThirdPersonController : MonoBehaviour
         rigidbody.AddForce(forceDirection, ForceMode.Impulse);
         forceDirection = Vector3.zero;
 
-        //gravity- increase fall acceliration
-        if(rigidbody.velocity.y <0f)
-        {
-            rigidbody.velocity += Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
-        }
-
         //cap velocity
         Vector3 horzontalVelocity = rigidbody.velocity;
         horzontalVelocity.y = 0;
