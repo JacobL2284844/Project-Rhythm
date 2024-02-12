@@ -51,9 +51,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Crouch/SLide",
+                    "name": "Crouch/Slide",
                     "type": "Button",
                     "id": "457d1aed-855c-4214-a001-b536cb3121e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "47e97eb3-ca26-4a5d-8f78-87b9623c14e8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -306,7 +315,7 @@
                 {
                     "name": "",
                     "id": "e94e75d4-a620-4596-b4d2-1c47df112689",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -332,7 +341,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Crouch/SLide",
+                    "action": "Crouch/Slide",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -343,7 +352,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Crouch/SLide",
+                    "action": "Crouch/Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1658155-40c2-42b6-9a97-477ee105f9b7",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0da2207e-8866-480e-97b5-e3642992f037",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

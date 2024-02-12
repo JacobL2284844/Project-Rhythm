@@ -75,9 +75,18 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Crouch/SLide"",
+                    ""name"": ""Crouch/Slide"",
                     ""type"": ""Button"",
                     ""id"": ""457d1aed-855c-4214-a001-b536cb3121e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""47e97eb3-ca26-4a5d-8f78-87b9623c14e8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -330,7 +339,7 @@ namespace UnityEngine.InputSystem
                 {
                     ""name"": """",
                     ""id"": ""e94e75d4-a620-4596-b4d2-1c47df112689"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -356,7 +365,7 @@ namespace UnityEngine.InputSystem
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Crouch/SLide"",
+                    ""action"": ""Crouch/Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -367,7 +376,29 @@ namespace UnityEngine.InputSystem
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Crouch/SLide"",
+                    ""action"": ""Crouch/Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1658155-40c2-42b6-9a97-477ee105f9b7"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0da2207e-8866-480e-97b5-e3642992f037"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -960,7 +991,8 @@ namespace UnityEngine.InputSystem
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
-            m_Player_CrouchSLide = m_Player.FindAction("Crouch/SLide", throwIfNotFound: true);
+            m_Player_CrouchSlide = m_Player.FindAction("Crouch/Slide", throwIfNotFound: true);
+            m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1039,7 +1071,8 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Roll;
-        private readonly InputAction m_Player_CrouchSLide;
+        private readonly InputAction m_Player_CrouchSlide;
+        private readonly InputAction m_Player_Sprint;
         public struct PlayerActions
         {
             private @ThirdPersonInput m_Wrapper;
@@ -1049,7 +1082,8 @@ namespace UnityEngine.InputSystem
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Roll => m_Wrapper.m_Player_Roll;
-            public InputAction @CrouchSLide => m_Wrapper.m_Player_CrouchSLide;
+            public InputAction @CrouchSlide => m_Wrapper.m_Player_CrouchSlide;
+            public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1074,9 +1108,12 @@ namespace UnityEngine.InputSystem
                 @Roll.started += instance.OnRoll;
                 @Roll.performed += instance.OnRoll;
                 @Roll.canceled += instance.OnRoll;
-                @CrouchSLide.started += instance.OnCrouchSLide;
-                @CrouchSLide.performed += instance.OnCrouchSLide;
-                @CrouchSLide.canceled += instance.OnCrouchSLide;
+                @CrouchSlide.started += instance.OnCrouchSlide;
+                @CrouchSlide.performed += instance.OnCrouchSlide;
+                @CrouchSlide.canceled += instance.OnCrouchSlide;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1096,9 +1133,12 @@ namespace UnityEngine.InputSystem
                 @Roll.started -= instance.OnRoll;
                 @Roll.performed -= instance.OnRoll;
                 @Roll.canceled -= instance.OnRoll;
-                @CrouchSLide.started -= instance.OnCrouchSLide;
-                @CrouchSLide.performed -= instance.OnCrouchSLide;
-                @CrouchSLide.canceled -= instance.OnCrouchSLide;
+                @CrouchSlide.started -= instance.OnCrouchSlide;
+                @CrouchSlide.performed -= instance.OnCrouchSlide;
+                @CrouchSlide.canceled -= instance.OnCrouchSlide;
+                @Sprint.started -= instance.OnSprint;
+                @Sprint.performed -= instance.OnSprint;
+                @Sprint.canceled -= instance.OnSprint;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1286,7 +1326,8 @@ namespace UnityEngine.InputSystem
             void OnFire(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnRoll(InputAction.CallbackContext context);
-            void OnCrouchSLide(InputAction.CallbackContext context);
+            void OnCrouchSlide(InputAction.CallbackContext context);
+            void OnSprint(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
