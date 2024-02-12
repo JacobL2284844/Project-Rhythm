@@ -42,4 +42,22 @@ public class CharacterAnimation : MonoBehaviour
             animator.SetTrigger("Slide");
         }
     }
+    public void WallRun(bool onWallLeft, bool onWallRight)
+    {
+        if(onWallLeft)
+        {
+            animator.SetBool("WallRunRight", false);
+            animator.SetBool("WallRunLeft", true);
+        }
+        if(onWallRight)
+        {
+            animator.SetBool("WallRunLeft", false);
+            animator.SetBool("WallRunRight", true);
+        }
+    }
+    public void ExitWallRun()
+    {
+        animator.SetBool("WallRunLeft", false);
+        animator.SetBool("WallRunRight", false);
+    }
 }

@@ -38,6 +38,25 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private float sprintDuration = 5f;
 
+    [Header("WallRun")]
+    [SerializeField]
+    private LayerMask wallMask;
+    [SerializeField]
+    private bool isWallRunning;
+    [SerializeField]
+    private float wallRunSpeedMultiplier;
+    [SerializeField]
+    private float wallRunDuration = 0.23f;
+    [SerializeField]
+    private float wallRunExitJumpForce;
+
+    private bool onWall_left;
+    private bool onWall_right;
+    RaycastHit leftWall_rayHit;
+    RaycastHit rightWall_rayHit;
+    Vector3 wallNormal;
+    Vector3 forwardDirection;
+
     [Header("Roll")]
     public float rollDuration = 2.5f;
     [SerializeField]
@@ -60,6 +79,8 @@ public class ThirdPersonController : MonoBehaviour
     [Header("Slam")]
     [SerializeField]
     private float slamForce = 10f;
+
+    //-----------------
     private void Awake()
     {
         rigidbody = this.GetComponent<Rigidbody>();
@@ -67,7 +88,7 @@ public class ThirdPersonController : MonoBehaviour
         baseMaxSpeed = currentMaxSpeed;
         og_movementForce = movementForce;
     }
-
+    //-----------------
     private void OnEnable()
     {
         playerInputActionAsset.Player.Jump.started += DoJump;
@@ -80,7 +101,7 @@ public class ThirdPersonController : MonoBehaviour
         playerInputActionAsset.Player.Jump.started -= DoJump;
         playerInputActionAsset.Player.Disable();
     }
-
+    //-----------------
     private void FixedUpdate()
     {
         //movement
@@ -107,9 +128,10 @@ public class ThirdPersonController : MonoBehaviour
             rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
         }
 
+        CheckWallRun();
         IsGrounded();
     }
-
+    //-----------------
     private void LookAt()
     {
         Vector3 direction = rigidbody.velocity;
@@ -125,7 +147,6 @@ public class ThirdPersonController : MonoBehaviour
             rigidbody.angularVelocity = Vector3.zero;
         }
     }
-
     private Vector3 GetCameraForward(Camera playerCamera)
     {
         Vector3 forward = playerCamera.transform.forward;
@@ -133,7 +154,6 @@ public class ThirdPersonController : MonoBehaviour
 
         return forward.normalized;
     }
-
     private Vector3 GetCameraRight(Camera playerCamera)
     {
         Vector3 right = playerCamera.transform.right;
@@ -141,7 +161,7 @@ public class ThirdPersonController : MonoBehaviour
 
         return right.normalized;
     }
-
+    //-----------------
     private void DoJump(InputAction.CallbackContext obj)
     {
         if (IsGrounded())
@@ -149,8 +169,12 @@ public class ThirdPersonController : MonoBehaviour
             characterAnimation.DoJump();
             forceDirection += Vector3.up * jumpForce;
         }
+        if (isWallRunning)
+        {
+            ExitWallRun();
+        }
     }
-
+    //-----------------
     public void DoRoll(InputAction.CallbackContext context)
     {
         if (context.started && IsGrounded() && !isRolling)
@@ -171,7 +195,7 @@ public class ThirdPersonController : MonoBehaviour
         isRolling = false;
         currentMaxSpeed = baseMaxSpeed;
     }
-
+    //-----------------
     public void DoSlide(InputAction.CallbackContext context)
     {
         if (context.started && IsGrounded() && !isSliding)
@@ -179,7 +203,6 @@ public class ThirdPersonController : MonoBehaviour
             StartCoroutine(PerformSlide());
         }
     }
-
     IEnumerator PerformSlide()
     {
         isSliding = true;
@@ -191,6 +214,7 @@ public class ThirdPersonController : MonoBehaviour
         isSliding = false;
         currentMaxSpeed = baseMaxSpeed;
     }
+    //-----------------
     public void DoSlam(InputAction.CallbackContext context)
     {
         if (context.started && !IsGrounded())
@@ -198,10 +222,10 @@ public class ThirdPersonController : MonoBehaviour
             rigidbody.AddForce(-transform.up * slamForce, ForceMode.Impulse);
         }
     }
-
+    //-----------------
     public void DoSprint(InputAction.CallbackContext context)
     {
-        if(context.started && ! isSprinting)
+        if (context.started && !isSprinting)
         {
             isSprinting = true;
             StartCoroutine(PerformSprint());
@@ -214,6 +238,7 @@ public class ThirdPersonController : MonoBehaviour
         movementForce = og_movementForce;
         isSprinting = false;
     }
+    //-----------------
     private bool IsGrounded()
     {
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.25f, Vector3.down);
@@ -228,4 +253,86 @@ public class ThirdPersonController : MonoBehaviour
             return false;
         }
     }
+    //-----------------
+    private bool wasWallrunning = false;
+    private void CheckWallRun()
+    {
+        onWall_left = Physics.Raycast(transform.position, -transform.right, out leftWall_rayHit, 0.7f, wallMask);
+        onWall_right = Physics.Raycast(transform.position, transform.right, out rightWall_rayHit, 0.7f, wallMask);
+
+        if ((onWall_right || onWall_left) && !isWallRunning)
+        {
+            Debug.Log("wallruning");
+            WallRun();
+            WallRunMovement();
+
+            if (onWall_right)
+            {
+                onWall_left = false;
+            }
+            if (onWall_left)
+            {
+                onWall_right = false;
+            }
+            characterAnimation.WallRun(onWall_left, onWall_right);
+        }
+
+
+        if ((!onWall_right || !onWall_left) && isWallRunning)
+        {
+            if (wasWallrunning)
+            {
+                ExitWallRun();
+                wasWallrunning = false;
+                Debug.Log("exit");
+            }
+        }
+        wasWallrunning = isWallRunning;
+    }
+    private void WallRunMovement()
+    {
+        if (forceDirection.z > (forwardDirection.z - 10f) && forceDirection.z < (forwardDirection.z + 10f))
+        {
+            forceDirection += forwardDirection;
+        }
+        else if (forceDirection.z < (forwardDirection.z - 10f) && forceDirection.z > (forwardDirection.z + 10f))
+        {
+            forceDirection.x = 0f;
+            forceDirection.z = 0f;
+            ExitWallRun();
+        }
+    }
+    private void WallRun()
+    {
+        isWallRunning = true;
+
+        if (movementForce < og_movementForce * wallRunSpeedMultiplier)
+        {
+            movementForce = og_movementForce * wallRunSpeedMultiplier;
+        }
+
+        rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+        forwardDirection = Vector3.Cross(wallNormal, Vector3.up);
+
+        if (Vector3.Dot(forwardDirection, transform.forward) < 0)
+        {
+            forwardDirection = -forwardDirection;
+        }
+    }
+    public void ExitWallRun()
+    {
+        isWallRunning = false;
+        movementForce = og_movementForce;
+        characterAnimation.ExitWallRun();
+
+        if (onWall_left)
+        {
+            rigidbody.AddForce(forwardDirection * wallRunExitJumpForce, ForceMode.Impulse);
+        }
+        if (onWall_right)
+        {
+            rigidbody.AddForce(forwardDirection * wallRunExitJumpForce, ForceMode.Impulse);
+        }
+    }
+    //-----------------
 }
