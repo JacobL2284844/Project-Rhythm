@@ -91,6 +91,33 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlayMusic 0"",
+                    ""type"": ""Button"",
+                    ""id"": ""75bb4ee6-838f-4468-a3c7-4e0cb35b5e10"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlayMusic 1"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec2d28a5-8e67-45cb-9d69-14c37977c765"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlayMusic 2"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d42fd07-e04d-4a97-8198-4da13129c975"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -399,6 +426,39 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc1320bb-df03-488a-ae58-65603576b4d2"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayMusic 0"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1daf5cce-0735-45d6-8034-f36f1f98ceaf"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayMusic 1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86129470-48af-4d83-922e-e0dc98afa857"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayMusic 2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -993,6 +1053,9 @@ namespace UnityEngine.InputSystem
             m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
             m_Player_CrouchSlide = m_Player.FindAction("Crouch/Slide", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+            m_Player_PlayMusic0 = m_Player.FindAction("PlayMusic 0", throwIfNotFound: true);
+            m_Player_PlayMusic1 = m_Player.FindAction("PlayMusic 1", throwIfNotFound: true);
+            m_Player_PlayMusic2 = m_Player.FindAction("PlayMusic 2", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1073,6 +1136,9 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_Roll;
         private readonly InputAction m_Player_CrouchSlide;
         private readonly InputAction m_Player_Sprint;
+        private readonly InputAction m_Player_PlayMusic0;
+        private readonly InputAction m_Player_PlayMusic1;
+        private readonly InputAction m_Player_PlayMusic2;
         public struct PlayerActions
         {
             private @ThirdPersonInput m_Wrapper;
@@ -1084,6 +1150,9 @@ namespace UnityEngine.InputSystem
             public InputAction @Roll => m_Wrapper.m_Player_Roll;
             public InputAction @CrouchSlide => m_Wrapper.m_Player_CrouchSlide;
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+            public InputAction @PlayMusic0 => m_Wrapper.m_Player_PlayMusic0;
+            public InputAction @PlayMusic1 => m_Wrapper.m_Player_PlayMusic1;
+            public InputAction @PlayMusic2 => m_Wrapper.m_Player_PlayMusic2;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1114,6 +1183,15 @@ namespace UnityEngine.InputSystem
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @PlayMusic0.started += instance.OnPlayMusic0;
+                @PlayMusic0.performed += instance.OnPlayMusic0;
+                @PlayMusic0.canceled += instance.OnPlayMusic0;
+                @PlayMusic1.started += instance.OnPlayMusic1;
+                @PlayMusic1.performed += instance.OnPlayMusic1;
+                @PlayMusic1.canceled += instance.OnPlayMusic1;
+                @PlayMusic2.started += instance.OnPlayMusic2;
+                @PlayMusic2.performed += instance.OnPlayMusic2;
+                @PlayMusic2.canceled += instance.OnPlayMusic2;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1139,6 +1217,15 @@ namespace UnityEngine.InputSystem
                 @Sprint.started -= instance.OnSprint;
                 @Sprint.performed -= instance.OnSprint;
                 @Sprint.canceled -= instance.OnSprint;
+                @PlayMusic0.started -= instance.OnPlayMusic0;
+                @PlayMusic0.performed -= instance.OnPlayMusic0;
+                @PlayMusic0.canceled -= instance.OnPlayMusic0;
+                @PlayMusic1.started -= instance.OnPlayMusic1;
+                @PlayMusic1.performed -= instance.OnPlayMusic1;
+                @PlayMusic1.canceled -= instance.OnPlayMusic1;
+                @PlayMusic2.started -= instance.OnPlayMusic2;
+                @PlayMusic2.performed -= instance.OnPlayMusic2;
+                @PlayMusic2.canceled -= instance.OnPlayMusic2;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1328,6 +1415,9 @@ namespace UnityEngine.InputSystem
             void OnRoll(InputAction.CallbackContext context);
             void OnCrouchSlide(InputAction.CallbackContext context);
             void OnSprint(InputAction.CallbackContext context);
+            void OnPlayMusic0(InputAction.CallbackContext context);
+            void OnPlayMusic1(InputAction.CallbackContext context);
+            void OnPlayMusic2(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

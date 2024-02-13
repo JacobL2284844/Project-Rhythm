@@ -65,4 +65,18 @@ public class CharacterAnimation : MonoBehaviour
         animator.SetBool("WallRunLeft", false);
         animator.SetBool("WallRunRight", false);
     }
+
+    //-----
+    public void PlayMusic1()
+    {
+        animator.SetFloat("MusicPlayingLevel", 0);
+    }
+    public void PlayMusic2()
+    {
+        animator.SetFloat("MusicPlayingLevel", 2);
+    }
+    public void PlayMusic3()
+    {
+        animator.SetFloat("MusicPlayingLevel", 3);
+    }
 }

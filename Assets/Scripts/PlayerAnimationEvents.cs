@@ -9,6 +9,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     [SerializeField]GameObject weaponEquiped;
     [SerializeField]GameObject weaponStored;
+    [SerializeField]GameObject instrament;
     private void Start()
     {
         HideWeapon();
@@ -27,5 +28,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         weaponEquiped.SetActive(false);
         weaponStored.SetActive(true);
+
+        instrament.SetActive(false);
     }
 }
