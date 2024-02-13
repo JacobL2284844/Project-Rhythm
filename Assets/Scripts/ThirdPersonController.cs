@@ -318,6 +318,8 @@ public class ThirdPersonController : MonoBehaviour
         {
             forceDirection.x = 0f;
             forceDirection.z = 0f;
+
+            forceDirection.y = 1f;
         }
     }
     private void WallRun()

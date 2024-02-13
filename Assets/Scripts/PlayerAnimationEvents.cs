@@ -9,6 +9,10 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     [SerializeField]GameObject weaponEquiped;
     [SerializeField]GameObject weaponStored;
+    private void Start()
+    {
+        HideWeapon();
+    }
     public void JumpOffWallRun()
     {
         thirdPersonController.WallJump();
