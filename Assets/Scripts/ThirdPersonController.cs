@@ -234,15 +234,18 @@ public class ThirdPersonController : MonoBehaviour
     //-----------------
     public void DoSprint(InputAction.CallbackContext context)
     {
-        if (context.started && !isSprinting && ! isWallRunning && ! isSliding && IsGrounded())
+        if (context.started && !isSprinting && !isWallRunning && !isSliding && IsGrounded())
         {
-            isSprinting = true;
-            StartCoroutine(PerformSprint());
+            if (movementForce < (og_movementForce * sprintMultiplier))
+            {
+                isSprinting = true;
+                StartCoroutine(PerformSprint());
+            }
         }
     }
     IEnumerator PerformSprint()
     {
-        movementForce = movementForce * sprintMultiplier;
+        movementForce = og_movementForce * sprintMultiplier;
         yield return new WaitForSeconds(sprintDuration);
         movementForce = og_movementForce;
         isSprinting = false;
