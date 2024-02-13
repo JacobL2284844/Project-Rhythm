@@ -234,7 +234,7 @@ public class ThirdPersonController : MonoBehaviour
     //-----------------
     public void DoSprint(InputAction.CallbackContext context)
     {
-        if (context.started && !isSprinting)
+        if (context.started && !isSprinting && ! isWallRunning && ! isSliding)
         {
             isSprinting = true;
             StartCoroutine(PerformSprint());
@@ -353,6 +353,7 @@ public class ThirdPersonController : MonoBehaviour
         if (onWall_left)
         {
             forwardDirection += wallJumpDirection_right.forward;
+
             rigidbody.AddForce(forwardDirection * wallRunExitJumpForce, ForceMode.Impulse);
             Debug.Log("dash right");
         }
