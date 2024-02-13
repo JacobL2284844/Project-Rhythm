@@ -48,7 +48,13 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private float wallRunDuration = 0.23f;
     [SerializeField]
+    private float wallRunCooldown = 0.5f;
+    private bool canWallRun = true;
+    private bool canExitWallRun = true;
+    [SerializeField]
     private float wallRunExitJumpForce;
+    [SerializeField] private Transform wallJumpDirection_left;
+    [SerializeField] private Transform wallJumpDirection_right;
 
     private bool onWall_left;
     private bool onWall_right;
@@ -260,21 +266,30 @@ public class ThirdPersonController : MonoBehaviour
         onWall_left = Physics.Raycast(transform.position, -transform.right, out leftWall_rayHit, 0.7f, wallMask);
         onWall_right = Physics.Raycast(transform.position, transform.right, out rightWall_rayHit, 0.7f, wallMask);
 
-        if ((onWall_right || onWall_left) && !isWallRunning)
+        if (canWallRun)
         {
-            Debug.Log("wallruning");
-            WallRun();
-            WallRunMovement();
+            if ((onWall_right || onWall_left) && !isWallRunning)
+            {
+                Debug.Log("wallruning");
+                WallRun();
+                WallRunMovement();
 
-            if (onWall_right)
-            {
-                onWall_left = false;
+                if (wallNormal != rightWall_rayHit.normal || wallNormal != leftWall_rayHit.normal)//if not on same wall as previus
+                {
+
+                    if (onWall_right)
+                    {
+                        wallNormal = rightWall_rayHit.normal;
+                        onWall_left = false;
+                    }
+                    if (onWall_left)
+                    {
+                        wallNormal = leftWall_rayHit.normal;
+                        onWall_right = false;
+                    }
+                    characterAnimation.WallRun(onWall_left, onWall_right);
+                }
             }
-            if (onWall_left)
-            {
-                onWall_right = false;
-            }
-            characterAnimation.WallRun(onWall_left, onWall_right);
         }
 
 
@@ -284,7 +299,6 @@ public class ThirdPersonController : MonoBehaviour
             {
                 ExitWallRun();
                 wasWallrunning = false;
-                Debug.Log("exit");
             }
         }
         wasWallrunning = isWallRunning;
@@ -299,7 +313,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             forceDirection.x = 0f;
             forceDirection.z = 0f;
-            ExitWallRun();
         }
     }
     private void WallRun()
@@ -321,17 +334,36 @@ public class ThirdPersonController : MonoBehaviour
     }
     public void ExitWallRun()
     {
-        isWallRunning = false;
-        movementForce = og_movementForce;
-        characterAnimation.ExitWallRun();
+        if (isWallRunning && canExitWallRun)
+        {
+            Debug.Log("exit");
+            canExitWallRun= false;
+            isWallRunning = false;
+            movementForce = og_movementForce;
+            characterAnimation.ExitWallRun();
 
-        if (onWall_left)
-        {
-            rigidbody.AddForce(forwardDirection * wallRunExitJumpForce, ForceMode.Impulse);
+            StartCoroutine(DoWallRunCooDdown());
+
+            if (onWall_left)
+            {
+                forceDirection = wallJumpDirection_left.forward * wallRunExitJumpForce;
+            }
+            if (onWall_right)
+            {
+                forceDirection = wallJumpDirection_left.forward * wallRunExitJumpForce;
+            }
         }
-        if (onWall_right)
+    }
+    IEnumerator DoWallRunCooDdown()
+    {
+        if (isWallRunning)
         {
-            rigidbody.AddForce(forwardDirection * wallRunExitJumpForce, ForceMode.Impulse);
+            isWallRunning = false;
+            canWallRun = false;
+
+            yield return new WaitForSeconds(wallRunCooldown);
+            canExitWallRun = true;
+            canWallRun= true;
         }
     }
     //-----------------
