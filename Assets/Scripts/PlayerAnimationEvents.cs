@@ -9,6 +9,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void JumpOffWallRun()
     {
+        thirdPersonController.WallJump();
         thirdPersonController.ExitWallRun();
     }
 

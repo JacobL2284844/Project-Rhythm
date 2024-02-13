@@ -54,6 +54,10 @@ public class CharacterAnimation : MonoBehaviour
             animator.SetBool("WallRunLeft", false);
             animator.SetBool("WallRunRight", true);
         }
+        else if(! onWallLeft && ! onWallRight)
+        {
+            ExitWallRun();
+        }
     }
     public void ExitWallRun()
     {

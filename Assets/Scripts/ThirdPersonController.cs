@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class ThirdPersonController : MonoBehaviour
@@ -177,6 +179,7 @@ public class ThirdPersonController : MonoBehaviour
         }
         if (isWallRunning)
         {
+            WallJump();
             ExitWallRun();
         }
     }
@@ -270,7 +273,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             if ((onWall_right || onWall_left) && !isWallRunning)
             {
-                Debug.Log("wallruning");
                 WallRun();
                 WallRunMovement();
 
@@ -282,7 +284,7 @@ public class ThirdPersonController : MonoBehaviour
                         wallNormal = rightWall_rayHit.normal;
                         onWall_left = false;
                     }
-                    if (onWall_left)
+                    else if (onWall_left)
                     {
                         wallNormal = leftWall_rayHit.normal;
                         onWall_right = false;
@@ -334,24 +336,31 @@ public class ThirdPersonController : MonoBehaviour
     }
     public void ExitWallRun()
     {
-        if (isWallRunning && canExitWallRun)
+        characterAnimation.WallRun(false, false);
+        characterAnimation.ExitWallRun();
+        isWallRunning = false;
+
+        if (canExitWallRun)
         {
-            Debug.Log("exit");
-            canExitWallRun= false;
-            isWallRunning = false;
+            canExitWallRun = false;
             movementForce = og_movementForce;
-            characterAnimation.ExitWallRun();
 
             StartCoroutine(DoWallRunCooDdown());
-
-            if (onWall_left)
-            {
-                forceDirection = wallJumpDirection_left.forward * wallRunExitJumpForce;
-            }
-            if (onWall_right)
-            {
-                forceDirection = wallJumpDirection_left.forward * wallRunExitJumpForce;
-            }
+        }
+    }
+    public void WallJump()
+    {
+        if (onWall_left)
+        {
+            forwardDirection += wallJumpDirection_right.forward;
+            rigidbody.AddForce(forwardDirection * wallRunExitJumpForce, ForceMode.Impulse);
+            Debug.Log("dash right");
+        }
+        if (onWall_right)
+        {
+            forwardDirection += wallJumpDirection_left.forward;
+            rigidbody.AddForce(forwardDirection * wallRunExitJumpForce, ForceMode.Impulse);
+            Debug.Log("dash left");
         }
     }
     IEnumerator DoWallRunCooDdown()
@@ -360,10 +369,11 @@ public class ThirdPersonController : MonoBehaviour
         {
             isWallRunning = false;
             canWallRun = false;
-
             yield return new WaitForSeconds(wallRunCooldown);
+
+            wallNormal = Vector3.zero;
             canExitWallRun = true;
-            canWallRun= true;
+            canWallRun = true;
         }
     }
     //-----------------
