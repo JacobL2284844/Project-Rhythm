@@ -234,7 +234,7 @@ public class ThirdPersonController : MonoBehaviour
     //-----------------
     public void DoSprint(InputAction.CallbackContext context)
     {
-        if (context.started && !isSprinting && ! isWallRunning && ! isSliding)
+        if (context.started && !isSprinting && ! isWallRunning && ! isSliding && IsGrounded())
         {
             isSprinting = true;
             StartCoroutine(PerformSprint());
