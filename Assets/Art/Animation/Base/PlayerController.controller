@@ -815,7 +815,7 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: MusicPlayingLevel
     m_Type: 1
-    m_DefaultFloat: 3
+    m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
@@ -829,6 +829,18 @@ AnimatorController:
     m_BlendingMode: 0
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 0
+    m_IKPass: 0
+    m_SyncedLayerAffectsTiming: 0
+    m_Controller: {fileID: 9100000}
+  - serializedVersion: 5
+    m_Name: Attacks
+    m_StateMachine: {fileID: 1631668890876379953}
+    m_Mask: {fileID: 31900000, guid: 8e72ec8c1626ccb46a3e7ee808a19f95, type: 2}
+    m_Motions: []
+    m_Behaviours: []
+    m_BlendingMode: 0
+    m_SyncedLayerIndex: -1
+    m_DefaultWeight: 1
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
@@ -871,18 +883,6 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Roll
     m_StateMachine: {fileID: 3968499269750887400}
-    m_Mask: {fileID: 31900000, guid: 8e72ec8c1626ccb46a3e7ee808a19f95, type: 2}
-    m_Motions: []
-    m_Behaviours: []
-    m_BlendingMode: 0
-    m_SyncedLayerIndex: -1
-    m_DefaultWeight: 1
-    m_IKPass: 0
-    m_SyncedLayerAffectsTiming: 0
-    m_Controller: {fileID: 9100000}
-  - serializedVersion: 5
-    m_Name: Attacks
-    m_StateMachine: {fileID: 1631668890876379953}
     m_Mask: {fileID: 31900000, guid: 8e72ec8c1626ccb46a3e7ee808a19f95, type: 2}
     m_Motions: []
     m_Behaviours: []
@@ -1060,32 +1060,32 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -6516735030698270443}
-    m_Position: {x: 294, y: 118, z: 0}
+    m_Position: {x: 300, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2248895199033853034}
-    m_Position: {x: 340, y: 0, z: 0}
+    m_Position: {x: 570, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2570354722700631640}
-    m_Position: {x: 600, y: 0, z: 0}
+    m_Position: {x: 100, y: 50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7556880002558090950}
-    m_Position: {x: 310, y: 60, z: 0}
+    m_Position: {x: 500, y: 50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5214947435748753331}
-    m_Position: {x: 580, y: 50, z: 0}
+    m_Position: {x: 300, y: -20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1311807766032906326}
-    m_Position: {x: 558, y: 164.64705, z: 0}
+    m_Position: {x: 420, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1486444209277925315}
-    m_Position: {x: 420, y: 220, z: 0}
+    m_Position: {x: 200, y: 200, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
-  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_AnyStatePosition: {x: 50, y: -30, z: 0}
+  m_EntryPosition: {x: 40, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -6516735030698270443}

@@ -21,6 +21,7 @@ public class ThirdPersonController : MonoBehaviour
     private float og_movementForce = 1f;
     [SerializeField]
     private float jumpForce = 5f;
+    private bool canDoubleJump = true;
     [SerializeField]
     private float currentMaxSpeed = 4f;
     private float baseMaxSpeed = 4f;
@@ -177,6 +178,14 @@ public class ThirdPersonController : MonoBehaviour
             characterAnimation.DoJump();
             forceDirection += Vector3.up * jumpForce;
         }
+        else if( ! IsGrounded() && canDoubleJump)
+        {
+            canDoubleJump = false;
+
+            forceDirection += Vector3.up * (jumpForce / 2);
+            forceDirection += transform.forward * jumpForce;
+        }
+
         if (isWallRunning)
         {
             WallJump();
@@ -256,6 +265,7 @@ public class ThirdPersonController : MonoBehaviour
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.25f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, groundcheckRaycastDistance))
         {//is grounded
+            canDoubleJump = true;
             characterAnimation.ExitFallAnimation();
             return true;
         }
