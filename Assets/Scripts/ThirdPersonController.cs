@@ -128,8 +128,8 @@ public class ThirdPersonController : MonoBehaviour
             rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
         }
 
-        CheckWallRun();
         IsGrounded();
+        CheckWallRun();
     }
     //-----------------
     private void LookAt()

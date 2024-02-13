@@ -358,7 +358,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115925205}
-  m_LocalRotation: {x: -0.15734118, y: -0.02141572, z: 0.01899876, w: 0.9871293}
+  m_LocalRotation: {x: -0.15734118, y: -0.021415746, z: 0.018998785, w: 0.9871293}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -16618,7 +16618,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   isWallRunning: 0
-  wallRunSpeedMultiplier: 1.2
+  wallRunSpeedMultiplier: 4
   wallRunDuration: 0
   wallRunExitJumpForce: 0
   rollDuration: 0.5
