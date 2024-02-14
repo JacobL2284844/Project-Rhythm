@@ -21,6 +21,8 @@ public class ThirdPersonController : MonoBehaviour
     private float og_movementForce = 1f;
     [SerializeField]
     private float jumpForce = 5f;
+    [SerializeField]
+    private float doubleJumpForce = 5f;
     private bool canDoubleJump = true;
     [SerializeField]
     private float currentMaxSpeed = 4f;
@@ -176,7 +178,7 @@ public class ThirdPersonController : MonoBehaviour
 
             characterAnimation.DoDoubleJumpAnimation();
 
-            forceDirection += Vector3.up * (jumpForce / 2);
+            forceDirection += Vector3.up * doubleJumpForce;
             forceDirection += transform.forward * jumpForce;
         }
 
@@ -327,6 +329,7 @@ public class ThirdPersonController : MonoBehaviour
         characterAnimation.WallRun(false, false);
         characterAnimation.ExitWallRun();
         isWallRunning = false;
+        canDoubleJump = true;
 
         if (canExitWallRun)
         {
@@ -340,16 +343,13 @@ public class ThirdPersonController : MonoBehaviour
     {
         if (onWall_left)
         {
-            forwardDirection += wallJumpDirection_right.forward;
-
-            rigidbody.AddForce(forwardDirection * wallRunExitJumpForce, ForceMode.Impulse);
-            Debug.Log("dash right");
+            forceDirection += transform.right * wallRunExitJumpForce;
+            forceDirection += transform.up * doubleJumpForce;
         }
         if (onWall_right)
         {
-            forwardDirection += wallJumpDirection_left.forward;
-            rigidbody.AddForce(forwardDirection * wallRunExitJumpForce, ForceMode.Impulse);
-            Debug.Log("dash left");
+            forceDirection += -transform.right * wallRunExitJumpForce;
+            forceDirection += transform.up * doubleJumpForce;
         }
     }
     IEnumerator DoWallRunCooDdown()

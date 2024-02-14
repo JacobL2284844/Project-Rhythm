@@ -14,7 +14,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         HideWeapon();
     }
-    public void JumpOffWallRun()
+    public void JumpOffWallRun()//called in wallrun animation
     {
         thirdPersonController.WallJump();
         thirdPersonController.ExitWallRun();
