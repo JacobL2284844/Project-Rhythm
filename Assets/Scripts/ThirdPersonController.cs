@@ -66,14 +66,6 @@ public class ThirdPersonController : MonoBehaviour
     Vector3 wallNormal;
     Vector3 forwardDirection;
 
-    [Header("Roll")]
-    public float rollDuration = 2.5f;
-    [SerializeField]
-    private float rollForce = 2f;
-    [SerializeField]
-    private bool isRolling = false;
-    [SerializeField] float maxSpeed_Rolling = 7.5f;
-
     [Header("Slide")]
     [SerializeField]
     private float slideVelocityMultiplier = 1.2f;
@@ -182,6 +174,8 @@ public class ThirdPersonController : MonoBehaviour
         {
             canDoubleJump = false;
 
+            characterAnimation.DoDoubleJumpAnimation();
+
             forceDirection += Vector3.up * (jumpForce / 2);
             forceDirection += transform.forward * jumpForce;
         }
@@ -191,27 +185,6 @@ public class ThirdPersonController : MonoBehaviour
             WallJump();
             ExitWallRun();
         }
-    }
-    //-----------------
-    public void DoRoll(InputAction.CallbackContext context)
-    {
-        if (context.started && IsGrounded() && !isRolling)
-        {
-            StartCoroutine(PerformRoll());
-        }
-    }
-    IEnumerator PerformRoll()
-    {
-        isRolling = true;
-
-        currentMaxSpeed = maxSpeed_Rolling;
-        // Apply dodge force
-        rigidbody.AddForce(transform.forward * rollForce, ForceMode.Impulse);
-
-        // Wait for the dodge duration
-        yield return new WaitForSeconds(rollDuration);
-        isRolling = false;
-        currentMaxSpeed = baseMaxSpeed;
     }
     //-----------------
     public void DoSlide(InputAction.CallbackContext context)

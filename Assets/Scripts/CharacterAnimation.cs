@@ -28,14 +28,6 @@ public class CharacterAnimation : MonoBehaviour
     {
         animator.SetBool("IsGrounded", true);
     }
-
-    public void DoRollAnimation(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            animator.SetTrigger("Roll");
-        }
-    }
     public void DoSlideAnimation(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -65,7 +57,10 @@ public class CharacterAnimation : MonoBehaviour
         animator.SetBool("WallRunLeft", false);
         animator.SetBool("WallRunRight", false);
     }
-
+    public void DoDoubleJumpAnimation()
+    {
+        animator.SetTrigger("DoubleJump");
+    }
     //-----
     public void PlayMusic1()
     {
