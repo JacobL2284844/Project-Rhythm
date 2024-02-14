@@ -5,15 +5,16 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
+    [Header("Main")]
     public Rigidbody targetRigidbody;
     public CinemachineFreeLook[] cameras;
 
     public CinemachineFreeLook cinemachineFL;
-    public CinemachineFreeLook cinemachine_LockOn;
 
     public CinemachineFreeLook startCam;
     public CinemachineFreeLook currentCam;
 
+    [Header("Dynamic FOV")]
     public float minFOV = 40f;
     public float maxFOV = 55f;
     public float minVelocity = 0f;
@@ -23,7 +24,13 @@ public class CameraController : MonoBehaviour
     private float currentVelocity = 0f;
 
     [Header("LockOnPresets")]
-    [SerializeField] private bool lockedOn = false;
+    public Transform targetToLock;
+    [SerializeField] private EnemyChecker enemyChecker;
+    [SerializeField] private CinemachineTargetGroup targetGroup;
+    public bool lockedOn = false;
+    public CinemachineFreeLook cinemachine_LockOn;
+
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -49,7 +56,6 @@ public class CameraController : MonoBehaviour
 
     private void DynamicFOV()
     {
-
         float targetNormalizedVelocity = Mathf.Clamp01((targetRigidbody.velocity.magnitude - minVelocity) / (maxVelocity - minVelocity));
         float targetFOV = Mathf.Lerp(minFOV, maxFOV, targetNormalizedVelocity);
 
@@ -62,21 +68,48 @@ public class CameraController : MonoBehaviour
     public void ToggleLockOn(InputAction.CallbackContext context)
     {
         //lockoncheck
-        if(context.started)
+        if (context.started)
         {
-            if(lockedOn)
+            if (lockedOn)
             {
                 lockedOn = false;
                 SwitchCamera(cinemachineFL);
             }
             else
             {
-                lockedOn = true;
-                SwitchCamera(cinemachine_LockOn);
+                if (TargetClosestEnemy() != null)
+                {
+                    targetToLock = TargetClosestEnemy();
+                    targetGroup.m_Targets[1].target = targetToLock;
+
+                    lockedOn = true;
+                    SwitchCamera(cinemachine_LockOn);
+                }
+            }
+        }
+    }
+    private Transform TargetClosestEnemy()
+    {
+        Transform closestEnemie = null;
+        float closestDistance = Mathf.Infinity;
+        Vector3 currentPosition = targetRigidbody.transform.position;
+
+        foreach (Transform enemie in enemyChecker.enemiesInRange)
+        {
+            if (enemie != null)
+            {
+                float distance = Vector3.Distance(enemie.transform.position, currentPosition);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemie = enemie;
+                }
             }
         }
 
+        return closestEnemie;
     }
+
     public void SwitchCamera(CinemachineFreeLook newCamera)
     {
         currentCam = newCamera;
@@ -84,7 +117,7 @@ public class CameraController : MonoBehaviour
         currentCam.Priority = 20;
         for (int i = 0; i < cameras.Length; i++)
         {
-            if(cameras[i] != currentCam)
+            if (cameras[i] != currentCam)
             {
                 cameras[i].Priority = 0;
             }
