@@ -66,15 +66,6 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Roll"",
-                    ""type"": ""Button"",
-                    ""id"": ""ee7b6dc5-3114-4d02-ba08-f89681db1810"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Crouch/Slide"",
                     ""type"": ""Button"",
                     ""id"": ""457d1aed-855c-4214-a001-b536cb3121e0"",
@@ -87,6 +78,15 @@ namespace UnityEngine.InputSystem
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""47e97eb3-ca26-4a5d-8f78-87b9623c14e8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TogleLockOnTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""e825e38b-3c7a-475c-8c34-571b50563816"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -365,28 +365,6 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e94e75d4-a620-4596-b4d2-1c47df112689"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Roll"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9dc7a070-617e-4485-98e9-4b90b06537fc"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Roll"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""648b1c03-3013-44fa-a17c-7e32086026e2"",
                     ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
@@ -459,6 +437,28 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PlayMusic 2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2fd7bc3-ba1f-48b9-9aa9-a876f5722e30"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TogleLockOnTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""980f0abb-976a-4a2e-8a24-d4368a0a5dcd"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TogleLockOnTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1050,9 +1050,9 @@ namespace UnityEngine.InputSystem
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-            m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
             m_Player_CrouchSlide = m_Player.FindAction("Crouch/Slide", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+            m_Player_TogleLockOnTarget = m_Player.FindAction("TogleLockOnTarget", throwIfNotFound: true);
             m_Player_PlayMusic0 = m_Player.FindAction("PlayMusic 0", throwIfNotFound: true);
             m_Player_PlayMusic1 = m_Player.FindAction("PlayMusic 1", throwIfNotFound: true);
             m_Player_PlayMusic2 = m_Player.FindAction("PlayMusic 2", throwIfNotFound: true);
@@ -1133,9 +1133,9 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_Jump;
-        private readonly InputAction m_Player_Roll;
         private readonly InputAction m_Player_CrouchSlide;
         private readonly InputAction m_Player_Sprint;
+        private readonly InputAction m_Player_TogleLockOnTarget;
         private readonly InputAction m_Player_PlayMusic0;
         private readonly InputAction m_Player_PlayMusic1;
         private readonly InputAction m_Player_PlayMusic2;
@@ -1147,9 +1147,9 @@ namespace UnityEngine.InputSystem
             public InputAction @Look => m_Wrapper.m_Player_Look;
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
-            public InputAction @Roll => m_Wrapper.m_Player_Roll;
             public InputAction @CrouchSlide => m_Wrapper.m_Player_CrouchSlide;
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+            public InputAction @TogleLockOnTarget => m_Wrapper.m_Player_TogleLockOnTarget;
             public InputAction @PlayMusic0 => m_Wrapper.m_Player_PlayMusic0;
             public InputAction @PlayMusic1 => m_Wrapper.m_Player_PlayMusic1;
             public InputAction @PlayMusic2 => m_Wrapper.m_Player_PlayMusic2;
@@ -1174,15 +1174,15 @@ namespace UnityEngine.InputSystem
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @Roll.started += instance.OnRoll;
-                @Roll.performed += instance.OnRoll;
-                @Roll.canceled += instance.OnRoll;
                 @CrouchSlide.started += instance.OnCrouchSlide;
                 @CrouchSlide.performed += instance.OnCrouchSlide;
                 @CrouchSlide.canceled += instance.OnCrouchSlide;
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @TogleLockOnTarget.started += instance.OnTogleLockOnTarget;
+                @TogleLockOnTarget.performed += instance.OnTogleLockOnTarget;
+                @TogleLockOnTarget.canceled += instance.OnTogleLockOnTarget;
                 @PlayMusic0.started += instance.OnPlayMusic0;
                 @PlayMusic0.performed += instance.OnPlayMusic0;
                 @PlayMusic0.canceled += instance.OnPlayMusic0;
@@ -1208,15 +1208,15 @@ namespace UnityEngine.InputSystem
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
-                @Roll.started -= instance.OnRoll;
-                @Roll.performed -= instance.OnRoll;
-                @Roll.canceled -= instance.OnRoll;
                 @CrouchSlide.started -= instance.OnCrouchSlide;
                 @CrouchSlide.performed -= instance.OnCrouchSlide;
                 @CrouchSlide.canceled -= instance.OnCrouchSlide;
                 @Sprint.started -= instance.OnSprint;
                 @Sprint.performed -= instance.OnSprint;
                 @Sprint.canceled -= instance.OnSprint;
+                @TogleLockOnTarget.started -= instance.OnTogleLockOnTarget;
+                @TogleLockOnTarget.performed -= instance.OnTogleLockOnTarget;
+                @TogleLockOnTarget.canceled -= instance.OnTogleLockOnTarget;
                 @PlayMusic0.started -= instance.OnPlayMusic0;
                 @PlayMusic0.performed -= instance.OnPlayMusic0;
                 @PlayMusic0.canceled -= instance.OnPlayMusic0;
@@ -1412,9 +1412,9 @@ namespace UnityEngine.InputSystem
             void OnLook(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
-            void OnRoll(InputAction.CallbackContext context);
             void OnCrouchSlide(InputAction.CallbackContext context);
             void OnSprint(InputAction.CallbackContext context);
+            void OnTogleLockOnTarget(InputAction.CallbackContext context);
             void OnPlayMusic0(InputAction.CallbackContext context);
             void OnPlayMusic1(InputAction.CallbackContext context);
             void OnPlayMusic2(InputAction.CallbackContext context);

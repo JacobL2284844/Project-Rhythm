@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Roll",
-                    "type": "Button",
-                    "id": "ee7b6dc5-3114-4d02-ba08-f89681db1810",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Crouch/Slide",
                     "type": "Button",
                     "id": "457d1aed-855c-4214-a001-b536cb3121e0",
@@ -63,6 +54,15 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "47e97eb3-ca26-4a5d-8f78-87b9623c14e8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TogleLockOnTarget",
+                    "type": "Button",
+                    "id": "e825e38b-3c7a-475c-8c34-571b50563816",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -341,28 +341,6 @@
                 },
                 {
                     "name": "",
-                    "id": "e94e75d4-a620-4596-b4d2-1c47df112689",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Roll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9dc7a070-617e-4485-98e9-4b90b06537fc",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Roll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "648b1c03-3013-44fa-a17c-7e32086026e2",
                     "path": "<Keyboard>/ctrl",
                     "interactions": "",
@@ -435,6 +413,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PlayMusic 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2fd7bc3-ba1f-48b9-9aa9-a876f5722e30",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TogleLockOnTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "980f0abb-976a-4a2e-8a24-d4368a0a5dcd",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TogleLockOnTarget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
