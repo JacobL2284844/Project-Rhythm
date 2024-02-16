@@ -9,11 +9,13 @@ public class CharacterAnimation : MonoBehaviour
     private Animator animator;
     [SerializeField]
     private Rigidbody rigidbody;
+    [SerializeField]
     private float maxSpeed = 5f;
 
     void Update()
     {
-        animator.SetFloat("Speed", rigidbody.velocity.magnitude / maxSpeed);
+        animator.SetFloat("Speed Z", rigidbody.velocity.x / maxSpeed);
+        animator.SetFloat("Speed X", rigidbody.velocity.z / maxSpeed);
     }
 
     public void DoJump()
