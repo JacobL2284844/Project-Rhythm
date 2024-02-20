@@ -29,6 +29,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineTargetGroup targetGroup;
     public bool lockedOn = false;
     public CinemachineFreeLook cinemachine_LockOn;
+    [SerializeField] private AttackManager attackManager;
 
 
     private void Start()
@@ -73,6 +74,7 @@ public class CameraController : MonoBehaviour
             if (lockedOn)
             {
                 lockedOn = false;
+                attackManager.currentEnemyTarget= null;
                 SwitchCamera(cinemachineFL);
             }
             else
@@ -107,6 +109,7 @@ public class CameraController : MonoBehaviour
             }
         }
 
+        attackManager.SetLockOnTarget(closestEnemie);//set target in attak manager
         return closestEnemie;
     }
 

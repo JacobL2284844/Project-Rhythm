@@ -118,6 +118,15 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BeatCheck"",
+                    ""type"": ""Button"",
+                    ""id"": ""d2cc399f-117f-4f24-ac15-fb9b7a3d3e98"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -258,7 +267,7 @@ namespace UnityEngine.InputSystem
                     ""id"": ""c1f7a91b-d0fd-4a62-997e-7fb9b69bf235"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""InvertVector2(invertX=false)"",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -459,6 +468,17 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""TogleLockOnTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""607dceb5-6071-47f0-975d-797f76879d11"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BeatCheck"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1056,6 +1076,7 @@ namespace UnityEngine.InputSystem
             m_Player_PlayMusic0 = m_Player.FindAction("PlayMusic 0", throwIfNotFound: true);
             m_Player_PlayMusic1 = m_Player.FindAction("PlayMusic 1", throwIfNotFound: true);
             m_Player_PlayMusic2 = m_Player.FindAction("PlayMusic 2", throwIfNotFound: true);
+            m_Player_BeatCheck = m_Player.FindAction("BeatCheck", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1139,6 +1160,7 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_PlayMusic0;
         private readonly InputAction m_Player_PlayMusic1;
         private readonly InputAction m_Player_PlayMusic2;
+        private readonly InputAction m_Player_BeatCheck;
         public struct PlayerActions
         {
             private @ThirdPersonInput m_Wrapper;
@@ -1153,6 +1175,7 @@ namespace UnityEngine.InputSystem
             public InputAction @PlayMusic0 => m_Wrapper.m_Player_PlayMusic0;
             public InputAction @PlayMusic1 => m_Wrapper.m_Player_PlayMusic1;
             public InputAction @PlayMusic2 => m_Wrapper.m_Player_PlayMusic2;
+            public InputAction @BeatCheck => m_Wrapper.m_Player_BeatCheck;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1192,6 +1215,9 @@ namespace UnityEngine.InputSystem
                 @PlayMusic2.started += instance.OnPlayMusic2;
                 @PlayMusic2.performed += instance.OnPlayMusic2;
                 @PlayMusic2.canceled += instance.OnPlayMusic2;
+                @BeatCheck.started += instance.OnBeatCheck;
+                @BeatCheck.performed += instance.OnBeatCheck;
+                @BeatCheck.canceled += instance.OnBeatCheck;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1226,6 +1252,9 @@ namespace UnityEngine.InputSystem
                 @PlayMusic2.started -= instance.OnPlayMusic2;
                 @PlayMusic2.performed -= instance.OnPlayMusic2;
                 @PlayMusic2.canceled -= instance.OnPlayMusic2;
+                @BeatCheck.started -= instance.OnBeatCheck;
+                @BeatCheck.performed -= instance.OnBeatCheck;
+                @BeatCheck.canceled -= instance.OnBeatCheck;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1418,6 +1447,7 @@ namespace UnityEngine.InputSystem
             void OnPlayMusic0(InputAction.CallbackContext context);
             void OnPlayMusic1(InputAction.CallbackContext context);
             void OnPlayMusic2(InputAction.CallbackContext context);
+            void OnBeatCheck(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

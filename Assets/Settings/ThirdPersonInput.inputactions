@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "BeatCheck",
+                    "type": "Button",
+                    "id": "d2cc399f-117f-4f24-ac15-fb9b7a3d3e98",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -234,7 +243,7 @@
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "InvertVector2(invertX=false)",
                     "groups": ";Gamepad",
                     "action": "Look",
                     "isComposite": false,
@@ -435,6 +444,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "TogleLockOnTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "607dceb5-6071-47f0-975d-797f76879d11",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BeatCheck",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

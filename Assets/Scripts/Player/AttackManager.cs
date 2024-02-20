@@ -7,7 +7,7 @@ public class AttackManager : MonoBehaviour
 {
     [Header("Lock on Target")]
     [SerializeField] CameraController cameraController;
-
+    public Transform currentEnemyTarget;
 
     void Start()
     {
@@ -20,10 +20,8 @@ public class AttackManager : MonoBehaviour
 
     }
 
-    public void LockOnTarget(InputAction.CallbackContext context)
+    public void SetLockOnTarget(Transform targetEnemy)
     {
-        if (context.started)
-        {
-        }
+        currentEnemyTarget = targetEnemy;
     }
 }

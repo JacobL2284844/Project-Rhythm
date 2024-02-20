@@ -107,9 +107,14 @@ public class ThirdPersonController : MonoBehaviour
     //-----------------
     private void FixedUpdate()
     {
+        IsGrounded();
+        CheckWallRun();
+        LookAt();
+
         //movement
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
         forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
+
         //imploment movement
         rigidbody.AddForce(forceDirection, ForceMode.Impulse);
         forceDirection = Vector3.zero;
@@ -122,17 +127,12 @@ public class ThirdPersonController : MonoBehaviour
             rigidbody.velocity = horzontalVelocity.normalized * currentMaxSpeed + Vector3.up * rigidbody.velocity.y;
         }
 
-        LookAt();
-
         //if falling check ground
         if (rigidbody.velocity.y < 0f)
         {
             //fix gravity
             rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
         }
-
-        IsGrounded();
-        CheckWallRun();
     }
     //-----------------
     private void LookAt()
@@ -167,12 +167,19 @@ public class ThirdPersonController : MonoBehaviour
     //-----------------
     private void DoJump(InputAction.CallbackContext obj)
     {
+        if (isWallRunning)
+        {
+            WallJump();
+            ExitWallRun();
+            return;
+        }
+
         if (IsGrounded())
         {
             characterAnimation.DoJump();
             forceDirection += Vector3.up * jumpForce;
         }
-        else if( ! IsGrounded() && canDoubleJump)
+        else if (!IsGrounded() && canDoubleJump)
         {
             canDoubleJump = false;
 
@@ -182,11 +189,6 @@ public class ThirdPersonController : MonoBehaviour
             forceDirection += transform.forward * jumpForce;
         }
 
-        if (isWallRunning)
-        {
-            WallJump();
-            ExitWallRun();
-        }
     }
     //-----------------
     public void DoSlide(InputAction.CallbackContext context)
@@ -241,7 +243,9 @@ public class ThirdPersonController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, groundcheckRaycastDistance))
         {//is grounded
             canDoubleJump = true;
+
             characterAnimation.ExitFallAnimation();
+            rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             return true;
         }
         else
@@ -278,10 +282,11 @@ public class ThirdPersonController : MonoBehaviour
                         onWall_right = false;
                     }
                     characterAnimation.WallRun(onWall_left, onWall_right);
+
+                    rigidbody.interpolation = RigidbodyInterpolation.None;
                 }
             }
         }
-
 
         if ((!onWall_right || !onWall_left) && isWallRunning)
         {
@@ -328,8 +333,8 @@ public class ThirdPersonController : MonoBehaviour
     {
         characterAnimation.WallRun(false, false);
         characterAnimation.ExitWallRun();
-        isWallRunning = false;
         canDoubleJump = true;
+        isWallRunning = false;
 
         if (canExitWallRun)
         {
