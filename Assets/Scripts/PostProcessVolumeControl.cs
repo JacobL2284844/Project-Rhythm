@@ -14,8 +14,7 @@ public class PostProcessVolumeControl : MonoBehaviour
     {
         postProcessVolume.profile.TryGet(out vignette);
 
-        vignetteIntesity = vignette.intensity.value;
-
+        //vignetteIntesity = vignette.intensity.value;
 
         FadeOutVignette();
     }

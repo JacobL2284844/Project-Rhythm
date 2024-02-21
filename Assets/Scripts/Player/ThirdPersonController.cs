@@ -108,7 +108,6 @@ public class ThirdPersonController : MonoBehaviour
     private void FixedUpdate()
     {
         IsGrounded();
-        CheckWallRun();
         LookAt();
 
         //movement
@@ -133,6 +132,7 @@ public class ThirdPersonController : MonoBehaviour
             //fix gravity
             rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
         }
+        CheckWallRun();
     }
     //-----------------
     private void LookAt()
@@ -265,6 +265,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             if ((onWall_right || onWall_left) && !isWallRunning)
             {
+                rigidbody.interpolation = RigidbodyInterpolation.None;
                 WallRun();
                 WallRunMovement();
 
@@ -283,7 +284,6 @@ public class ThirdPersonController : MonoBehaviour
                     }
                     characterAnimation.WallRun(onWall_left, onWall_right);
 
-                    rigidbody.interpolation = RigidbodyInterpolation.None;
                 }
             }
         }
