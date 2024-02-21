@@ -23,7 +23,6 @@ public class NPCStateManager : MonoBehaviour
     [Header("NPC")]
     public float npcMood = 1f;// set in spawner
     public Health health;
-    public bool hasLegs = false;
     public Transform npcMesh;
 
     [Header("Animation")]
@@ -86,7 +85,15 @@ public class NPCStateManager : MonoBehaviour
         if (isStandardEnemy)
         {
             attackingHitBox.SetActive(false);//activated in anim context
-            SetState(RandomState());
+
+            if (idleOnEntry)
+            {
+                SetState(idleState);
+            }
+            else
+            {
+                SetState(RandomState());
+            }
         }
     }
 
@@ -96,7 +103,7 @@ public class NPCStateManager : MonoBehaviour
         {
             currantState.UpdateState(this); //updates currant state
 
-            if (currantState == chaseState)
+            if (/*currantState == chaseState || */currantState == wanderState)
             {
                 direction = transform.GetComponent<Rigidbody>().velocity.normalized; /*(player.position - transform.position).normalized;*/
 
@@ -107,18 +114,15 @@ public class NPCStateManager : MonoBehaviour
 
                     npcMesh.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
                 }
-                if (hasLegs)
-                {
-                    speed = navMeshAgent.velocity.magnitude / 1f;// sets animator walk speed
+                speed = navMeshAgent.velocity.magnitude;// sets animator walk speed
 
-                    if (speed > 0.1)
-                    {
-                        currant_animator.SetBool("IsMoving", true);
-                    }
-                    else
-                    {
-                        currant_animator.SetBool("IsMoving", false);
-                    }
+                if (speed > 0.1)
+                {
+                    currant_animator.SetBool("IsMoving", true);
+                }
+                else
+                {
+                    currant_animator.SetBool("IsMoving", false);
                 }
             }
         }

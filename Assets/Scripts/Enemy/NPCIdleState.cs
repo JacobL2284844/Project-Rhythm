@@ -23,11 +23,7 @@ public class NPCIdleState : NPCBaseState// script of type state
         stateManager.StartIdleDuration();
 
         //anims
-
-        if (stateManager.hasLegs)
-        {
-            stateManager.currant_animator.SetBool("IsMoving", false);
-        }
+        stateManager.currant_animator.SetBool("IsMoving", false);
 
         //set variables
         thisNpc = stateManager.transform;

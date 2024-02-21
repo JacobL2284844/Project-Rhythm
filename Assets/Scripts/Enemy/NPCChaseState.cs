@@ -22,19 +22,9 @@ public class NPCChaseState : NPCBaseState
         playerPos = stateManager.player;// set player as destination
         stateManager.currantTargetDestination = playerPos;//set destination on manager
 
-        if (stateManager.hasLegs)
-        {
-            stateManager.currant_animator.SetTrigger("Chase");
+        stateManager.currant_animator.SetTrigger("Chase");
 
-            if(stateManager.animContext.isStanding)
-            {
-                stateManager.navMeshAgent.speed = stateManager.chaseNavAgentSpeed;
-            }
-        }
-        else
-        {
-            stateManager.navMeshAgent.speed = stateManager.chaseNavAgentSpeed;
-        }
+        stateManager.navMeshAgent.speed = stateManager.chaseNavAgentSpeed;
 
         try// try set destination on navmesh
         {
