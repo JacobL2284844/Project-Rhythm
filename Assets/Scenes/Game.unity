@@ -7326,89 +7326,6 @@ MonoBehaviour:
   cinemachine_LockOn: {fileID: 1095452872}
   attackManager: {fileID: 1737175232}
   postProcessControll: {fileID: 1073345275}
---- !u!1 &466792885
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 466792886}
-  - component: {fileID: 466792888}
-  - component: {fileID: 466792887}
-  m_Layer: 0
-  m_Name: Centre
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &466792886
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 466792885}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.19567, y: 0.19567, z: 0.19567}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 2133160451}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &466792887
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 466792885}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a1ad153167724a448a3b7c7ac2f3d002, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &466792888
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 466792885}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &486429541
 GameObject:
   m_ObjectHideFlags: 0
@@ -8333,7 +8250,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595497955}
-  m_LocalRotation: {x: -0.08562641, y: 0.94733256, z: -0.0904388, w: 0.2950425}
+  m_LocalRotation: {x: -0.08562638, y: 0.94733256, z: -0.09043884, w: 0.29504248}
   m_LocalPosition: {x: -9.032134, y: 1.1067286, z: 14.994264}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10617,7 +10534,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631877150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.609}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.19567, y: 0.19567, z: 0.19567}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -24781,7 +24698,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367299965}
-  m_LocalRotation: {x: 0.04727669, y: 0.000000014901161, z: -0.0000000023283064, w: 0.9988819}
+  m_LocalRotation: {x: 0.04727669, y: 0.000000029802322, z: -0.000000009313226, w: 0.9988819}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -31311,6 +31228,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: d2cc399f-117f-4f24-ac15-fb9b7a3d3e98
     m_ActionName: Player/BeatCheck
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1737175232}
+        m_TargetAssemblyTypeName: AttackManager, Assembly-CSharp
+        m_MethodName: SetPlayerDashPositionForAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e347bb83-f172-43dd-975d-c3dd2c2a65dc
+    m_ActionName: Player/TestAttack[/Mouse/leftButton,/XInputControllerWindows/buttonWest]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -31350,6 +31283,7 @@ MonoBehaviour:
   cameraController: {fileID: 459044976}
   currentEnemyTarget: {fileID: 0}
   attackPositioner: {fileID: 2133160451}
+  dashToAttackTargetDuration: 0.1
 --- !u!1 &1746216378
 GameObject:
   m_ObjectHideFlags: 0
@@ -34565,7 +34499,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 466792886}
   - {fileID: 631877151}
   m_Father: {fileID: 0}
   m_RootOrder: 6

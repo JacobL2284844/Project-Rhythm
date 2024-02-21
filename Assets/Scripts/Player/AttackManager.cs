@@ -10,6 +10,7 @@ public class AttackManager : MonoBehaviour
     public Transform currentEnemyTarget;
 
     [SerializeField] private Transform attackPositioner;
+    [SerializeField] private float dashToAttackTargetDuration = 0.5f;
     void Start()
     {
 
@@ -20,10 +21,36 @@ public class AttackManager : MonoBehaviour
     {
         if(currentEnemyTarget != null)
         {
-            SetAttackingPositionAndRotation();
+            SetAttackingPositioner_PositionAndRotation();
         }
     }
 
+    public void SetPlayerDashPositionForAttack(InputAction.CallbackContext context)
+    {
+        if (context.started && currentEnemyTarget != null)
+        {
+            //set position
+            StartCoroutine(LerpToTargetPosition());
+            //rotate player
+            Vector3 directionToTarget = attackPositioner.position - transform.position;
+            directionToTarget.y = 0f;
+
+            transform.rotation = Quaternion.LookRotation(directionToTarget);
+        }
+    }
+    IEnumerator LerpToTargetPosition()
+    {
+        Vector3 initialPosition = transform.position;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < dashToAttackTargetDuration)
+        {
+            transform.position = Vector3.Lerp(initialPosition, attackPositioner.GetChild(0).position, elapsedTime / dashToAttackTargetDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = attackPositioner.GetChild(0).position; // Ensure reaching exact target position
+    }
     public void SetLockOnTarget(Transform targetEnemy)
     {
         currentEnemyTarget = targetEnemy;
@@ -38,7 +65,7 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    private void SetAttackingPositionAndRotation()
+    private void SetAttackingPositioner_PositionAndRotation()
     {
         //set position
         attackPositioner.position = currentEnemyTarget.position;

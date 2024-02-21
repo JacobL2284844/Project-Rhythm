@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "TestAttack",
+                    "type": "Button",
+                    "id": "e347bb83-f172-43dd-975d-c3dd2c2a65dc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "68e55dd5-b7de-4c2d-bfd3-1c83f69e016a",
@@ -60,18 +69,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PlayMusic 0",
+                    "name": "BeatCheck",
                     "type": "Button",
-                    "id": "75bb4ee6-838f-4468-a3c7-4e0cb35b5e10",
+                    "id": "d2cc399f-117f-4f24-ac15-fb9b7a3d3e98",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PlayMusic 1",
+                    "name": "PlayMusic 0",
                     "type": "Button",
-                    "id": "ec2d28a5-8e67-45cb-9d69-14c37977c765",
+                    "id": "75bb4ee6-838f-4468-a3c7-4e0cb35b5e10",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -87,9 +96,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BeatCheck",
+                    "name": "PlayMusic 1",
                     "type": "Button",
-                    "id": "d2cc399f-117f-4f24-ac15-fb9b7a3d3e98",
+                    "id": "ec2d28a5-8e67-45cb-9d69-14c37977c765",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -330,6 +339,39 @@
                 },
                 {
                     "name": "",
+                    "id": "f2fd7bc3-ba1f-48b9-9aa9-a876f5722e30",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TogleLockOnTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "980f0abb-976a-4a2e-8a24-d4368a0a5dcd",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TogleLockOnTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "607dceb5-6071-47f0-975d-797f76879d11",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BeatCheck",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dc1320bb-df03-488a-ae58-65603576b4d2",
                     "path": "<Keyboard>/1",
                     "interactions": "",
@@ -363,34 +405,23 @@
                 },
                 {
                     "name": "",
-                    "id": "f2fd7bc3-ba1f-48b9-9aa9-a876f5722e30",
-                    "path": "<Mouse>/middleButton",
+                    "id": "7c002d14-c8fc-4251-b5e0-2308886a56f2",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TogleLockOnTarget",
+                    "action": "TestAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "980f0abb-976a-4a2e-8a24-d4368a0a5dcd",
-                    "path": "<Gamepad>/rightStickPress",
+                    "id": "5160f738-feb8-4c21-a8bc-7c6c489b3667",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TogleLockOnTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "607dceb5-6071-47f0-975d-797f76879d11",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BeatCheck",
+                    "action": "TestAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
