@@ -43,6 +43,10 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private float sprintDuration = 5f;
 
+    [Header("Camera")]
+    [SerializeField] private CameraController cameraController;
+    [SerializeField] private float sprintFovCamIncrease = 5f;
+
     [Header("WallRun")]
     [SerializeField]
     private LayerMask wallMask;
@@ -217,6 +221,7 @@ public class ThirdPersonController : MonoBehaviour
             rigidbody.AddForce(-transform.up * slamForce, ForceMode.Impulse);
         }
     }
+    
     //-----------------
     public void DoSprint(InputAction.CallbackContext context)
     {
@@ -232,7 +237,11 @@ public class ThirdPersonController : MonoBehaviour
     IEnumerator PerformSprint()
     {
         movementForce = og_movementForce * sprintMultiplier;
+
+        cameraController.maxFOV = cameraController.maxFOV + sprintFovCamIncrease;
         yield return new WaitForSeconds(sprintDuration);
+
+        cameraController.maxFOV = cameraController.maxFOV - sprintFovCamIncrease;
         movementForce = og_movementForce;
         isSprinting = false;
     }
@@ -251,6 +260,12 @@ public class ThirdPersonController : MonoBehaviour
         else
         {//not grounded
             characterAnimation.DoFallAnimation();
+
+            if (rigidbody.velocity.y < 0.2f)
+            {
+                rigidbody.AddForce(-transform.up * 10, ForceMode.Force);
+            }
+
             return false;
         }
     }
