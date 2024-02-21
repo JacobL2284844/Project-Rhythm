@@ -31,7 +31,8 @@ public class CameraController : MonoBehaviour
     public CinemachineFreeLook cinemachine_LockOn;
     [SerializeField] private AttackManager attackManager;
 
-
+    [Header("Post-Processing")]
+    [SerializeField] private PostProcessVolumeControl postProcessControll;
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -75,6 +76,7 @@ public class CameraController : MonoBehaviour
             {
                 lockedOn = false;
                 attackManager.currentEnemyTarget= null;
+
                 SwitchCamera(cinemachineFL);
             }
             else
@@ -115,6 +117,16 @@ public class CameraController : MonoBehaviour
 
     public void SwitchCamera(CinemachineFreeLook newCamera)
     {
+        //fade vignette
+        if(newCamera == cinemachineFL)
+        {
+            postProcessControll.FadeOutVignette();
+        }
+        else if(newCamera == cinemachine_LockOn)
+        {
+            postProcessControll.FadeInVignette();
+        }
+
         currentCam = newCamera;
 
         currentCam.Priority = 20;
