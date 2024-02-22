@@ -455,15 +455,26 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "2c453982-76ba-487d-8b9f-eecea8a1f065",
-                    "path": "<Mouse>/scroll",
+                    "name": "1D Axis",
+                    "id": "6b53b701-63cb-42fb-9a3b-e6b37e73410e",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TargetNextInList",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "45403e3b-9e29-480b-a6f4-167e29dae8ce",
+                    "path": "<Mouse>/scroll/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "TargetNextInList",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -475,6 +486,28 @@
                     "action": "TargetPreviusInList",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "4da70761-7faa-47bc-bd68-06b92ec3063a",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TargetPreviusInList",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "bc9bc5d3-740e-4d66-ae38-4ea2a6a0a8e8",
+                    "path": "<Mouse>/scroll/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TargetPreviusInList",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
