@@ -12,8 +12,7 @@ public class ThirdPersonController : MonoBehaviour
 
     //input
     private ThirdPersonInput playerInputActionAsset;
-    private InputAction move;
-    [SerializeField] private AttackManager attackManager;
+    [HideInInspector]public InputAction move;
     [Header("Movement")]
     private bool allowMovement = true;
     public Rigidbody rigidbody;
@@ -151,8 +150,6 @@ public class ThirdPersonController : MonoBehaviour
         if (move.ReadValue<Vector2>().sqrMagnitude > 0.1f && direction.sqrMagnitude > 0.1f)
         {
             this.rigidbody.rotation = Quaternion.LookRotation(direction, Vector3.up);
-
-            attackManager.ExitAttack();//if moving
         }
         else
         {//not moving
@@ -175,10 +172,12 @@ public class ThirdPersonController : MonoBehaviour
     }
     public void EnableMovement()
     {
+        //movementForce = 0.1f;
         Debug.Log("Enable");
     }
     public void DisableMovement()
     {
+        //movementForce = og_movementForce;
         Debug.Log("Disable");
         forceDirection = Vector3.zero;
     }

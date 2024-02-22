@@ -18,6 +18,7 @@ public class AttackManager : MonoBehaviour
     [SerializeField] private AnimatorOverrideController defaultAnimController;
 
     [Header("Attack Combos")]
+    public bool isAttacking = false;
     public List<AttackSO> currentCombo;
     public List<AttackSO> combo_1;
     float lastAttackInputTime;
@@ -45,9 +46,11 @@ public class AttackManager : MonoBehaviour
         if (Time.time - lastComboEnd > timeBetweenCombos && comboCount <= combo.Count)
         {
             CancelInvoke("EndCombo");
+            thirdPersonController.EnableMovement();
 
             if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
             {
+                isAttacking = true;
                 animator.runtimeAnimatorController = combo[comboCount].animatorOverride;
                 animator.Play("AttackState", 1, 0);
 
@@ -55,7 +58,7 @@ public class AttackManager : MonoBehaviour
 
                 comboCount++;
                 lastAttackInputTime = Time.time;
-                if (comboCount + 1> combo.Count)
+                if (comboCount + 1 > combo.Count)
                 {
                     comboCount = 0;
                 }
@@ -64,25 +67,39 @@ public class AttackManager : MonoBehaviour
     }
     public void ExitAttack()
     {
-        if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.9 && animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        if (isAttacking)
         {
-            thirdPersonController.EnableMovement();
-            animator.runtimeAnimatorController = defaultAnimController;
-            Invoke("EndCombo", 1);
+            if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.9 && animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+            {
+                thirdPersonController.EnableMovement();
+                ForceStopAttack();
+            }
+            if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.5 && thirdPersonController.move.ReadValue<Vector2>().sqrMagnitude > 0.3f)
+            {
+                thirdPersonController.EnableMovement();
+                ForceStopAttack();
+            }
         }
     }
     void EndCombo()
     {
+        isAttacking = false;
         animator.runtimeAnimatorController = defaultAnimController;
         thirdPersonController.EnableMovement();
         comboCount = 0;
         lastComboEnd = Time.time;
     }
-
+    public void ForceStopAttack()
+    {
+        isAttacking = false;
+        thirdPersonController.EnableMovement();
+        animator.runtimeAnimatorController = defaultAnimController;
+        Invoke("EndCombo", 1);
+    }
     //attack dash
     public void SetPlayerDashPositionForAttack(InputAction.CallbackContext context)
     {
-        if (context.started && currentEnemyTarget != null)
+        if (context.started && currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
         {
             //do attack
             Attack(currentCombo);
