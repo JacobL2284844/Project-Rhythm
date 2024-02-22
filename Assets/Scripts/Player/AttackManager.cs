@@ -9,6 +9,7 @@ public class AttackManager : MonoBehaviour
     [SerializeField] CameraController cameraController;
     public Transform currentEnemyTarget;
 
+    [SerializeField] ThirdPersonController thirdPersonController;
     [SerializeField] private Transform attackPositioner;
     [SerializeField] private float dashToAttackTargetDuration = 0.5f;
     void Start()
@@ -32,15 +33,22 @@ public class AttackManager : MonoBehaviour
             //set position
             StartCoroutine(LerpToTargetPosition());
             //rotate player
-            Vector3 directionToTarget = attackPositioner.position - transform.position;
+            Vector3 directionToTarget = transform.position - attackPositioner.position;
             directionToTarget.y = 0f;
 
-            transform.rotation = Quaternion.LookRotation(directionToTarget);
+            thirdPersonController.forceDirection = -directionToTarget;
+            thirdPersonController.rigidbody.velocity = -directionToTarget;
+            transform.rotation = Quaternion.LookRotation(-directionToTarget);
         }
     }
     IEnumerator LerpToTargetPosition()
     {
         Vector3 initialPosition = transform.position;
+
+        //fov
+        cameraController.transitionSpeed = cameraController.transitionSpeed / 10;
+        cameraController.maxFOV = cameraController.maxFOV - 25;//should not be hard coded
+        cameraController.minFOV = cameraController.minFOV - 25;
 
         float elapsedTime = 0f;
         while (elapsedTime < dashToAttackTargetDuration)
@@ -49,6 +57,11 @@ public class AttackManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        //fov
+        cameraController.transitionSpeed = cameraController.transitionSpeed * 10;
+        cameraController.maxFOV = cameraController.maxFOV + 25;//should not be hard coded
+        cameraController.minFOV = cameraController.minFOV + 25;
+
         transform.position = attackPositioner.GetChild(0).position; // Ensure reaching exact target position
     }
     public void SetLockOnTarget(Transform targetEnemy)

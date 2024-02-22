@@ -15,7 +15,7 @@ public class ThirdPersonController : MonoBehaviour
     private InputAction move;
 
     [Header("Movement")]
-    private Rigidbody rigidbody;
+    public Rigidbody rigidbody;
     [SerializeField]
     private float movementForce = 1f;
     private float og_movementForce = 1f;
@@ -27,7 +27,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private float currentMaxSpeed = 4f;
     private float baseMaxSpeed = 4f;
-    private Vector3 forceDirection = Vector3.zero;
+    public Vector3 forceDirection = Vector3.zero;
     [SerializeField]
     private float fallForce = 65f;
     [SerializeField]
@@ -112,7 +112,7 @@ public class ThirdPersonController : MonoBehaviour
     private void FixedUpdate()
     {
         IsGrounded();
-        LookAt();
+        LookAt(rigidbody.velocity);
 
         //movement
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
@@ -139,9 +139,8 @@ public class ThirdPersonController : MonoBehaviour
         CheckWallRun();
     }
     //-----------------
-    private void LookAt()
+    private void LookAt(Vector3 direction)
     {
-        Vector3 direction = rigidbody.velocity;
         direction.y = 0;
 
         //rotate rigidbody in move direction

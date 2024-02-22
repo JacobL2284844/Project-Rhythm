@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour
             if (lockedOn)
             {
                 lockedOn = false;
-                attackManager.currentEnemyTarget= null;
+                attackManager.currentEnemyTarget = null;
 
                 SwitchCamera(cinemachineFL);
             }
@@ -114,15 +114,53 @@ public class CameraController : MonoBehaviour
         attackManager.SetLockOnTarget(closestEnemie);//set target in attak manager
         return closestEnemie;
     }
+    public void TargetNextInList(InputAction.CallbackContext context)
+    {
+        if (targetToLock != null && context.started)
+        {
+            int index = enemyChecker.enemiesInRange.IndexOf(attackManager.currentEnemyTarget);
+
+            if (index == enemyChecker.enemiesInRange.Count)
+            {
+                index = 0;
+            }
+            else
+            {
+                index++;
+            }
+            targetToLock = enemyChecker.enemiesInRange[index];
+            targetGroup.m_Targets[1].target = targetToLock;
+            attackManager.SetLockOnTarget(targetToLock);
+        }
+    }
+    public void TargetPreviusInList(InputAction.CallbackContext context)
+    {
+        if (targetToLock != null && context.started)
+        {
+            int index = enemyChecker.enemiesInRange.IndexOf(attackManager.currentEnemyTarget);
+
+            if (index == 0)
+            {
+                index = enemyChecker.enemiesInRange.Count;
+            }
+            else
+            {
+                index--;
+            }
+            targetToLock = enemyChecker.enemiesInRange[index];
+            targetGroup.m_Targets[1].target = targetToLock;
+            attackManager.SetLockOnTarget(targetToLock);
+        }
+    }
 
     public void SwitchCamera(CinemachineFreeLook newCamera)
     {
         //fade vignette
-        if(newCamera == cinemachineFL)
+        if (newCamera == cinemachineFL)
         {
             postProcessControll.FadeOutVignette();
         }
-        else if(newCamera == cinemachine_LockOn)
+        else if (newCamera == cinemachine_LockOn)
         {
             postProcessControll.FadeInVignette();
         }

@@ -127,6 +127,24 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TargetNextInList"",
+                    ""type"": ""Value"",
+                    ""id"": ""3ef4a94f-29d6-4a09-9b6f-f63ff57e0293"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TargetPreviusInList"",
+                    ""type"": ""Button"",
+                    ""id"": ""3349ecd2-35cc-4634-94ae-47b4057610e2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -446,6 +464,39 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""TestAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39f754ea-9c83-482d-829d-26d685ddafdd"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TargetNextInList"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c453982-76ba-487d-8b9f-eecea8a1f065"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TargetNextInList"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e74dc6a-201e-4934-b638-b1e2af55b7b9"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TargetPreviusInList"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1044,6 +1095,8 @@ namespace UnityEngine.InputSystem
             m_Player_PlayMusic0 = m_Player.FindAction("PlayMusic 0", throwIfNotFound: true);
             m_Player_PlayMusic2 = m_Player.FindAction("PlayMusic 2", throwIfNotFound: true);
             m_Player_PlayMusic1 = m_Player.FindAction("PlayMusic 1", throwIfNotFound: true);
+            m_Player_TargetNextInList = m_Player.FindAction("TargetNextInList", throwIfNotFound: true);
+            m_Player_TargetPreviusInList = m_Player.FindAction("TargetPreviusInList", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1128,6 +1181,8 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_PlayMusic0;
         private readonly InputAction m_Player_PlayMusic2;
         private readonly InputAction m_Player_PlayMusic1;
+        private readonly InputAction m_Player_TargetNextInList;
+        private readonly InputAction m_Player_TargetPreviusInList;
         public struct PlayerActions
         {
             private @ThirdPersonInput m_Wrapper;
@@ -1143,6 +1198,8 @@ namespace UnityEngine.InputSystem
             public InputAction @PlayMusic0 => m_Wrapper.m_Player_PlayMusic0;
             public InputAction @PlayMusic2 => m_Wrapper.m_Player_PlayMusic2;
             public InputAction @PlayMusic1 => m_Wrapper.m_Player_PlayMusic1;
+            public InputAction @TargetNextInList => m_Wrapper.m_Player_TargetNextInList;
+            public InputAction @TargetPreviusInList => m_Wrapper.m_Player_TargetPreviusInList;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1185,6 +1242,12 @@ namespace UnityEngine.InputSystem
                 @PlayMusic1.started += instance.OnPlayMusic1;
                 @PlayMusic1.performed += instance.OnPlayMusic1;
                 @PlayMusic1.canceled += instance.OnPlayMusic1;
+                @TargetNextInList.started += instance.OnTargetNextInList;
+                @TargetNextInList.performed += instance.OnTargetNextInList;
+                @TargetNextInList.canceled += instance.OnTargetNextInList;
+                @TargetPreviusInList.started += instance.OnTargetPreviusInList;
+                @TargetPreviusInList.performed += instance.OnTargetPreviusInList;
+                @TargetPreviusInList.canceled += instance.OnTargetPreviusInList;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1222,6 +1285,12 @@ namespace UnityEngine.InputSystem
                 @PlayMusic1.started -= instance.OnPlayMusic1;
                 @PlayMusic1.performed -= instance.OnPlayMusic1;
                 @PlayMusic1.canceled -= instance.OnPlayMusic1;
+                @TargetNextInList.started -= instance.OnTargetNextInList;
+                @TargetNextInList.performed -= instance.OnTargetNextInList;
+                @TargetNextInList.canceled -= instance.OnTargetNextInList;
+                @TargetPreviusInList.started -= instance.OnTargetPreviusInList;
+                @TargetPreviusInList.performed -= instance.OnTargetPreviusInList;
+                @TargetPreviusInList.canceled -= instance.OnTargetPreviusInList;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1415,6 +1484,8 @@ namespace UnityEngine.InputSystem
             void OnPlayMusic0(InputAction.CallbackContext context);
             void OnPlayMusic2(InputAction.CallbackContext context);
             void OnPlayMusic1(InputAction.CallbackContext context);
+            void OnTargetNextInList(InputAction.CallbackContext context);
+            void OnTargetPreviusInList(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

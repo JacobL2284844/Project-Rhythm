@@ -1830,7 +1830,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Speed
-    m_EventTreshold: 1.3
+    m_EventTreshold: 2
   - m_ConditionMode: 2
     m_ConditionEvent: WallRunLeft
     m_EventTreshold: 0

@@ -48,6 +48,31 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 8
     min: 2
+--- !u!114 &-1909400858551249432
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fa0085f50d5e54f8144f766051a691, type: 3}
+  m_Name: FilmGrain
+  m_EditorClassIdentifier: 
+  active: 1
+  type:
+    m_OverrideState: 1
+    m_Value: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 1
+  response:
+    m_OverrideState: 1
+    m_Value: 0.603
+  texture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
 --- !u!114 &-1016694868962581565
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -117,15 +142,7 @@ MonoBehaviour:
   m_Name: DefaultSettingsVolumeProfile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 7686318427622180703}
-  - {fileID: -1016694868962581565}
-  - {fileID: 7502528774814404555}
-  - {fileID: 7542669330009093999}
-  - {fileID: 1501199423866068322}
-  - {fileID: 5315503232242033309}
-  - {fileID: 1932259527246508038}
-  - {fileID: 448115243408767295}
-  - {fileID: -7089757308646879465}
+  - {fileID: -1909400858551249432}
 --- !u!114 &448115243408767295
 MonoBehaviour:
   m_ObjectHideFlags: 3
