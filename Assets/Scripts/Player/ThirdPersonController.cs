@@ -13,8 +13,9 @@ public class ThirdPersonController : MonoBehaviour
     //input
     private ThirdPersonInput playerInputActionAsset;
     private InputAction move;
-
+    [SerializeField] private AttackManager attackManager;
     [Header("Movement")]
+    private bool allowMovement = true;
     public Rigidbody rigidbody;
     [SerializeField]
     private float movementForce = 1f;
@@ -111,32 +112,35 @@ public class ThirdPersonController : MonoBehaviour
     //-----------------
     private void FixedUpdate()
     {
-        IsGrounded();
-        LookAt(rigidbody.velocity);
-
-        //movement
-        forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
-        forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
-
-        //imploment movement
-        rigidbody.AddForce(forceDirection, ForceMode.Impulse);
-        forceDirection = Vector3.zero;
-
-        //cap velocity
-        Vector3 horzontalVelocity = rigidbody.velocity;
-        horzontalVelocity.y = 0;
-        if (horzontalVelocity.sqrMagnitude > currentMaxSpeed * currentMaxSpeed)
+        if (allowMovement)
         {
-            rigidbody.velocity = horzontalVelocity.normalized * currentMaxSpeed + Vector3.up * rigidbody.velocity.y;
-        }
+            IsGrounded();
+            LookAt(rigidbody.velocity);
 
-        //if falling check ground
-        if (rigidbody.velocity.y < 0f)
-        {
-            //fix gravity
-            rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
+            //movement
+            forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
+            forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
+
+            //imploment movement
+            rigidbody.AddForce(forceDirection, ForceMode.Impulse);
+            forceDirection = Vector3.zero;
+
+            //cap velocity
+            Vector3 horzontalVelocity = rigidbody.velocity;
+            horzontalVelocity.y = 0;
+            if (horzontalVelocity.sqrMagnitude > currentMaxSpeed * currentMaxSpeed)
+            {
+                rigidbody.velocity = horzontalVelocity.normalized * currentMaxSpeed + Vector3.up * rigidbody.velocity.y;
+            }
+
+            //if falling check ground
+            if (rigidbody.velocity.y < 0f)
+            {
+                //fix gravity
+                rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
+            }
+            CheckWallRun();
         }
-        CheckWallRun();
     }
     //-----------------
     private void LookAt(Vector3 direction)
@@ -147,9 +151,11 @@ public class ThirdPersonController : MonoBehaviour
         if (move.ReadValue<Vector2>().sqrMagnitude > 0.1f && direction.sqrMagnitude > 0.1f)
         {
             this.rigidbody.rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+            attackManager.ExitAttack();//if moving
         }
         else
-        {
+        {//not moving
             rigidbody.angularVelocity = Vector3.zero;
         }
     }
@@ -166,6 +172,15 @@ public class ThirdPersonController : MonoBehaviour
         right.y = 0;
 
         return right.normalized;
+    }
+    public void EnableMovement()
+    {
+        Debug.Log("Enable");
+    }
+    public void DisableMovement()
+    {
+        Debug.Log("Disable");
+        forceDirection = Vector3.zero;
     }
     //-----------------
     private void DoJump(InputAction.CallbackContext obj)
@@ -220,7 +235,7 @@ public class ThirdPersonController : MonoBehaviour
             rigidbody.AddForce(-transform.up * slamForce, ForceMode.Impulse);
         }
     }
-    
+
     //-----------------
     public void DoSprint(InputAction.CallbackContext context)
     {
