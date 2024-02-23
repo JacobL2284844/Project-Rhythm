@@ -108,7 +108,7 @@ public class AttackManager : MonoBehaviour
            
             //set position
             float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
-            if (distance > 0.2f)
+            if (distance > 0.1f)
             {
                 StartCoroutine(LerpToTargetPosition());
                 //rotate player
