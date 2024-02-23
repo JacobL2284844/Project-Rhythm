@@ -101,9 +101,11 @@ public class AttackManager : MonoBehaviour
     {
         if (context.started && currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
         {
-            //do attack
+             //do attack
             Attack(currentCombo);
-
+            //set attack position
+            //attackPositioner.GetChild(0).position = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+           
             //set position
             float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
             if (distance > 0.2f)

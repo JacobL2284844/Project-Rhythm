@@ -6,4 +6,5 @@ using UnityEngine;
 public class AttackSO : ScriptableObject
 {
     public AnimatorOverrideController animatorOverride;
+    //public float attackDistanceToEnemy = 1f;
 }

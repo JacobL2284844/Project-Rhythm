@@ -232,6 +232,7 @@ public class ThirdPersonController : MonoBehaviour
         if (context.started && !IsGrounded())
         {
             rigidbody.AddForce(-transform.up * slamForce, ForceMode.Impulse);
+            StartCoroutine(PerformSlide());
         }
     }
 
@@ -255,6 +256,10 @@ public class ThirdPersonController : MonoBehaviour
         yield return new WaitForSeconds(sprintDuration);
 
         cameraController.maxFOV = cameraController.maxFOV - sprintFovCamIncrease;
+        ExitSprint();
+    }
+    void ExitSprint()
+    {
         movementForce = og_movementForce;
         isSprinting = false;
     }
@@ -299,7 +304,6 @@ public class ThirdPersonController : MonoBehaviour
 
                 if (wallNormal != rightWall_rayHit.normal || wallNormal != leftWall_rayHit.normal)//if not on same wall as previus
                 {
-
                     if (onWall_right)
                     {
                         wallNormal = rightWall_rayHit.normal;
@@ -363,6 +367,8 @@ public class ThirdPersonController : MonoBehaviour
         characterAnimation.ExitWallRun();
         canDoubleJump = true;
         isWallRunning = false;
+
+        ExitSprint();
 
         if (canExitWallRun)
         {
