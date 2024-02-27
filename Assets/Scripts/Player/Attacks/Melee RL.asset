@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Melee RL
   m_EditorClassIdentifier: 
   animatorOverride: {fileID: 22100000, guid: 275202500a91cde4ab9ba88402dd7db3, type: 2}
+  attackDistanceToEnemy: 1.3

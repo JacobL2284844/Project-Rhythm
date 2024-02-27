@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Melee Up
   m_EditorClassIdentifier: 
   animatorOverride: {fileID: 22100000, guid: 7620929a0590031439ec9aec32e29161, type: 2}
+  attackDistanceToEnemy: 1.7

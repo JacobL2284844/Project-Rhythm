@@ -25,5 +25,10 @@ public class EnemyChecker : MonoBehaviour
         {
             cameraController.SwitchCamera(cameraController.cinemachineFL);
         }
+
+        if(cameraController.lockedOn && cameraController.targetToLock == other)
+        {
+            cameraController.SwitchCamera(cameraController.cinemachineFL);
+        }
     }
 }

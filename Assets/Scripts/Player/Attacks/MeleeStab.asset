@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: MeleeStab
   m_EditorClassIdentifier: 
   animatorOverride: {fileID: 22100000, guid: b9f4c98c6c51b05479e2659fc0363af6, type: 2}
+  attackDistanceToEnemy: 3

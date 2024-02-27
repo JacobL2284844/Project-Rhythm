@@ -51,6 +51,7 @@ public class AttackManager : MonoBehaviour
             if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
             {
                 isAttacking = true;
+                attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, - combo[comboCount].attackDistanceToEnemy);
                 animator.runtimeAnimatorController = combo[comboCount].animatorOverride;
                 animator.Play("AttackState", 1, 0);
 
@@ -92,6 +93,7 @@ public class AttackManager : MonoBehaviour
     public void ForceStopAttack()
     {
         isAttacking = false;
+        attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -1);
         thirdPersonController.EnableMovement();
         animator.runtimeAnimatorController = defaultAnimController;
         Invoke("EndCombo", 1);

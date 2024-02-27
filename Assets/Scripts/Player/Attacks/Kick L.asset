@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Kick L
   m_EditorClassIdentifier: 
   animatorOverride: {fileID: 22100000, guid: ad36ccb25aa4d3847b67d8d4afaacac6, type: 2}
+  attackDistanceToEnemy: 1.2
