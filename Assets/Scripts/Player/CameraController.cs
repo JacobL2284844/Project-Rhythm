@@ -30,6 +30,7 @@ public class CameraController : MonoBehaviour
     public bool lockedOn = false;
     public CinemachineFreeLook cinemachine_LockOn;
     [SerializeField] private AttackManager attackManager;
+    [SerializeField] private int currentEnemyLockedIndex;
 
     [Header("Post-Processing")]
     [SerializeField] private PostProcessVolumeControl postProcessControll;
@@ -85,6 +86,7 @@ public class CameraController : MonoBehaviour
                 {
                     targetToLock = TargetClosestEnemy();
                     targetGroup.m_Targets[1].target = targetToLock;
+                    currentEnemyLockedIndex = enemyChecker.enemiesInRange.IndexOf(attackManager.currentEnemyTarget);
 
                     lockedOn = true;
                     SwitchCamera(cinemachine_LockOn);
@@ -118,17 +120,15 @@ public class CameraController : MonoBehaviour
     {
         if (targetToLock != null && context.started)
         {
-            int index = enemyChecker.enemiesInRange.IndexOf(attackManager.currentEnemyTarget);
+            currentEnemyLockedIndex = enemyChecker.enemiesInRange.IndexOf(attackManager.currentEnemyTarget);
 
-            if (index == enemyChecker.enemiesInRange.Count)
+            currentEnemyLockedIndex++;
+
+            if (currentEnemyLockedIndex == enemyChecker.enemiesInRange.Count)
             {
-                index = 0;
+                currentEnemyLockedIndex = 0;
             }
-            else
-            {
-                index++;
-            }
-            targetToLock = enemyChecker.enemiesInRange[index];
+            targetToLock = enemyChecker.enemiesInRange[currentEnemyLockedIndex];
             targetGroup.m_Targets[1].target = targetToLock;
             attackManager.SetLockOnTarget(targetToLock);
         }
@@ -137,22 +137,19 @@ public class CameraController : MonoBehaviour
     {
         if (targetToLock != null && context.started)
         {
-            int index = enemyChecker.enemiesInRange.IndexOf(attackManager.currentEnemyTarget);
+            currentEnemyLockedIndex = enemyChecker.enemiesInRange.IndexOf(attackManager.currentEnemyTarget);
 
-            if (index == 0)
+            currentEnemyLockedIndex--;
+
+            if (currentEnemyLockedIndex < 0)
             {
-                index = enemyChecker.enemiesInRange.Count;
+                currentEnemyLockedIndex = enemyChecker.enemiesInRange.Count -1;
             }
-            else
-            {
-                index--;
-            }
-            targetToLock = enemyChecker.enemiesInRange[index];
+            targetToLock = enemyChecker.enemiesInRange[currentEnemyLockedIndex];
             targetGroup.m_Targets[1].target = targetToLock;
             attackManager.SetLockOnTarget(targetToLock);
         }
     }
-
     public void SwitchCamera(CinemachineFreeLook newCamera)
     {
         //fade vignette
