@@ -124,27 +124,37 @@ public class AttackManager : MonoBehaviour
     //attack dash when attack is first called from input
     public void PerformAttack(InputAction.CallbackContext context)
     {
-        if (context.started && currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
-        {
-            //do attack
-            Attack(currentCombo);
-            //set attack positioner position to specific attack
-            attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
-
-            //some beat check stuff here probably
-
-            //set position
-            float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
-            if (distance > 0.1f)
+        if (context.started)
+        {//if not locked
+            if (! currentEnemyTarget || cameraController.currentCam != cameraController.cinemachine_LockOn)
             {
-                StartCoroutine(LerpToTargetPosition());
-                //rotate player
-                Vector3 directionToTarget = transform.position - attackPositioner.position;
-                directionToTarget.y = 0f;
+                cameraController.TargetClosestEnemy();
+                cameraController.SetTargetClosestAndLockOn();
+                SetAttackingPositioner_PositionAndRotation();
+            }
+            //once locked
+            if (currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
+            {
+                //do attack
+                Attack(currentCombo);
+                //set attack positioner position to specific attack
+                attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
 
-                thirdPersonController.forceDirection = -directionToTarget;
-                thirdPersonController.rigidbody.velocity = -directionToTarget;
-                transform.rotation = Quaternion.LookRotation(-directionToTarget);
+                //some beat check stuff here probably
+
+                //set position
+                float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
+                if (distance > 0.1f)
+                {
+                    StartCoroutine(LerpToTargetPosition());
+                    //rotate player
+                    Vector3 directionToTarget = transform.position - attackPositioner.position;
+                    directionToTarget.y = 0f;
+
+                    thirdPersonController.forceDirection = -directionToTarget;
+                    thirdPersonController.rigidbody.velocity = -directionToTarget;
+                    transform.rotation = Quaternion.LookRotation(-directionToTarget);
+                }
             }
         }
     }
