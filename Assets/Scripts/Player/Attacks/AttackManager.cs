@@ -135,10 +135,11 @@ public class AttackManager : MonoBehaviour
             //once locked
             if (currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
             {
-                //do attack
-                Attack(currentCombo);
                 //set attack positioner position to specific attack
                 attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+                
+                //do attack
+                Attack(currentCombo);
 
                 //some beat check stuff here probably
 
