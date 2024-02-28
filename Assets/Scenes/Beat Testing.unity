@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -252,22 +252,6 @@ MonoBehaviour:
   _bpm: 135
   _audioSource: {fileID: 100951310}
   _intervals:
-  - _steps: 0.5
-    _trigger:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1726297094}
-          m_TargetAssemblyTypeName: PulseToBeat, Assembly-CSharp
-          m_MethodName: Pulse
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - _steps: 1
     _trigger:
       m_PersistentCalls:
@@ -850,6 +834,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 135
+  perfectTimingThreshold: 0.03
+  goodTimingThreshold: 0.07
+  mehTimingThreshold: 0.1
 --- !u!114 &867941066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -911,8 +898,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useTestBeat: 0
-  _pulseSize: 1.15
-  _returnSpeed: 5
+  _pulseSize: 1
+  _returnSpeed: 10
 --- !u!23 &1726297095
 MeshRenderer:
   m_ObjectHideFlags: 0

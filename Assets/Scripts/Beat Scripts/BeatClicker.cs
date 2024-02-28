@@ -1,10 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BeatClicker : MonoBehaviour
 {
     public float bpm = 135f; // Beats per minute
+    public float perfectTimingThreshold = 0.03f; // Threshold for perfect timing (in seconds)
+    public float goodTimingThreshold = 0.07f; // Threshold for good timing (in seconds)
+    public float mehTimingThreshold = 0.1f; // Threshold for meh timing (in seconds)
+
     private float beatInterval; // Time interval between beats
     private float beatTimer; // Timer to keep track of beats
+
     private int score = 0; // Player's score
     private int streakMultiplier = 1; // Streak multiplier
     private ScoreDisplay scoreDisplay; // Reference to the ScoreDisplay script
@@ -12,10 +19,8 @@ public class BeatClicker : MonoBehaviour
 
     void Start()
     {
-        // Calculate the time interval between beats based on the BPM
-        beatInterval = 60f / bpm;
-        // Start the beat timer
-        beatTimer = beatInterval;
+        beatInterval = 60f / bpm; // Calculate the time interval between beats based on the BPM
+        beatTimer = beatInterval; // Start the beat timer
 
         scoreDisplay = FindObjectOfType<ScoreDisplay>();
         streakText = FindObjectOfType<StreakText>();
@@ -25,33 +30,39 @@ public class BeatClicker : MonoBehaviour
     {
         beatTimer -= Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // Mouse button input
         {
-            // Check if the click was on time with the beat
-            if (beatTimer <= 0)
+            float timingDifference = Mathf.Abs(beatTimer);
+
+            if (timingDifference <= perfectTimingThreshold) // Perfect Timing Threshold
             {
-                Debug.Log("Clicked on beat!");
-                // Increment the score by the streak multiplier
+                Debug.Log("Perfect!");
                 score += streakMultiplier;
-                // Update the score display
-                scoreDisplay.UpdateScore(score);
-                // Increase streak multiplier if on beat
                 IncreaseStreakMultiplier();
-                // Reset the beat timer to the next beat
-                beatTimer = beatInterval;
-                // Add your beat action here, for example, playing a sound
+                scoreDisplay.UpdateScore(score);
+            }
+            else if (timingDifference <= goodTimingThreshold) // Good Timing Threshold
+            {
+                Debug.Log("Good!");
+                score += streakMultiplier;
+                scoreDisplay.UpdateScore(score);
+            }
+            else if (timingDifference <= mehTimingThreshold) // Meh Timing Threshold
+            {
+                Debug.Log("Meh!");
+                score += streakMultiplier;
+                scoreDisplay.UpdateScore(score);
             }
             else
             {
-                // Reset streak multiplier if off-beat
-                ResetStreakMultiplier();
-                // Add your off-beat action here
-                Debug.Log("Off beat!");
+                Debug.Log("Offbeat!"); // Add your off-beat action here
+                ResetStreakMultiplier();// Reset streak multiplier if off-beat
             }
+
+            beatTimer = beatInterval; // Reset the beat timer for the next beat
         }
 
-        // Update streak text
-        streakText.SetStreakMultiplier(streakMultiplier);
+        streakText.SetStreakMultiplier(streakMultiplier); // Update streak text
     }
 
     // Method to increase the streak multiplier, up to a maximum of 8x
