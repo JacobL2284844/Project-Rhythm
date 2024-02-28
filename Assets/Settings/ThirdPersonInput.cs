@@ -57,6 +57,15 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Block"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ee24e29-e114-4414-a12d-1f1db2211aa4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""68e55dd5-b7de-4c2d-bfd3-1c83f69e016a"",
@@ -248,17 +257,6 @@ namespace UnityEngine.InputSystem
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8"",
-                    ""path"": ""<XRController>/{Primary2DAxis}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -512,6 +510,28 @@ namespace UnityEngine.InputSystem
                     ""action"": ""TargetPreviusInList"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68dd4f17-399e-46be-b2fa-0a9517fe135d"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ffcbcbea-e6c7-4a5a-9c85-b5b1ea5806fe"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1100,6 +1120,7 @@ namespace UnityEngine.InputSystem
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+            m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_CrouchSlide = m_Player.FindAction("Crouch/Slide", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
@@ -1185,6 +1206,7 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Attack;
+        private readonly InputAction m_Player_Block;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_CrouchSlide;
         private readonly InputAction m_Player_Sprint;
@@ -1201,6 +1223,7 @@ namespace UnityEngine.InputSystem
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Look => m_Wrapper.m_Player_Look;
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
+            public InputAction @Block => m_Wrapper.m_Player_Block;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @CrouchSlide => m_Wrapper.m_Player_CrouchSlide;
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
@@ -1228,6 +1251,9 @@ namespace UnityEngine.InputSystem
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @Block.started += instance.OnBlock;
+                @Block.performed += instance.OnBlock;
+                @Block.canceled += instance.OnBlock;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -1268,6 +1294,9 @@ namespace UnityEngine.InputSystem
                 @Attack.started -= instance.OnAttack;
                 @Attack.performed -= instance.OnAttack;
                 @Attack.canceled -= instance.OnAttack;
+                @Block.started -= instance.OnBlock;
+                @Block.performed -= instance.OnBlock;
+                @Block.canceled -= instance.OnBlock;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
@@ -1480,6 +1509,7 @@ namespace UnityEngine.InputSystem
             void OnMove(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnAttack(InputAction.CallbackContext context);
+            void OnBlock(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnCrouchSlide(InputAction.CallbackContext context);
             void OnSprint(InputAction.CallbackContext context);

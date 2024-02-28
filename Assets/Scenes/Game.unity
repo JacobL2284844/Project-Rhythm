@@ -34903,7 +34903,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1711621385}
-  m_LocalRotation: {x: -0.046542432, y: -0.13193746, z: 0.045282815, w: 0.98912877}
+  m_LocalRotation: {x: -0.046542447, y: -0.13193746, z: 0.045282807, w: 0.98912877}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35272,7 +35272,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1737175232}
         m_TargetAssemblyTypeName: AttackManager, Assembly-CSharp
-        m_MethodName: SetPlayerDashPositionForAttack
+        m_MethodName: PerformAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -35316,6 +35316,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3349ecd2-35cc-4634-94ae-47b4057610e2
     m_ActionName: Player/TargetPreviusInList[/Mouse/backButton,/DualSenseGamepadHID/rightStick/left]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1737175232}
+        m_TargetAssemblyTypeName: AttackManager, Assembly-CSharp
+        m_MethodName: PerformBlock
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6ee24e29-e114-4414-a12d-1f1db2211aa4
+    m_ActionName: Player/Block[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -35370,6 +35386,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7874aa08827762d4a9f21a39b0ed28d7, type: 2}
   - {fileID: 11400000, guid: babfdea804d55bd4db3b250e5a486f47, type: 2}
   - {fileID: 11400000, guid: 1ac5299afc6c7574989af1e58954a7fa, type: 2}
+  block: {fileID: 11400000, guid: 479c7c3adce15144fb45e91a0be089a7, type: 2}
   timeBetweenAttacks: 0.4
   timeBetweenCombos: 0.8
   fovChangeOnAttack: 25

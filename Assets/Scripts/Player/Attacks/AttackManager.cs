@@ -21,6 +21,8 @@ public class AttackManager : MonoBehaviour
     public bool isAttacking = false;
     public List<AttackSO> currentCombo;
     public List<AttackSO> combo_1;
+    public AttackSO block;
+
     float lastAttackInputTime;
     float lastComboEnd;
     int comboCount;
@@ -52,7 +54,7 @@ public class AttackManager : MonoBehaviour
             if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
             {
                 isAttacking = true;
-                attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, - combo[comboCount].attackDistanceToEnemy);
+                attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -combo[comboCount].attackDistanceToEnemy);
                 animator.runtimeAnimatorController = combo[comboCount].animatorOverride;
                 animator.Play("AttackState", 1, 0);
 
@@ -64,6 +66,26 @@ public class AttackManager : MonoBehaviour
                 {
                     comboCount = 0;
                 }
+            }
+        }
+    }
+    void Block()
+    {
+        if (Time.time - lastComboEnd > timeBetweenCombos)
+        {
+            CancelInvoke("EndCombo");
+            thirdPersonController.EnableMovement();
+
+            if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
+            {
+                isAttacking = true;
+                attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -block.attackDistanceToEnemy);
+                animator.runtimeAnimatorController = block.animatorOverride;
+                animator.Play("AttackState", 1, 0);
+
+                thirdPersonController.DisableMovement();
+
+                lastAttackInputTime = Time.time;
             }
         }
     }
@@ -100,15 +122,15 @@ public class AttackManager : MonoBehaviour
         Invoke("EndCombo", 1);
     }
     //attack dash when attack is first called from input
-    public void SetPlayerDashPositionForAttack(InputAction.CallbackContext context)
+    public void PerformAttack(InputAction.CallbackContext context)
     {
         if (context.started && currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
         {
-             //do attack
+            //do attack
             Attack(currentCombo);
             //set attack positioner position to specific attack
             attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
-           
+
             //some beat check stuff here probably
 
             //set position
@@ -116,6 +138,31 @@ public class AttackManager : MonoBehaviour
             if (distance > 0.1f)
             {
                 StartCoroutine(LerpToTargetPosition());
+                //rotate player
+                Vector3 directionToTarget = transform.position - attackPositioner.position;
+                directionToTarget.y = 0f;
+
+                thirdPersonController.forceDirection = -directionToTarget;
+                thirdPersonController.rigidbody.velocity = -directionToTarget;
+                transform.rotation = Quaternion.LookRotation(-directionToTarget);
+            }
+        }
+    }
+    public void PerformBlock(InputAction.CallbackContext context)
+    {
+        if (context.started && currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
+        {
+            //do block
+            Block();
+            //set attack positioner position to specific attack
+            attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+
+            //some beat check stuff here probably
+
+            //check position
+            float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
+            if (distance > 0.1f)
+            {
                 //rotate player
                 Vector3 directionToTarget = transform.position - attackPositioner.position;
                 directionToTarget.y = 0f;
@@ -148,7 +195,7 @@ public class AttackManager : MonoBehaviour
         cameraController.minFOV = cameraController.minFOV + fovChangeOnAttack;
 
         // Ensure reaching exact target position
-        transform.position = attackPositioner.GetChild(0).position; 
+        transform.position = attackPositioner.GetChild(0).position;
 
         //rotate player
         Vector3 directionToTarget = transform.position - attackPositioner.position;

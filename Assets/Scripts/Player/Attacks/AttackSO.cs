@@ -7,4 +7,5 @@ public class AttackSO : ScriptableObject
 {
     public AnimatorOverrideController animatorOverride;
     public float attackDistanceToEnemy = 1.3f;
+    public float pointInAnimationToSkipPerfectHit;
 }

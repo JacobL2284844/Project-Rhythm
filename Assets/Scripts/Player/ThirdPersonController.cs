@@ -12,7 +12,7 @@ public class ThirdPersonController : MonoBehaviour
 
     //input
     private ThirdPersonInput playerInputActionAsset;
-    [HideInInspector]public InputAction move;
+    [HideInInspector] public InputAction move;
     [Header("Movement")]
     private bool allowMovement = true;
     public Rigidbody rigidbody;
@@ -264,7 +264,7 @@ public class ThirdPersonController : MonoBehaviour
         isSprinting = false;
     }
     //-----------------
-    private bool IsGrounded()
+    private bool IsGrounded()//overrideGroundedState set in attack lerp
     {
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.25f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, groundcheckRaycastDistance))
