@@ -48,7 +48,7 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""TestAttack"",
+                    ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""e347bb83-f172-43dd-975d-c3dd2c2a65dc"",
                     ""expectedControlType"": ""Button"",
@@ -87,15 +87,6 @@ namespace UnityEngine.InputSystem
                     ""name"": ""TogleLockOnTarget"",
                     ""type"": ""Button"",
                     ""id"": ""e825e38b-3c7a-475c-8c34-571b50563816"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""BeatCheck"",
-                    ""type"": ""Button"",
-                    ""id"": ""d2cc399f-117f-4f24-ac15-fb9b7a3d3e98"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -403,17 +394,6 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""607dceb5-6071-47f0-975d-797f76879d11"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BeatCheck"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""dc1320bb-df03-488a-ae58-65603576b4d2"",
                     ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
@@ -452,7 +432,7 @@ namespace UnityEngine.InputSystem
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TestAttack"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -463,7 +443,7 @@ namespace UnityEngine.InputSystem
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TestAttack"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1119,12 +1099,11 @@ namespace UnityEngine.InputSystem
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-            m_Player_TestAttack = m_Player.FindAction("TestAttack", throwIfNotFound: true);
+            m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_CrouchSlide = m_Player.FindAction("Crouch/Slide", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             m_Player_TogleLockOnTarget = m_Player.FindAction("TogleLockOnTarget", throwIfNotFound: true);
-            m_Player_BeatCheck = m_Player.FindAction("BeatCheck", throwIfNotFound: true);
             m_Player_PlayMusic0 = m_Player.FindAction("PlayMusic 0", throwIfNotFound: true);
             m_Player_PlayMusic2 = m_Player.FindAction("PlayMusic 2", throwIfNotFound: true);
             m_Player_PlayMusic1 = m_Player.FindAction("PlayMusic 1", throwIfNotFound: true);
@@ -1205,12 +1184,11 @@ namespace UnityEngine.InputSystem
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Look;
-        private readonly InputAction m_Player_TestAttack;
+        private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_CrouchSlide;
         private readonly InputAction m_Player_Sprint;
         private readonly InputAction m_Player_TogleLockOnTarget;
-        private readonly InputAction m_Player_BeatCheck;
         private readonly InputAction m_Player_PlayMusic0;
         private readonly InputAction m_Player_PlayMusic2;
         private readonly InputAction m_Player_PlayMusic1;
@@ -1222,12 +1200,11 @@ namespace UnityEngine.InputSystem
             public PlayerActions(@ThirdPersonInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Look => m_Wrapper.m_Player_Look;
-            public InputAction @TestAttack => m_Wrapper.m_Player_TestAttack;
+            public InputAction @Attack => m_Wrapper.m_Player_Attack;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @CrouchSlide => m_Wrapper.m_Player_CrouchSlide;
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
             public InputAction @TogleLockOnTarget => m_Wrapper.m_Player_TogleLockOnTarget;
-            public InputAction @BeatCheck => m_Wrapper.m_Player_BeatCheck;
             public InputAction @PlayMusic0 => m_Wrapper.m_Player_PlayMusic0;
             public InputAction @PlayMusic2 => m_Wrapper.m_Player_PlayMusic2;
             public InputAction @PlayMusic1 => m_Wrapper.m_Player_PlayMusic1;
@@ -1248,9 +1225,9 @@ namespace UnityEngine.InputSystem
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @TestAttack.started += instance.OnTestAttack;
-                @TestAttack.performed += instance.OnTestAttack;
-                @TestAttack.canceled += instance.OnTestAttack;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -1263,9 +1240,6 @@ namespace UnityEngine.InputSystem
                 @TogleLockOnTarget.started += instance.OnTogleLockOnTarget;
                 @TogleLockOnTarget.performed += instance.OnTogleLockOnTarget;
                 @TogleLockOnTarget.canceled += instance.OnTogleLockOnTarget;
-                @BeatCheck.started += instance.OnBeatCheck;
-                @BeatCheck.performed += instance.OnBeatCheck;
-                @BeatCheck.canceled += instance.OnBeatCheck;
                 @PlayMusic0.started += instance.OnPlayMusic0;
                 @PlayMusic0.performed += instance.OnPlayMusic0;
                 @PlayMusic0.canceled += instance.OnPlayMusic0;
@@ -1291,9 +1265,9 @@ namespace UnityEngine.InputSystem
                 @Look.started -= instance.OnLook;
                 @Look.performed -= instance.OnLook;
                 @Look.canceled -= instance.OnLook;
-                @TestAttack.started -= instance.OnTestAttack;
-                @TestAttack.performed -= instance.OnTestAttack;
-                @TestAttack.canceled -= instance.OnTestAttack;
+                @Attack.started -= instance.OnAttack;
+                @Attack.performed -= instance.OnAttack;
+                @Attack.canceled -= instance.OnAttack;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
@@ -1306,9 +1280,6 @@ namespace UnityEngine.InputSystem
                 @TogleLockOnTarget.started -= instance.OnTogleLockOnTarget;
                 @TogleLockOnTarget.performed -= instance.OnTogleLockOnTarget;
                 @TogleLockOnTarget.canceled -= instance.OnTogleLockOnTarget;
-                @BeatCheck.started -= instance.OnBeatCheck;
-                @BeatCheck.performed -= instance.OnBeatCheck;
-                @BeatCheck.canceled -= instance.OnBeatCheck;
                 @PlayMusic0.started -= instance.OnPlayMusic0;
                 @PlayMusic0.performed -= instance.OnPlayMusic0;
                 @PlayMusic0.canceled -= instance.OnPlayMusic0;
@@ -1508,12 +1479,11 @@ namespace UnityEngine.InputSystem
         {
             void OnMove(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
-            void OnTestAttack(InputAction.CallbackContext context);
+            void OnAttack(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnCrouchSlide(InputAction.CallbackContext context);
             void OnSprint(InputAction.CallbackContext context);
             void OnTogleLockOnTarget(InputAction.CallbackContext context);
-            void OnBeatCheck(InputAction.CallbackContext context);
             void OnPlayMusic0(InputAction.CallbackContext context);
             void OnPlayMusic2(InputAction.CallbackContext context);
             void OnPlayMusic1(InputAction.CallbackContext context);

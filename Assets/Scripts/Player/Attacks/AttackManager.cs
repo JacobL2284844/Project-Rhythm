@@ -26,6 +26,7 @@ public class AttackManager : MonoBehaviour
     int comboCount;
     [SerializeField] float timeBetweenAttacks = 0.2f;
     [SerializeField] float timeBetweenCombos = 0.5f;
+    [SerializeField] float fovChangeOnAttack = 25;
 
     private void Start()
     {
@@ -41,7 +42,7 @@ public class AttackManager : MonoBehaviour
         ExitAttack();
     }
     //attack logic
-    void Attack(List<AttackSO> combo)
+    void Attack(List<AttackSO> combo)//will need to take in beat check timing
     {
         if (Time.time - lastComboEnd > timeBetweenCombos && comboCount <= combo.Count)
         {
@@ -98,16 +99,18 @@ public class AttackManager : MonoBehaviour
         animator.runtimeAnimatorController = defaultAnimController;
         Invoke("EndCombo", 1);
     }
-    //attack dash
+    //attack dash when attack is first called from input
     public void SetPlayerDashPositionForAttack(InputAction.CallbackContext context)
     {
         if (context.started && currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
         {
              //do attack
             Attack(currentCombo);
-            //set attack position
-            //attackPositioner.GetChild(0).position = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+            //set attack positioner position to specific attack
+            attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
            
+            //some beat check stuff here probably
+
             //set position
             float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
             if (distance > 0.1f)
@@ -129,8 +132,8 @@ public class AttackManager : MonoBehaviour
 
         //fov
         cameraController.transitionSpeed = cameraController.transitionSpeed / 10;
-        cameraController.maxFOV = cameraController.maxFOV - 25;//should not be hard coded
-        cameraController.minFOV = cameraController.minFOV - 25;
+        cameraController.maxFOV = cameraController.maxFOV - fovChangeOnAttack;
+        cameraController.minFOV = cameraController.minFOV - fovChangeOnAttack;
 
         float elapsedTime = 0f;
         while (elapsedTime < dashToAttackTargetDuration)
@@ -141,10 +144,19 @@ public class AttackManager : MonoBehaviour
         }
         //fov
         cameraController.transitionSpeed = cameraController.transitionSpeed * 10;
-        cameraController.maxFOV = cameraController.maxFOV + 25;//should not be hard coded
-        cameraController.minFOV = cameraController.minFOV + 25;
+        cameraController.maxFOV = cameraController.maxFOV + fovChangeOnAttack;
+        cameraController.minFOV = cameraController.minFOV + fovChangeOnAttack;
 
-        transform.position = attackPositioner.GetChild(0).position; // Ensure reaching exact target position
+        // Ensure reaching exact target position
+        transform.position = attackPositioner.GetChild(0).position; 
+
+        //rotate player
+        Vector3 directionToTarget = transform.position - attackPositioner.position;
+        directionToTarget.y = 0f;
+
+        thirdPersonController.forceDirection = -directionToTarget;
+        thirdPersonController.rigidbody.velocity = -directionToTarget;
+        transform.rotation = Quaternion.LookRotation(-directionToTarget);
     }
     public void SetLockOnTarget(Transform targetEnemy)
     {
@@ -152,7 +164,7 @@ public class AttackManager : MonoBehaviour
 
         if (currentEnemyTarget != null)
         {
-
+            //checks ??
         }
         else
         {
