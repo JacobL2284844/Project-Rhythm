@@ -66,6 +66,17 @@ public class AttackManager : MonoBehaviour
                 {
                     comboCount = 0;
                 }
+
+                NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
+
+                if (stateManager.currantStateStr != "Combat")
+                {
+                    stateManager.SetState(stateManager.combatState);
+                }
+                else
+                {
+                    stateManager.combatState.RotateFacePlayer();
+                }
             }
         }
     }
@@ -126,7 +137,7 @@ public class AttackManager : MonoBehaviour
     {
         if (context.started)
         {//if not locked
-            if (! currentEnemyTarget || cameraController.currentCam != cameraController.cinemachine_LockOn)
+            if (!currentEnemyTarget || cameraController.currentCam != cameraController.cinemachine_LockOn)
             {
                 cameraController.TargetClosestEnemy();
                 cameraController.SetTargetClosestAndLockOn();
@@ -137,7 +148,7 @@ public class AttackManager : MonoBehaviour
             {
                 //set attack positioner position to specific attack
                 attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
-                
+
                 //do attack
                 Attack(currentCombo);
 

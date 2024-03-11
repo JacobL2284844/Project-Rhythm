@@ -18,7 +18,8 @@ public class NPCStateManager : MonoBehaviour
     public NPCWanderState wanderState = new NPCWanderState();
     public NPCIdleState idleState = new NPCIdleState();
     public NPCChaseState chaseState = new NPCChaseState();
-    public NPCAttackState attackState = new NPCAttackState();
+    public NPCCombatState combatState = new NPCCombatState();
+    //public NPCAttackState attackState = new NPCAttackState(); //outdated
 
     [Header("NPC")]
     public float npcMood = 1f;// set in spawner
@@ -75,9 +76,9 @@ public class NPCStateManager : MonoBehaviour
             idleState.stateManager = this;
             chaseState.stateManager = this;
             chaseState.navMeshAgent = navMeshAgent;
-            attackState.stateManager = this;
-            attackState.navMeshAgent = navMeshAgent;
-            attackState.animContext = animContext;
+            combatState.stateManager = this;
+            combatState.navMeshAgent = navMeshAgent;
+            combatState.animContext = animContext;
         }
     }
     void Start()
@@ -158,7 +159,7 @@ public class NPCStateManager : MonoBehaviour
             {
                 return;
             }
-            else if (currantState == attackState)
+            else if (currantState == combatState)
             {
                 return;
             }
@@ -170,7 +171,7 @@ public class NPCStateManager : MonoBehaviour
         }
 
         //set anim combat layer weight
-        if (currantState == attackState)
+        if (currantState == combatState)
         {
             currant_animator.SetLayerWeight(1, 1);
         }
