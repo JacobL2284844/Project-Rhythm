@@ -20,7 +20,7 @@ public class AttackManager : MonoBehaviour
     [Header("Attack Combos")]
     public bool isAttacking = false;
     public List<AttackSO> currentCombo;
-    public List<AttackSO> combo_1;
+    public List<ComboSO> combos;
     public AttackSO block;
 
     float lastAttackInputTime;
@@ -32,7 +32,7 @@ public class AttackManager : MonoBehaviour
 
     private void Start()
     {
-        currentCombo = combo_1;
+        currentCombo = RandomCombo();
     }
     // Update is called once per frame
     void Update()
@@ -123,6 +123,8 @@ public class AttackManager : MonoBehaviour
         thirdPersonController.EnableMovement();
         comboCount = 0;
         lastComboEnd = Time.time;
+
+        currentCombo = RandomCombo();
     }
     public void ForceStopAttack()
     {
@@ -131,6 +133,11 @@ public class AttackManager : MonoBehaviour
         thirdPersonController.EnableMovement();
         animator.runtimeAnimatorController = defaultAnimController;
         Invoke("EndCombo", 1);
+    }
+    private List<AttackSO> RandomCombo()
+    {
+        int index = Random.Range(0, combos.Count);
+        return combos[index].combo;
     }
     //attack dash when attack is first called from input
     public void PerformAttack(InputAction.CallbackContext context)
