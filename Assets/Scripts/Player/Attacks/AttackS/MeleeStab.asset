@@ -16,5 +16,6 @@ MonoBehaviour:
   attackDistanceToEnemy: 2
   pointInAnimationToSkipPerfectHit: 0
   enemyReactions:
+  - {fileID: 22100000, guid: 93728352feac9244294e4067f0698605, type: 2}
   - {fileID: 22100000, guid: a0780f4b5d0072144b7f7aa7157a921f, type: 2}
   - {fileID: 22100000, guid: a07c2f60e546d8841b762d80bad5ebb7, type: 2}

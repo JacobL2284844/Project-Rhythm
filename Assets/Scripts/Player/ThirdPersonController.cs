@@ -173,12 +173,12 @@ public class ThirdPersonController : MonoBehaviour
     public void EnableMovement()
     {
         //movementForce = 0.1f;
-        Debug.Log("Enable");
+        //Debug.Log("Enable");
     }
     public void DisableMovement()
     {
         //movementForce = og_movementForce;
-        Debug.Log("Disable");
+        //Debug.Log("Disable");
         forceDirection = Vector3.zero;
     }
     //-----------------

@@ -25,14 +25,14 @@ public class AttackManager : MonoBehaviour
 
     float lastAttackInputTime;
     float lastComboEnd;
-    int comboCount;
+    [SerializeField] int comboCount;
     [SerializeField] float timeBetweenAttacks = 0.2f;
     [SerializeField] float timeBetweenCombos = 0.5f;
     [SerializeField] float fovChangeOnAttack = 25;
 
     private void Start()
     {
-        currentCombo = RandomCombo();
+        SetRandomCombo();
     }
     // Update is called once per frame
     void Update()
@@ -62,9 +62,10 @@ public class AttackManager : MonoBehaviour
 
                 comboCount++;
                 lastAttackInputTime = Time.time;
-                if (comboCount + 1 > combo.Count)
+                if (comboCount + 1> combo.Count)
                 {
                     comboCount = 0;
+                    SetRandomCombo();
                 }
 
                 NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
@@ -108,7 +109,7 @@ public class AttackManager : MonoBehaviour
             {
                 thirdPersonController.EnableMovement();
                 ForceStopAttack();
-            }
+            }//should code timings to bpm ?
             if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.5 && thirdPersonController.move.ReadValue<Vector2>().sqrMagnitude > 0.3f)
             {
                 thirdPersonController.EnableMovement();
@@ -118,13 +119,13 @@ public class AttackManager : MonoBehaviour
     }
     void EndCombo()
     {
+        Debug.Log("End Combo");
+
         isAttacking = false;
         animator.runtimeAnimatorController = defaultAnimController;
         thirdPersonController.EnableMovement();
         comboCount = 0;
         lastComboEnd = Time.time;
-
-        currentCombo = RandomCombo();
     }
     public void ForceStopAttack()
     {
@@ -132,12 +133,20 @@ public class AttackManager : MonoBehaviour
         attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -1);
         thirdPersonController.EnableMovement();
         animator.runtimeAnimatorController = defaultAnimController;
-        Invoke("EndCombo", 1);
+        EndCombo();
     }
-    private List<AttackSO> RandomCombo()
+
+    void SetRandomCombo()
     {
+        Debug.Log("Random combo");
+        currentCombo.Clear();
+
         int index = Random.Range(0, combos.Count);
-        return combos[index].combo;
+
+        foreach (var attack in combos[index].combo)//random combo
+        {
+            currentCombo.Add(attack);
+        }
     }
     //attack dash when attack is first called from input
     public void PerformAttack(InputAction.CallbackContext context)
