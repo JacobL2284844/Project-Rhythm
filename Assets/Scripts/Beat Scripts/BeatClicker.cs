@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BeatClicker : MonoBehaviour
 {
+    public bool inGameAsset = false;//allow ashleys tests ??
+
     public float bpm = 135f; // Beats per minute
     public float perfectTimingThreshold = 0.03f; // Threshold for perfect timing (in seconds)
     public float goodTimingThreshold = 0.07f; // Threshold for good timing (in seconds)
@@ -17,6 +20,12 @@ public class BeatClicker : MonoBehaviour
     private ScoreDisplay scoreDisplay; // Reference to the ScoreDisplay script
     private StreakText streakText; // Reference to the StreakText script
 
+    public string recentHitState = "tbd";//most recent tag of hit
+    public string perfectTag = "Perfect!";
+    public string goodTag = "Good!";
+    public string mehTag = "Meh!";
+    public string failTag = "Offbeat!";
+
     void Start()
     {
         beatInterval = 60f / bpm; // Calculate the time interval between beats based on the BPM
@@ -26,45 +35,62 @@ public class BeatClicker : MonoBehaviour
         streakText = FindObjectOfType<StreakText>();
     }
 
+    public void PerfromCheckBeat(InputAction.CallbackContext context)//from input provider
+    {
+        if(context.started)
+        {
+            CheckBeat();
+        }
+    }
     void Update()
     {
         beatTimer -= Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0)) // Mouse button input
+        if (Input.GetMouseButtonDown(0) && ! inGameAsset) // Mouse button input
         {
-            float timingDifference = Mathf.Abs(beatTimer);
-
-            if (timingDifference <= perfectTimingThreshold) // Perfect Timing Threshold
-            {
-                Debug.Log("Perfect!");
-                score += streakMultiplier;
-                IncreaseStreakMultiplier();
-                scoreDisplay.UpdateScore(score);
-            }
-            else if (timingDifference <= goodTimingThreshold) // Good Timing Threshold
-            {
-                Debug.Log("Good!");
-                score += streakMultiplier;
-                scoreDisplay.UpdateScore(score);
-            }
-            else if (timingDifference <= mehTimingThreshold) // Meh Timing Threshold
-            {
-                Debug.Log("Meh!");
-                score += streakMultiplier;
-                scoreDisplay.UpdateScore(score);
-            }
-            else
-            {
-                Debug.Log("Offbeat!"); // Add your off-beat action here
-                ResetStreakMultiplier();// Reset streak multiplier if off-beat
-            }
-
-            beatTimer = beatInterval; // Reset the beat timer for the next beat
+            CheckBeat();
         }
 
         streakText.SetStreakMultiplier(streakMultiplier); // Update streak text
     }
 
+    void CheckBeat()//ashleys code for beat ckeck
+    {
+        float timingDifference = Mathf.Abs(beatTimer);
+
+        if (timingDifference <= perfectTimingThreshold) // Perfect Timing Threshold
+        {
+            recentHitState = perfectTag;
+            //Debug.Log(perfectTag);
+
+            score += streakMultiplier;
+            IncreaseStreakMultiplier();
+            scoreDisplay.UpdateScore(score);
+        }
+        else if (timingDifference <= goodTimingThreshold) // Good Timing Threshold
+        {
+            recentHitState = goodTag;
+            //Debug.Log(goodTag);
+
+            score += streakMultiplier;
+            scoreDisplay.UpdateScore(score);
+        }
+        else if (timingDifference <= mehTimingThreshold) // Meh Timing Threshold
+        {
+            recentHitState = mehTag;
+            //Debug.Log(mehTag);
+            score += streakMultiplier;
+            scoreDisplay.UpdateScore(score);
+        }
+        else
+        {
+            recentHitState = failTag;
+            //Debug.Log(failTag); // Add your off-beat action here
+            ResetStreakMultiplier();// Reset streak multiplier if off-beat
+        }
+
+        beatTimer = beatInterval; // Reset the beat timer for the next beat
+    }
     // Method to increase the streak multiplier, up to a maximum of 8x
     void IncreaseStreakMultiplier()
     {

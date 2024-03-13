@@ -23,6 +23,8 @@ public class AttackManager : MonoBehaviour
     public List<ComboSO> combos;
     public AttackSO block;
 
+    public BeatClicker beatClicker;
+
     float lastAttackInputTime;
     float lastComboEnd;
     [SerializeField] int comboCount;
@@ -94,10 +96,31 @@ public class AttackManager : MonoBehaviour
         stateManager.combatState.RotateFacePlayer();
 
         //animate hit react
-        int hitStrenth = 2;//get strength from input timing
+        int hitStrenth = CheckBeatAccuracy();//get strength from input timing
 
         AnimatorOverrideController enemysHitReactAnim = combo[comboCount].enemyReactions[hitStrenth];
         stateManager.combatState.HitReact(enemysHitReactAnim);
+    }
+    int CheckBeatAccuracy()//0 miss, 1 good, 2 perfec. classes hit strength
+    {
+        string hitState = beatClicker.recentHitState;
+
+        if (hitState == beatClicker.perfectTag)
+        {
+            return 2;
+        }
+        else if (hitState == beatClicker.goodTag || hitState == beatClicker.mehTag)
+        {
+            return 1;
+        }
+        else if (hitState == beatClicker.failTag)
+        {
+            return 0;
+        }
+        else
+        {
+            return 0;
+        }
     }
     void Block()
     {
