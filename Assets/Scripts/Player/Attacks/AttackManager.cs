@@ -62,24 +62,42 @@ public class AttackManager : MonoBehaviour
 
                 comboCount++;
                 lastAttackInputTime = Time.time;
-                if (comboCount + 1> combo.Count)
+                if (comboCount + 1 > combo.Count)
                 {
                     comboCount = 0;
                     SetRandomCombo();
                 }
+
+                //on enemy hit
+                //timing checks plz
 
                 NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
 
                 if (stateManager.currantStateStr != "Combat")
                 {
                     stateManager.SetState(stateManager.combatState);
+
+
                 }
                 else
                 {
-                    stateManager.combatState.RotateFacePlayer();
+                    HitEnemy(combo);
                 }
             }
         }
+    }
+
+    void HitEnemy(List<AttackSO> combo)
+    {
+        NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
+        //rotate enemy to face player
+        stateManager.combatState.RotateFacePlayer();
+
+        //animate hit react
+        int hitStrenth = 2;//get strength from input timing
+
+        AnimatorOverrideController enemysHitReactAnim = combo[comboCount].enemyReactions[hitStrenth];
+        stateManager.combatState.HitReact(enemysHitReactAnim);
     }
     void Block()
     {
@@ -119,7 +137,7 @@ public class AttackManager : MonoBehaviour
     }
     void EndCombo()
     {
-        Debug.Log("End Combo");
+        //Debug.Log("End Combo");
 
         isAttacking = false;
         animator.runtimeAnimatorController = defaultAnimController;
@@ -138,7 +156,7 @@ public class AttackManager : MonoBehaviour
 
     void SetRandomCombo()
     {
-        Debug.Log("Random combo");
+        //Debug.Log("Random combo");
         currentCombo.Clear();
 
         int index = Random.Range(0, combos.Count);

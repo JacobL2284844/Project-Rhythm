@@ -51,6 +51,11 @@ public class NPCCombatState : NPCBaseState
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
         thisNpc.rotation = rotation;
     }
+    public void HitReact(AnimatorOverrideController hitOverrideController)
+    {
+        stateManager.currant_animator.runtimeAnimatorController = hitOverrideController;
+        stateManager.currant_animator.Play("CombatEmpty", 1, 0);
+    }
     public override void UpdateState(NPCStateManager npcContext)
     {
         //need checks
