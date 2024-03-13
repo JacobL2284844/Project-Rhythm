@@ -29,6 +29,7 @@ public class NPCStateManager : MonoBehaviour
     [Header("Animation")]
     public Animator currant_animator;
     public ParticleSystem hitEffect;
+    public AnimatorOverrideController resetCombatAnimOverrideController;
 
     [Header("Navigation")]
     public NavMeshAgent navMeshAgent;

@@ -15,3 +15,6 @@ MonoBehaviour:
   animatorOverride: {fileID: 22100000, guid: b9f4c98c6c51b05479e2659fc0363af6, type: 2}
   attackDistanceToEnemy: 2
   pointInAnimationToSkipPerfectHit: 0
+  enemyReactions:
+  - {fileID: 22100000, guid: a0780f4b5d0072144b7f7aa7157a921f, type: 2}
+  - {fileID: 22100000, guid: a07c2f60e546d8841b762d80bad5ebb7, type: 2}
