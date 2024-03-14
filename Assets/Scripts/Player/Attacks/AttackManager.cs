@@ -79,7 +79,7 @@ public class AttackManager : MonoBehaviour
                 {
                     stateManager.SetState(stateManager.combatState);
 
-
+                    HitEnemy(combo);
                 }
                 else
                 {
@@ -115,6 +115,11 @@ public class AttackManager : MonoBehaviour
         }
         else if (hitState == beatClicker.failTag)
         {
+            if(beatClicker.failCounter == beatClicker.failCounterThreshold)
+            {
+                //enemy free hit
+            }
+
             return 0;
         }
         else

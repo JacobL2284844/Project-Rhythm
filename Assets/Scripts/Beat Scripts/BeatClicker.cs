@@ -20,6 +20,8 @@ public class BeatClicker : MonoBehaviour
     private ScoreDisplay scoreDisplay; // Reference to the ScoreDisplay script
     private StreakText streakText; // Reference to the StreakText script
 
+    public int failCounter = 0;
+    public int failCounterThreshold = 3;
     public string recentHitState = "tbd";//most recent tag of hit
     public string perfectTag = "Perfect!";
     public string goodTag = "Good!";
@@ -86,6 +88,9 @@ public class BeatClicker : MonoBehaviour
         {
             recentHitState = failTag;
             //Debug.Log(failTag); // Add your off-beat action here
+
+            failCounter++;
+
             ResetStreakMultiplier();// Reset streak multiplier if off-beat
         }
 
