@@ -101,10 +101,18 @@ public class AttackManager : MonoBehaviour
         AnimatorOverrideController enemysHitReactAnim = combo[comboCount].enemyReactions[hitStrenth];
         stateManager.combatState.HitReact(enemysHitReactAnim);
 
-        if(hitStrenth == 0)
+        switch (hitStrenth)
         {
-            stateManager.canAttack = true;//if enemy blocks hit enemy can attack
+            case 0://player misses 
+                stateManager.canAttack = true;//if enemy blocks hit enemy can attack
+                break;
+            case 1://good hit
+                break;
+            case 2://perfect hit
+                break;
         }
+
+       
     }
     int CheckBeatAccuracy()//0 miss, 1 good, 2 perfect. classes hit strength
     {
