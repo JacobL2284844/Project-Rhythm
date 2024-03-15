@@ -58,6 +58,8 @@ public class NPCStateManager : MonoBehaviour
 
 
     [Header("Attack")]
+    public bool canAttack = false;
+
     public float melleeDamage;
 
     public bool canHitPlayer = false;
@@ -191,6 +193,19 @@ public class NPCStateManager : MonoBehaviour
         SetState(RandomState());
     }
 
+    public void LocalBeatCheck()//called in enemy manager/hanadller// called each beat
+    {
+        if(combatState == currantState && canAttack)//if in combat and can attack
+        {
+            CombatBeatAttack();
+        }
+    }
+
+    private void CombatBeatAttack()//enemy attack
+    {
+        Debug.Log("aattack");
+        canAttack = false;
+    }
     public void RegisterHit(float damage)
     {
         //hitEffect.Play();

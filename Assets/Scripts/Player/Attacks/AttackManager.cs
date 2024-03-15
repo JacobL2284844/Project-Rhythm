@@ -100,8 +100,13 @@ public class AttackManager : MonoBehaviour
 
         AnimatorOverrideController enemysHitReactAnim = combo[comboCount].enemyReactions[hitStrenth];
         stateManager.combatState.HitReact(enemysHitReactAnim);
+
+        if(hitStrenth == 0)
+        {
+            stateManager.canAttack = true;//if enemy blocks hit enemy can attack
+        }
     }
-    int CheckBeatAccuracy()//0 miss, 1 good, 2 perfec. classes hit strength
+    int CheckBeatAccuracy()//0 miss, 1 good, 2 perfect. classes hit strength
     {
         string hitState = beatClicker.recentHitState;
 
@@ -115,11 +120,6 @@ public class AttackManager : MonoBehaviour
         }
         else if (hitState == beatClicker.failTag)
         {
-            if(beatClicker.failCounter == beatClicker.failCounterThreshold)
-            {
-                //enemy free hit
-            }
-
             return 0;
         }
         else

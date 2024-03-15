@@ -41,7 +41,6 @@ public class NPCCombatState : NPCBaseState
 
         RotateFacePlayer();
     }
-
     public void RotateFacePlayer()
     {
         //rotate face player
