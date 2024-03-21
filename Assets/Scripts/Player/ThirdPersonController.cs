@@ -216,7 +216,7 @@ public class ThirdPersonController : MonoBehaviour
         }
         else if (!IsGrounded())
         {
-            if (CheckCanVault())
+            if (CheckOnWallForward_VaultCheck())
             {
                 DoVault();
                 return;
@@ -299,6 +299,7 @@ public class ThirdPersonController : MonoBehaviour
             canDoubleJump = true;
 
             characterAnimation.ExitFallAnimation();
+            characterAnimation.WallHangAnimation(false);
             rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             return true;
         }
@@ -306,6 +307,7 @@ public class ThirdPersonController : MonoBehaviour
         {//not grounded
             isGroundedState = false;
 
+            characterAnimation.WallHangAnimation(CheckOnWallForward_VaultCheck());
             characterAnimation.DoFallAnimation();
 
             if (rigidbody.velocity.y < 0.2f)
@@ -434,7 +436,7 @@ public class ThirdPersonController : MonoBehaviour
         }
     }
     //-----------------
-    private bool CheckCanVault()
+    private bool CheckOnWallForward_VaultCheck()
     {
         if (!isGroundedState && !onWall_left && !onWall_right && Physics.Raycast(transform.position, transform.forward, out forwardWall_rayHit, wallForwardDistanceCheck, wallMask))
         {

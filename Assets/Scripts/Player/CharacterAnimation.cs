@@ -37,17 +37,17 @@ public class CharacterAnimation : MonoBehaviour
     }
     public void WallRun(bool onWallLeft, bool onWallRight)
     {
-        if(onWallLeft)
+        if (onWallLeft)
         {
             animator.SetBool("WallRunRight", false);
             animator.SetBool("WallRunLeft", true);
         }
-        if(onWallRight)
+        if (onWallRight)
         {
             animator.SetBool("WallRunLeft", false);
             animator.SetBool("WallRunRight", true);
         }
-        else if(! onWallLeft && ! onWallRight)
+        else if (!onWallLeft && !onWallRight)
         {
             ExitWallRun();
         }
@@ -64,6 +64,17 @@ public class CharacterAnimation : MonoBehaviour
     public void DoVaultAnimation()
     {
         animator.SetTrigger("Vault");
+    }
+    public void WallHangAnimation(bool onWallForward)
+    {
+        if (onWallForward)
+        {
+            animator.SetTrigger("EnterWallHang");
+        }
+        else
+        {
+            animator.SetTrigger("ExitWallHang");
+        }
     }
     //-----
     public void PlayMusic1()
