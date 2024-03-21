@@ -61,6 +61,10 @@ public class CharacterAnimation : MonoBehaviour
     {
         animator.SetTrigger("DoubleJump");
     }
+    public void DoVaultAnimation()
+    {
+        animator.SetTrigger("Vault");
+    }
     //-----
     public void PlayMusic1()
     {

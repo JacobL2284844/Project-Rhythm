@@ -77,6 +77,14 @@ public class ThirdPersonController : MonoBehaviour
     [Header("Vault")]
     [SerializeField]
     private float wallForwardDistanceCheck = 0.6f;
+    [SerializeField]
+    private float wallDownDistanceCheck = 3f;
+    [SerializeField]
+    private float vaultDuration = 0.3f;
+    [SerializeField]
+    private Transform vaultfinder;
+    [SerializeField]
+    private float playerHeight = 2f;
     private bool onWall_forward;
     RaycastHit forwardWall_rayHit;
     bool isVaulting = false;
@@ -208,7 +216,7 @@ public class ThirdPersonController : MonoBehaviour
         }
         else if (!IsGrounded())
         {
-            if(CheckCanVault())
+            if (CheckCanVault())
             {
                 DoVault();
                 return;
@@ -428,11 +436,9 @@ public class ThirdPersonController : MonoBehaviour
     //-----------------
     private bool CheckCanVault()
     {
-        if (! isGroundedState && ! onWall_left && ! onWall_right)
+        if (!isGroundedState && !onWall_left && !onWall_right && Physics.Raycast(transform.position, transform.forward, out forwardWall_rayHit, wallForwardDistanceCheck, wallMask))
         {
-            onWall_forward = Physics.Raycast(transform.position, transform.forward, out forwardWall_rayHit, wallForwardDistanceCheck, wallMask);
-            DoVault();
-            return onWall_forward;
+            return true;
         }
         else
         {
@@ -442,5 +448,25 @@ public class ThirdPersonController : MonoBehaviour
     private void DoVault()
     {
         Debug.Log(" Try Vault");
+        onWall_forward = Physics.Raycast(transform.position, transform.forward, out var firstHit, wallForwardDistanceCheck, wallMask);
+
+        if(Physics.Raycast(vaultfinder.position, -vaultfinder.up, out var secondHit, wallDownDistanceCheck, wallMask))
+        {
+            characterAnimation.DoVaultAnimation();
+            StartCoroutine(LerpVault(secondHit.point, vaultDuration));
+        }
+    }
+    IEnumerator LerpVault(Vector3 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = transform.position;
+
+        while (time < duration)
+        {
+            transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPosition;
     }
 }
