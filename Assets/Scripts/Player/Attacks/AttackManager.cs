@@ -112,7 +112,7 @@ public class AttackManager : MonoBehaviour
                 break;
         }
 
-       
+
     }
     int CheckBeatAccuracy()//0 miss, 1 good, 2 perfect. classes hit strength
     {
@@ -314,7 +314,10 @@ public class AttackManager : MonoBehaviour
     private void SetAttackingPositioner_PositionAndRotation()
     {
         //set position
-        attackPositioner.position = currentEnemyTarget.position;
+        if (currentEnemyTarget != null)
+        {
+            attackPositioner.position = currentEnemyTarget.position;
+        }
 
         //point towards player
         Vector3 directionToTarget = attackPositioner.position - transform.position;

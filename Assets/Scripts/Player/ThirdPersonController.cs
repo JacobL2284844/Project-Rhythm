@@ -35,6 +35,8 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private float groundcheckRaycastDistance = 0.5f;
 
+    public bool isGroundedState;
+
     [Header("Sprint")]
     [SerializeField]
     private float sprintMultiplier = 1.5f;
@@ -71,6 +73,13 @@ public class ThirdPersonController : MonoBehaviour
     RaycastHit rightWall_rayHit;
     Vector3 wallNormal;
     Vector3 forwardDirection;
+
+    [Header("Vault")]
+    [SerializeField]
+    private float wallForwardDistanceCheck = 0.6f;
+    private bool onWall_forward;
+    RaycastHit forwardWall_rayHit;
+    bool isVaulting = false;
 
     [Header("Slide")]
     [SerializeField]
@@ -138,6 +147,7 @@ public class ThirdPersonController : MonoBehaviour
                 //fix gravity
                 rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
             }
+
             CheckWallRun();
         }
     }
@@ -196,16 +206,23 @@ public class ThirdPersonController : MonoBehaviour
             characterAnimation.DoJump();
             forceDirection += Vector3.up * jumpForce;
         }
-        else if (!IsGrounded() && canDoubleJump)
+        else if (!IsGrounded())
         {
-            canDoubleJump = false;
+            if(CheckCanVault())
+            {
+                DoVault();
+                return;
+            }
+            if (canDoubleJump)
+            {
+                canDoubleJump = false;
 
-            characterAnimation.DoDoubleJumpAnimation();
+                characterAnimation.DoDoubleJumpAnimation();
 
-            forceDirection += Vector3.up * doubleJumpForce;
-            forceDirection += transform.forward * jumpForce;
+                forceDirection += Vector3.up * doubleJumpForce;
+                forceDirection += transform.forward * jumpForce;
+            }
         }
-
     }
     //-----------------
     public void DoSlide(InputAction.CallbackContext context)
@@ -269,6 +286,8 @@ public class ThirdPersonController : MonoBehaviour
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.25f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, groundcheckRaycastDistance))
         {//is grounded
+            isGroundedState = true;
+
             canDoubleJump = true;
 
             characterAnimation.ExitFallAnimation();
@@ -277,6 +296,8 @@ public class ThirdPersonController : MonoBehaviour
         }
         else
         {//not grounded
+            isGroundedState = false;
+
             characterAnimation.DoFallAnimation();
 
             if (rigidbody.velocity.y < 0.2f)
@@ -405,4 +426,21 @@ public class ThirdPersonController : MonoBehaviour
         }
     }
     //-----------------
+    private bool CheckCanVault()
+    {
+        if (! isGroundedState && ! onWall_left && ! onWall_right)
+        {
+            onWall_forward = Physics.Raycast(transform.position, transform.forward, out forwardWall_rayHit, wallForwardDistanceCheck, wallMask);
+            DoVault();
+            return onWall_forward;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    private void DoVault()
+    {
+        Debug.Log(" Try Vault");
+    }
 }
