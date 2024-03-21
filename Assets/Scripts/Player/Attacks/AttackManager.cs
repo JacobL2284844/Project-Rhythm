@@ -48,43 +48,40 @@ public class AttackManager : MonoBehaviour
     //attack logic
     void Attack(List<AttackSO> combo)//will need to take in beat check timing
     {
-        if (Time.time - lastComboEnd > timeBetweenCombos && comboCount <= combo.Count)
+        CancelInvoke("EndCombo");
+        thirdPersonController.EnableMovement();
+
+        if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
         {
-            CancelInvoke("EndCombo");
-            thirdPersonController.EnableMovement();
+            isAttacking = true;
+            attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -combo[comboCount].attackDistanceToEnemy);
+            animator.runtimeAnimatorController = combo[comboCount].animatorOverride;
+            animator.Play("AttackState", 1, 0);
 
-            if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
+            thirdPersonController.DisableMovement();
+
+            comboCount++;
+            lastAttackInputTime = Time.time;
+            if (comboCount + 1 > combo.Count)
             {
-                isAttacking = true;
-                attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -combo[comboCount].attackDistanceToEnemy);
-                animator.runtimeAnimatorController = combo[comboCount].animatorOverride;
-                animator.Play("AttackState", 1, 0);
+                comboCount = 0;
+                SetRandomCombo();
+            }
 
-                thirdPersonController.DisableMovement();
+            //on enemy hit
+            //timing checks plz
 
-                comboCount++;
-                lastAttackInputTime = Time.time;
-                if (comboCount + 1 > combo.Count)
-                {
-                    comboCount = 0;
-                    SetRandomCombo();
-                }
+            NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
 
-                //on enemy hit
-                //timing checks plz
+            if (stateManager.currantStateStr != "Combat")
+            {
+                stateManager.SetState(stateManager.combatState);
 
-                NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
-
-                if (stateManager.currantStateStr != "Combat")
-                {
-                    stateManager.SetState(stateManager.combatState);
-
-                    HitEnemy(combo);
-                }
-                else
-                {
-                    HitEnemy(combo);
-                }
+                HitEnemy(combo);
+            }
+            else
+            {
+                HitEnemy(combo);
             }
         }
     }
@@ -215,27 +212,30 @@ public class AttackManager : MonoBehaviour
             }
             //once locked
             if (currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
-            {
-                //set attack positioner position to specific attack
-                attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
-
-                //do attack
-                Attack(currentCombo);
-
-                //some beat check stuff here probably
-
-                //set position
-                float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
-                if (distance > 0.1f)
+            {//combo timing
+                if (Time.time - lastComboEnd > timeBetweenCombos && comboCount <= currentCombo.Count)
                 {
-                    StartCoroutine(LerpToTargetPosition());
-                    //rotate player
-                    Vector3 directionToTarget = transform.position - attackPositioner.position;
-                    directionToTarget.y = 0f;
+                    //set attack positioner position to specific attack
+                    attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
 
-                    thirdPersonController.forceDirection = -directionToTarget;
-                    thirdPersonController.rigidbody.velocity = -directionToTarget;
-                    transform.rotation = Quaternion.LookRotation(-directionToTarget);
+                    //do attack
+                    Attack(currentCombo);
+
+                    //some beat check stuff here probably
+
+                    //set position
+                    float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
+                    if (distance > 0.1f)
+                    {
+                        StartCoroutine(LerpToTargetPosition());
+                        //rotate player
+                        Vector3 directionToTarget = transform.position - attackPositioner.position;
+                        directionToTarget.y = 0f;
+
+                        thirdPersonController.forceDirection = -directionToTarget;
+                        thirdPersonController.rigidbody.velocity = -directionToTarget;
+                        transform.rotation = Quaternion.LookRotation(-directionToTarget);
+                    }
                 }
             }
         }
