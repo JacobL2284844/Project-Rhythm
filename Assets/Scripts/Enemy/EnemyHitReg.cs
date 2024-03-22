@@ -12,7 +12,7 @@ public class EnemyHitReg : MonoBehaviour
             if (stateManager.currantStateStr == "Chase")
             {
                 stateManager.canChangeState = true;
-                stateManager.SetState(stateManager.attackState);
+                stateManager.SetState(stateManager.combatState);
             }
 
             stateManager.canHitPlayer = true;

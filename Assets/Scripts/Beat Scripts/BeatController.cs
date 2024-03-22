@@ -17,7 +17,6 @@ public class BeatController : MonoBehaviour
             interval.CheckForNewInterval(sampledTime);
         }
     }
-
 }
 
 [System.Serializable]

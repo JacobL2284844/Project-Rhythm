@@ -12,7 +12,7 @@ public class ThirdPersonController : MonoBehaviour
 
     //input
     private ThirdPersonInput playerInputActionAsset;
-    [HideInInspector]public InputAction move;
+    [HideInInspector] public InputAction move;
     [Header("Movement")]
     private bool allowMovement = true;
     public Rigidbody rigidbody;
@@ -34,6 +34,8 @@ public class ThirdPersonController : MonoBehaviour
     private Camera playerCamera;
     [SerializeField]
     private float groundcheckRaycastDistance = 0.5f;
+
+    public bool isGroundedState;
 
     [Header("Sprint")]
     [SerializeField]
@@ -71,6 +73,21 @@ public class ThirdPersonController : MonoBehaviour
     RaycastHit rightWall_rayHit;
     Vector3 wallNormal;
     Vector3 forwardDirection;
+
+    [Header("Vault")]
+    [SerializeField]
+    private float wallForwardDistanceCheck = 0.6f;
+    [SerializeField]
+    private float wallDownDistanceCheck = 3f;
+    [SerializeField]
+    private float vaultDuration = 0.3f;
+    [SerializeField]
+    private Transform vaultfinder;
+    [SerializeField]
+    private float playerHeight = 2f;
+    private bool onWall_forward;
+    RaycastHit forwardWall_rayHit;
+    bool isVaulting = false;
 
     [Header("Slide")]
     [SerializeField]
@@ -138,6 +155,7 @@ public class ThirdPersonController : MonoBehaviour
                 //fix gravity
                 rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
             }
+
             CheckWallRun();
         }
     }
@@ -173,12 +191,12 @@ public class ThirdPersonController : MonoBehaviour
     public void EnableMovement()
     {
         //movementForce = 0.1f;
-        Debug.Log("Enable");
+        //Debug.Log("Enable");
     }
     public void DisableMovement()
     {
         //movementForce = og_movementForce;
-        Debug.Log("Disable");
+        //Debug.Log("Disable");
         forceDirection = Vector3.zero;
     }
     //-----------------
@@ -196,16 +214,28 @@ public class ThirdPersonController : MonoBehaviour
             characterAnimation.DoJump();
             forceDirection += Vector3.up * jumpForce;
         }
-        else if (!IsGrounded() && canDoubleJump)
+        else
         {
-            canDoubleJump = false;
+            CheckandTryVault();
 
-            characterAnimation.DoDoubleJumpAnimation();
+            if (canDoubleJump)
+            {
+                canDoubleJump = false;
 
-            forceDirection += Vector3.up * doubleJumpForce;
-            forceDirection += transform.forward * jumpForce;
+                characterAnimation.DoDoubleJumpAnimation();
+
+                if (OnWallForward())//if on wall jump back
+                {
+                    forceDirection -= transform.forward * doubleJumpForce;
+                }
+                else
+                {
+                    forceDirection += transform.forward * jumpForce;
+                }
+
+                forceDirection += Vector3.up * doubleJumpForce;
+            }
         }
-
     }
     //-----------------
     public void DoSlide(InputAction.CallbackContext context)
@@ -264,20 +294,27 @@ public class ThirdPersonController : MonoBehaviour
         isSprinting = false;
     }
     //-----------------
-    private bool IsGrounded()
+    private bool IsGrounded()//overrideGroundedState set in attack lerp
     {
         Ray ray = new Ray(this.transform.position + Vector3.up * 0.25f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, groundcheckRaycastDistance))
         {//is grounded
+            isGroundedState = true;
+
             canDoubleJump = true;
 
             characterAnimation.ExitFallAnimation();
+            characterAnimation.WallHangAnimation(false);
+
             rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             return true;
         }
         else
         {//not grounded
+            isGroundedState = false;
+
             characterAnimation.DoFallAnimation();
+            characterAnimation.WallHangAnimation(OnWallForward());
 
             if (rigidbody.velocity.y < 0.2f)
             {
@@ -405,4 +442,47 @@ public class ThirdPersonController : MonoBehaviour
         }
     }
     //-----------------
+    private bool CheckandTryVault()
+    {
+        if (!isGroundedState && !onWall_left && !onWall_right && OnWallForward())
+        {
+            if (Physics.Raycast(vaultfinder.position, -vaultfinder.up, out var secondHit, wallDownDistanceCheck, wallMask))
+            {
+                characterAnimation.DoVaultAnimation();//start vault
+                StartCoroutine(LerpVault(secondHit.point, vaultDuration));
+            }
+
+            return true;//on wall hang
+        }
+        else
+        {
+            return false;
+        }
+    }
+    IEnumerator LerpVault(Vector3 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = transform.position;
+
+        targetPosition = new Vector3(transform.position.x, targetPosition.y + 0.3f, transform.position.z);
+
+        while (time < duration)
+        {
+            transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPosition;
+    }
+    private bool OnWallForward()
+    {
+        if (!isGroundedState && !onWall_left && !onWall_right && Physics.Raycast(transform.position, transform.forward, out var firstHit, wallForwardDistanceCheck, wallMask))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

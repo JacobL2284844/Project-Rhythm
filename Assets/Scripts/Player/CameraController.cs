@@ -82,19 +82,23 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                if (TargetClosestEnemy() != null)
-                {
-                    targetToLock = TargetClosestEnemy();
-                    targetGroup.m_Targets[1].target = targetToLock;
-                    currentEnemyLockedIndex = enemyChecker.enemiesInRange.IndexOf(attackManager.currentEnemyTarget);
-
-                    lockedOn = true;
-                    SwitchCamera(cinemachine_LockOn);
-                }
+                SetTargetClosestAndLockOn();
             }
         }
     }
-    private Transform TargetClosestEnemy()
+    public void SetTargetClosestAndLockOn()
+    {
+        if (TargetClosestEnemy() != null)
+        {
+            targetToLock = TargetClosestEnemy();
+            targetGroup.m_Targets[1].target = targetToLock;
+            currentEnemyLockedIndex = enemyChecker.enemiesInRange.IndexOf(attackManager.currentEnemyTarget);
+
+            lockedOn = true;
+            SwitchCamera(cinemachine_LockOn);
+        }
+    }
+    public Transform TargetClosestEnemy()
     {
         Transform closestEnemie = null;
         float closestDistance = Mathf.Infinity;

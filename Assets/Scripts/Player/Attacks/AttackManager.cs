@@ -20,17 +20,21 @@ public class AttackManager : MonoBehaviour
     [Header("Attack Combos")]
     public bool isAttacking = false;
     public List<AttackSO> currentCombo;
-    public List<AttackSO> combo_1;
+    public List<ComboSO> combos;
+    public AttackSO block;
+
+    public BeatClicker beatClicker;
+
     float lastAttackInputTime;
     float lastComboEnd;
-    int comboCount;
+    [SerializeField] int comboCount;
     [SerializeField] float timeBetweenAttacks = 0.2f;
     [SerializeField] float timeBetweenCombos = 0.5f;
     [SerializeField] float fovChangeOnAttack = 25;
 
     private void Start()
     {
-        currentCombo = combo_1;
+        SetRandomCombo();
     }
     // Update is called once per frame
     void Update()
@@ -44,7 +48,93 @@ public class AttackManager : MonoBehaviour
     //attack logic
     void Attack(List<AttackSO> combo)//will need to take in beat check timing
     {
-        if (Time.time - lastComboEnd > timeBetweenCombos && comboCount <= combo.Count)
+        CancelInvoke("EndCombo");
+        thirdPersonController.EnableMovement();
+
+        if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
+        {
+            isAttacking = true;
+            attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -combo[comboCount].attackDistanceToEnemy);
+            animator.runtimeAnimatorController = combo[comboCount].animatorOverride;
+            animator.Play("AttackState", 1, 0);
+
+            thirdPersonController.DisableMovement();
+
+            comboCount++;
+            lastAttackInputTime = Time.time;
+            if (comboCount + 1 > combo.Count)
+            {
+                comboCount = 0;
+                SetRandomCombo();
+            }
+
+            //on enemy hit
+            //timing checks plz
+
+            NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
+
+            if (stateManager.currantStateStr != "Combat")
+            {
+                stateManager.SetState(stateManager.combatState);
+
+                HitEnemy(combo);
+            }
+            else
+            {
+                HitEnemy(combo);
+            }
+        }
+    }
+
+    void HitEnemy(List<AttackSO> combo)
+    {
+        NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
+        //rotate enemy to face player
+        stateManager.combatState.RotateFacePlayer();
+
+        //animate hit react
+        int hitStrenth = CheckBeatAccuracy();//get strength from input timing
+
+        AnimatorOverrideController enemysHitReactAnim = combo[comboCount].enemyReactions[hitStrenth];
+        stateManager.combatState.HitReact(enemysHitReactAnim);
+
+        switch (hitStrenth)
+        {
+            case 0://player misses 
+                stateManager.canAttack = true;//if enemy blocks hit enemy can attack
+                break;
+            case 1://good hit
+                break;
+            case 2://perfect hit
+                break;
+        }
+
+
+    }
+    int CheckBeatAccuracy()//0 miss, 1 good, 2 perfect. classes hit strength
+    {
+        string hitState = beatClicker.recentHitState;
+
+        if (hitState == beatClicker.perfectTag)
+        {
+            return 2;
+        }
+        else if (hitState == beatClicker.goodTag || hitState == beatClicker.mehTag)
+        {
+            return 1;
+        }
+        else if (hitState == beatClicker.failTag)
+        {
+            return 0;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    void Block()
+    {
+        if (Time.time - lastComboEnd > timeBetweenCombos)
         {
             CancelInvoke("EndCombo");
             thirdPersonController.EnableMovement();
@@ -52,18 +142,13 @@ public class AttackManager : MonoBehaviour
             if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
             {
                 isAttacking = true;
-                attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, - combo[comboCount].attackDistanceToEnemy);
-                animator.runtimeAnimatorController = combo[comboCount].animatorOverride;
+                attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -block.attackDistanceToEnemy);
+                animator.runtimeAnimatorController = block.animatorOverride;
                 animator.Play("AttackState", 1, 0);
 
                 thirdPersonController.DisableMovement();
 
-                comboCount++;
                 lastAttackInputTime = Time.time;
-                if (comboCount + 1 > combo.Count)
-                {
-                    comboCount = 0;
-                }
             }
         }
     }
@@ -75,7 +160,7 @@ public class AttackManager : MonoBehaviour
             {
                 thirdPersonController.EnableMovement();
                 ForceStopAttack();
-            }
+            }//should code timings to bpm ?
             if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.5 && thirdPersonController.move.ReadValue<Vector2>().sqrMagnitude > 0.3f)
             {
                 thirdPersonController.EnableMovement();
@@ -85,6 +170,8 @@ public class AttackManager : MonoBehaviour
     }
     void EndCombo()
     {
+        //Debug.Log("End Combo");
+
         isAttacking = false;
         animator.runtimeAnimatorController = defaultAnimController;
         thirdPersonController.EnableMovement();
@@ -97,25 +184,77 @@ public class AttackManager : MonoBehaviour
         attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -1);
         thirdPersonController.EnableMovement();
         animator.runtimeAnimatorController = defaultAnimController;
-        Invoke("EndCombo", 1);
+        EndCombo();
+    }
+
+    void SetRandomCombo()
+    {
+        //Debug.Log("Random combo");
+        currentCombo.Clear();
+
+        int index = Random.Range(0, combos.Count);
+
+        foreach (var attack in combos[index].combo)//random combo
+        {
+            currentCombo.Add(attack);
+        }
     }
     //attack dash when attack is first called from input
-    public void SetPlayerDashPositionForAttack(InputAction.CallbackContext context)
+    public void PerformAttack(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {//if not locked
+            if (!currentEnemyTarget || cameraController.currentCam != cameraController.cinemachine_LockOn)
+            {
+                cameraController.TargetClosestEnemy();
+                cameraController.SetTargetClosestAndLockOn();
+                SetAttackingPositioner_PositionAndRotation();
+            }
+            //once locked
+            if (currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
+            {//combo timing
+                if (Time.time - lastComboEnd > timeBetweenCombos && comboCount <= currentCombo.Count)
+                {
+                    //set attack positioner position to specific attack
+                    attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+
+                    //do attack
+                    Attack(currentCombo);
+
+                    //some beat check stuff here probably
+
+                    //set position
+                    float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
+                    if (distance > 0.1f)
+                    {
+                        StartCoroutine(LerpToTargetPosition());
+                        //rotate player
+                        Vector3 directionToTarget = transform.position - attackPositioner.position;
+                        directionToTarget.y = 0f;
+
+                        thirdPersonController.forceDirection = -directionToTarget;
+                        thirdPersonController.rigidbody.velocity = -directionToTarget;
+                        transform.rotation = Quaternion.LookRotation(-directionToTarget);
+                    }
+                }
+            }
+        }
+    }
+    public void PerformBlock(InputAction.CallbackContext context)
     {
         if (context.started && currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
         {
-             //do attack
-            Attack(currentCombo);
+            //do block
+            Block();
             //set attack positioner position to specific attack
             attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
-           
+
             //some beat check stuff here probably
 
-            //set position
+            //check position
             float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
             if (distance > 0.1f)
             {
-                StartCoroutine(LerpToTargetPosition());
                 //rotate player
                 Vector3 directionToTarget = transform.position - attackPositioner.position;
                 directionToTarget.y = 0f;
@@ -148,7 +287,7 @@ public class AttackManager : MonoBehaviour
         cameraController.minFOV = cameraController.minFOV + fovChangeOnAttack;
 
         // Ensure reaching exact target position
-        transform.position = attackPositioner.GetChild(0).position; 
+        transform.position = attackPositioner.GetChild(0).position;
 
         //rotate player
         Vector3 directionToTarget = transform.position - attackPositioner.position;
@@ -175,7 +314,10 @@ public class AttackManager : MonoBehaviour
     private void SetAttackingPositioner_PositionAndRotation()
     {
         //set position
-        attackPositioner.position = currentEnemyTarget.position;
+        if (currentEnemyTarget != null)
+        {
+            attackPositioner.position = currentEnemyTarget.position;
+        }
 
         //point towards player
         Vector3 directionToTarget = attackPositioner.position - transform.position;

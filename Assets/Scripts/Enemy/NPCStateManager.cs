@@ -18,7 +18,8 @@ public class NPCStateManager : MonoBehaviour
     public NPCWanderState wanderState = new NPCWanderState();
     public NPCIdleState idleState = new NPCIdleState();
     public NPCChaseState chaseState = new NPCChaseState();
-    public NPCAttackState attackState = new NPCAttackState();
+    public NPCCombatState combatState = new NPCCombatState();
+    //public NPCAttackState attackState = new NPCAttackState(); //outdated
 
     [Header("NPC")]
     public float npcMood = 1f;// set in spawner
@@ -28,6 +29,7 @@ public class NPCStateManager : MonoBehaviour
     [Header("Animation")]
     public Animator currant_animator;
     public ParticleSystem hitEffect;
+    public AnimatorOverrideController resetCombatAnimOverrideController;
 
     [Header("Navigation")]
     public NavMeshAgent navMeshAgent;
@@ -56,6 +58,8 @@ public class NPCStateManager : MonoBehaviour
 
 
     [Header("Attack")]
+    public bool canAttack = false;
+
     public float melleeDamage;
 
     public bool canHitPlayer = false;
@@ -75,9 +79,9 @@ public class NPCStateManager : MonoBehaviour
             idleState.stateManager = this;
             chaseState.stateManager = this;
             chaseState.navMeshAgent = navMeshAgent;
-            attackState.stateManager = this;
-            attackState.navMeshAgent = navMeshAgent;
-            attackState.animContext = animContext;
+            combatState.stateManager = this;
+            combatState.navMeshAgent = navMeshAgent;
+            combatState.animContext = animContext;
         }
     }
     void Start()
@@ -158,7 +162,7 @@ public class NPCStateManager : MonoBehaviour
             {
                 return;
             }
-            else if (currantState == attackState)
+            else if (currantState == combatState)
             {
                 return;
             }
@@ -170,7 +174,7 @@ public class NPCStateManager : MonoBehaviour
         }
 
         //set anim combat layer weight
-        if (currantState == attackState)
+        if (currantState == combatState)
         {
             currant_animator.SetLayerWeight(1, 1);
         }
@@ -189,6 +193,19 @@ public class NPCStateManager : MonoBehaviour
         SetState(RandomState());
     }
 
+    public void LocalBeatCheck()//called in enemy manager/hanadller// called each beat
+    {
+        if(combatState == currantState && canAttack)//if in combat and can attack
+        {
+            CombatBeatAttack();
+        }
+    }
+
+    private void CombatBeatAttack()//enemy attack
+    {
+        Debug.Log("aattack");
+        canAttack = false;
+    }
     public void RegisterHit(float damage)
     {
         //hitEffect.Play();
