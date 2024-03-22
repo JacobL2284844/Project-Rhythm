@@ -16,3 +16,4 @@ MonoBehaviour:
   attackDistanceToEnemy: 1.3
   pointInAnimationToSkipPerfectHit: 0
   enemyReactions: []
+  hitOnBodyLocation: null

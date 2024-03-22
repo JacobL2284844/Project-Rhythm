@@ -8,7 +8,6 @@ public class Health : MonoBehaviour
 {
     public float currentHealth = 0f;
     public float maxHealth = 100f;
-    public float maxHealth_AfterUpgrades = 100f;
     public Image healthBar;
 
     public bool isEnemy = true;
@@ -18,41 +17,27 @@ public class Health : MonoBehaviour
     //public GameObject deathMenu;
     void Start()
     {
-        if (gameObject.tag == "Player")
-        {
-            float fillAmount_A = currentHealth / maxHealth;
-            float fillAmount_B = currentHealth / maxHealth;
-            StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
-
-            if (maxHealth >= maxHealth_AfterUpgrades)
-            {
-                maxHealth = maxHealth_AfterUpgrades;
-            }
-        }
-        else
-        {
-            currentHealth = maxHealth;
-        }
+        currentHealth = maxHealth;
     }
     public void TakeDamage(float amount)
     {
         float healthBeforAttack = currentHealth;
 
         currentHealth -= amount;
-        if (gameObject.tag == "NPC")
+        if (gameObject.tag == "Enemy")
         {
             NPCStateManager stateManager = GetComponent<NPCStateManager>();
 
-            if (stateManager != null)
-            {
-                if (stateManager.currantStateStr != "Chase" || stateManager.currantStateStr != "Attack")
-                {
-                    if (stateManager.isStandardEnemy)
-                    {
-                        stateManager.SetState(stateManager.chaseState);
-                    }
-                }
-            }
+            //if (stateManager != null)
+            //{
+            //    if (stateManager.currantStateStr != "Chase" || stateManager.currantStateStr != "Attack")
+            //    {
+            //        if (stateManager.isStandardEnemy)
+            //        {
+            //            stateManager.SetState(stateManager.chaseState);
+            //        }
+            //    }
+            //}
         }
         else if (gameObject.tag == "Player")
         {
@@ -70,9 +55,8 @@ public class Health : MonoBehaviour
     }
     void Die()
     {
-        if (gameObject.tag == "NPC")
+        if (gameObject.tag == "Enemy")
         {
-            Vector3 pos = new Vector3(transform.position.x, 0.02f, transform.position.z);
             Destroy(gameObject);
         }
         if (gameObject.tag == "Player")

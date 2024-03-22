@@ -9,4 +9,5 @@ public class AttackSO : ScriptableObject
     public float attackDistanceToEnemy = 1.3f;
     public float pointInAnimationToSkipPerfectHit;
     public AnimatorOverrideController[] enemyReactions; // levels low to high strength
+    public string hitOnBodyLocation = "Chest"; //Chest, Stomach, Head
 }
