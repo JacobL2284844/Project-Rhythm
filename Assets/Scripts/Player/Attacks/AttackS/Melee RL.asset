@@ -19,3 +19,4 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 93728352feac9244294e4067f0698605, type: 2}
   - {fileID: 22100000, guid: 30c78925b3b13e141bd05b20fb8543eb, type: 2}
   - {fileID: 22100000, guid: dd179b43bb890ea45b72eb8d4d2be776, type: 2}
+  hitOnBodyLocation: Stomach

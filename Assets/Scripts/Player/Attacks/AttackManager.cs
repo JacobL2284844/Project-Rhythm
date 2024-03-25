@@ -17,6 +17,11 @@ public class AttackManager : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private AnimatorOverrideController defaultAnimController;
 
+    [Header("Attack Damage")]
+    public float damageForHit = 10;
+    public float damageForPerfectHit = 20;
+
+
     [Header("Attack Combos")]
     public bool isAttacking = false;
     public List<AttackSO> currentCombo;
@@ -98,18 +103,23 @@ public class AttackManager : MonoBehaviour
         AnimatorOverrideController enemysHitReactAnim = combo[comboCount].enemyReactions[hitStrenth];
         stateManager.combatState.HitReact(enemysHitReactAnim);
 
+        //get location for hit effect on enemy from attack
+        string hitOnBodyLocation = combo[comboCount].hitOnBodyLocation;
+
         switch (hitStrenth)
         {
             case 0://player misses 
                 stateManager.canAttack = true;//if enemy blocks hit enemy can attack
                 break;
             case 1://good hit
+                stateManager.RegisterHit(damageForHit, this, hitOnBodyLocation);
                 break;
             case 2://perfect hit
+                stateManager.RegisterHit(damageForPerfectHit, this, hitOnBodyLocation);
+                break;
+            default:
                 break;
         }
-
-
     }
     int CheckBeatAccuracy()//0 miss, 1 good, 2 perfect. classes hit strength
     {

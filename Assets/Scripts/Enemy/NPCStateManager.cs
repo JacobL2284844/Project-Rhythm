@@ -28,8 +28,15 @@ public class NPCStateManager : MonoBehaviour
 
     [Header("Animation")]
     public Animator currant_animator;
-    public ParticleSystem hitEffect;
     public AnimatorOverrideController resetCombatAnimOverrideController;
+
+    [Header("Hit Effect")]
+    public ParticleSystem hitEffect;
+    public ParticleSystem hitEffect_perfect;
+
+    public Transform hitHeadPosition;
+    public Transform hitChestPosition;
+    public Transform hitStomachPosition;
 
     [Header("Navigation")]
     public NavMeshAgent navMeshAgent;
@@ -195,7 +202,7 @@ public class NPCStateManager : MonoBehaviour
 
     public void LocalBeatCheck()//called in enemy manager/hanadller// called each beat
     {
-        if(combatState == currantState && canAttack)//if in combat and can attack
+        if (combatState == currantState && canAttack)//if in combat and can attack
         {
             CombatBeatAttack();
         }
@@ -206,10 +213,37 @@ public class NPCStateManager : MonoBehaviour
         Debug.Log("aattack");
         canAttack = false;
     }
-    public void RegisterHit(float damage)
+    public void RegisterHit(float damage, AttackManager playerAttackManager, string hitBodyPoint)
     {
-        //hitEffect.Play();
+        ParticleSystem currentHitEffect;
 
+        //hit effect to use
+        if (damage == playerAttackManager.damageForPerfectHit)
+        {
+            currentHitEffect = hitEffect_perfect;
+        }
+        else
+        {
+            currentHitEffect = hitEffect;
+        }
+
+        //position hit effect to attack
+        switch(hitBodyPoint)
+        {
+            case "Head":
+                currentHitEffect.transform.position = hitHeadPosition.position;
+                break;
+            case "Chest":
+                currentHitEffect.transform.position = hitChestPosition.position;
+                break;
+            case "Stomach":
+                currentHitEffect.transform.position = hitStomachPosition.position;
+                break;
+            default:
+                currentHitEffect.transform.position = hitChestPosition.position;
+                break;
+        }
+        currentHitEffect.Play();
         health.TakeDamage(damage);
     }
 }
