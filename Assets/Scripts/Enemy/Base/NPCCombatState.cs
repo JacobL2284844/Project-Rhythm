@@ -25,20 +25,6 @@ public class NPCCombatState : NPCBaseState
         thisNpc = stateManager.transform;
         navMeshAgent = stateManager.navMeshAgent;
 
-        //try// try set destination on navmesh
-        //{
-        //    navMeshAgent.destination = stateManager.transform.position;// set new destination
-        //}
-        //catch// if nav agent not on navmesh, an error normally happens
-        //{
-        //    RaycastHit hit;
-        //    if (Physics.Raycast(thisNpc.position, Vector3.down, out hit, 3/*ray distance*/))
-        //    {
-        //        // set the position of the capsule to be on top of the hit point
-        //        thisNpc.position = hit.point + Vector3.up * thisNpc.localScale.y / 2;
-        //    }
-        //}
-
         RotateFacePlayer();
     }
     public void RotateFacePlayer()

@@ -19,7 +19,6 @@ public class NPCStateManager : MonoBehaviour
     public NPCIdleState idleState = new NPCIdleState();
     public NPCChaseState chaseState = new NPCChaseState();
     public NPCCombatState combatState = new NPCCombatState();
-    //public NPCAttackState attackState = new NPCAttackState(); //outdated
 
     [Header("NPC")]
     public float npcMood = 1f;// set in spawner
@@ -66,8 +65,12 @@ public class NPCStateManager : MonoBehaviour
 
     [Header("Attack")]
     public bool canAttack = false;
+    private bool isAttacking = false;
+    private bool waitOneBeat = true;//when ready to attack wait one beat
 
     public float melleeDamage;
+
+    public List<EnemyAttackSO> myAttacks;
 
     public bool canHitPlayer = false;
     public EnemyAnimContext animContext;
@@ -202,15 +205,27 @@ public class NPCStateManager : MonoBehaviour
 
     public void LocalBeatCheck()//called in enemy manager/hanadller// called each beat
     {
-        if (combatState == currantState && canAttack)//if in combat and can attack
+        if (combatState == currantState && canAttack)//if in combat and ready to attack
         {
-            CombatBeatAttack();
+            if (waitOneBeat)
+            {
+                waitOneBeat = false;
+                //check if player blocks
+            }
+            else//wait finished
+            {
+                DoAttack();
+            }
         }
     }
 
-    private void CombatBeatAttack()//enemy attack
+    private void DoAttack()//enemy attack start
     {
-        Debug.Log("aattack");
+        currant_animator.runtimeAnimatorController = myAttacks[0].animatorOverride;
+        currant_animator.Play("CombatEmpty", 1, 0);
+
+        isAttacking = true;
+        waitOneBeat = true;
         canAttack = false;
     }
     public void RegisterHit(float damage, AttackManager playerAttackManager, string hitBodyPoint)
@@ -228,7 +243,7 @@ public class NPCStateManager : MonoBehaviour
         }
 
         //position hit effect to attack
-        switch(hitBodyPoint)
+        switch (hitBodyPoint)
         {
             case "Head":
                 currentHitEffect.transform.position = hitHeadPosition.position;

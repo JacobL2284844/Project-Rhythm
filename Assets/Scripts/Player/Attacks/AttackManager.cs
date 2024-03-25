@@ -74,8 +74,6 @@ public class AttackManager : MonoBehaviour
             }
 
             //on enemy hit
-            //timing checks plz
-
             NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
 
             if (stateManager.currantStateStr != "Combat")
@@ -151,6 +149,14 @@ public class AttackManager : MonoBehaviour
 
             if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
             {
+                if(CheckBeatAccuracy() != 0 && currentEnemyTarget.GetComponent<NPCStateManager>().canAttack)
+                {//if enemy attacking and player blocked on beat
+                    Debug.Log("BlockOnBeat");
+                }
+                else
+                {
+                    Debug.Log("Block Failed");
+                }
                 isAttacking = true;
                 attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -block.attackDistanceToEnemy);
                 animator.runtimeAnimatorController = block.animatorOverride;
@@ -231,8 +237,6 @@ public class AttackManager : MonoBehaviour
                     //do attack
                     Attack(currentCombo);
 
-                    //some beat check stuff here probably
-
                     //set position
                     float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
                     if (distance > 0.1f)
@@ -258,8 +262,6 @@ public class AttackManager : MonoBehaviour
             Block();
             //set attack positioner position to specific attack
             attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
-
-            //some beat check stuff here probably
 
             //check position
             float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
