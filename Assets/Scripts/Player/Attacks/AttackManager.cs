@@ -140,7 +140,7 @@ public class AttackManager : MonoBehaviour
             return 0;
         }
     }
-    void Block()
+    public void Block()
     {
         if (Time.time - lastComboEnd > timeBetweenCombos)
         {

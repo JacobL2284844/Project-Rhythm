@@ -212,7 +212,7 @@ public class NPCStateManager : MonoBehaviour
                 waitOneBeat = false;
                 //check if player blocks
             }
-            else//wait finished
+            else
             {
                 DoAttack();
             }
