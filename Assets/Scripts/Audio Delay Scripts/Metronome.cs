@@ -11,7 +11,7 @@ public class Metronome : MonoBehaviour
 
     public Text offsetText; // Reference to the UI Text component
     public Text accuracyText; // Reference to the UI Text component for accuracy
-    public Text JudgementText; 
+    public Text JudgementText;
     public AudioSource tickSound; // Reference to the Tick Sound Audio
     public KeyCode hitKey = KeyCode.Mouse0;
 
@@ -23,8 +23,16 @@ public class Metronome : MonoBehaviour
     private float lastBeatTime;
     private bool playerHitOnBeat = false;
 
+    private string offsetPrefsKey = "Offset"; // PlayerPrefs key for storing offset
+
     void Start()
     {
+        // Load offset from PlayerPrefs
+        if (PlayerPrefs.HasKey("Offset"))
+        {
+            offsetMilliseconds = PlayerPrefs.GetFloat("Offset");
+        }
+
         nextBeatTime = Time.time;
         lastBeatTime = Time.time;
     }
@@ -92,6 +100,8 @@ public class Metronome : MonoBehaviour
 
             lastBeatTime = Time.time; // Update the last beat time
         }
+
+        PlayerPrefs.SetFloat("Offset", offsetMilliseconds);// Save the offset to PlayerPrefs whenever it changes
     }
 
     // Method to start/stop the metronome
@@ -112,6 +122,9 @@ public class Metronome : MonoBehaviour
     public void AdjustOffset(float offsetChange)
     {
         offsetMilliseconds += offsetChange;
+
+        PlayerPrefs.SetFloat("Offset", offsetMilliseconds);// Save the offset to PlayerPrefs whenever it changes
+
     }
 
 }

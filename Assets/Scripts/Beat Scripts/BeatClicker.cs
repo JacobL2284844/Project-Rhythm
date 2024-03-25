@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class BeatClicker : MonoBehaviour
@@ -28,9 +29,19 @@ public class BeatClicker : MonoBehaviour
     public string mehTag = "Meh!";
     public string failTag = "Offbeat!";
 
+    public Text offsetText; // (Can remove if you dont want Offset Adjust UI)
+    public float offsetMilliseconds = 0f;
+
     void Start()
     {
-        beatInterval = 60f / bpm; // Calculate the time interval between beats based on the BPM
+
+        // Load offset from PlayerPrefs when the game starts
+        if (PlayerPrefs.HasKey("Offset"))
+        {
+            offsetMilliseconds = PlayerPrefs.GetFloat("Offset");
+        }
+
+        beatInterval = 60f / bpm + offsetMilliseconds;
         beatTimer = beatInterval; // Start the beat timer
 
         scoreDisplay = FindObjectOfType<ScoreDisplay>();
@@ -46,6 +57,7 @@ public class BeatClicker : MonoBehaviour
     }
     void Update()
     {
+
         beatTimer -= Time.deltaTime;
 
         if (Input.GetMouseButtonDown(0) && ! inGameAsset) // Mouse button input
@@ -54,6 +66,16 @@ public class BeatClicker : MonoBehaviour
         }
 
         streakText.SetStreakMultiplier(streakMultiplier); // Update streak text
+
+        PlayerPrefs.SetFloat("Offset", offsetMilliseconds);// Save the offset to PlayerPrefs whenever it changes
+        beatInterval = 60f / bpm + offsetMilliseconds; // Calculate the time interval between beats based on the BPM (With Offset)
+
+        // Update Offset Text (Can remove if you dont want Offset Adjust)
+        if (offsetText != null)
+        {
+            offsetText.text = "Offset: " + offsetMilliseconds.ToString("F2") + "ms";
+        }
+
     }
 
     void CheckBeat()//ashleys code for beat ckeck
@@ -106,5 +128,14 @@ public class BeatClicker : MonoBehaviour
     void ResetStreakMultiplier()
     {
         streakMultiplier = 1;
+    }
+
+    // Method to adjust the offset in milliseconds (Can remove if you dont want offset adjust)
+    public void AdjustOffset(float offsetChange)
+    {
+        offsetMilliseconds += offsetChange;
+
+        PlayerPrefs.SetFloat("Offset", offsetMilliseconds);// Save the offset to PlayerPrefs whenever it changes
+
     }
 }
