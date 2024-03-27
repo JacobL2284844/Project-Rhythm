@@ -152,6 +152,12 @@ public class AttackManager : MonoBehaviour
                 if(CheckBeatAccuracy() != 0 && currentEnemyTarget.GetComponent<NPCStateManager>().canAttack)
                 {//if enemy attacking and player blocked on beat
                     Debug.Log("BlockOnBeat");
+
+                    if (currentEnemyTarget.GetComponent<NPCStateManager>())
+                    {
+                        currentEnemyTarget.GetComponent<NPCStateManager>().canHitPlayer = false;
+                    }
+
                 }
                 else
                 {

@@ -9,12 +9,6 @@ public class EnemyHitReg : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            if (stateManager.currantStateStr == "Chase")
-            {
-                stateManager.canChangeState = true;
-                stateManager.SetState(stateManager.combatState);
-            }
-
             stateManager.canHitPlayer = true;
         }
     }
@@ -22,12 +16,6 @@ public class EnemyHitReg : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            if (stateManager.currantStateStr == "Attack")
-            {
-                stateManager.canChangeState = true;
-                stateManager.SetState(stateManager.chaseState);
-            }
-
             stateManager.canHitPlayer = false;
         }
     }

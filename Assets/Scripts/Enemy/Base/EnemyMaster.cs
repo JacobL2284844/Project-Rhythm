@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyMaster : MonoBehaviour
 {
     public NPCStateManager[] enemys;
-
+    public QuickTimeManager quickTimeManager;
 
     public void UpdateAllEnemyBeatCheck()
     {

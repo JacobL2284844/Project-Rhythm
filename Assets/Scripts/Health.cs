@@ -41,12 +41,12 @@ public class Health : MonoBehaviour
         }
         else if (gameObject.tag == "Player")
         {
-            float fillAmount_A = healthBeforAttack / maxHealth;
-            float fillAmount_B = currentHealth / maxHealth;
+            //float fillAmount_A = healthBeforAttack / maxHealth;
+            //float fillAmount_B = currentHealth / maxHealth;
 
             playerHitEffect.Play();
 
-            StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
+             //StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
         }
         if (currentHealth <= 0f)
         {

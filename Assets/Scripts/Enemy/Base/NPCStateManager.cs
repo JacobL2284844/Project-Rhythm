@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class NPCStateManager : MonoBehaviour
 {
     public string currantStateStr = "tbd";//var for keeping track of currant state in editor
+    public EnemyMaster enemyMaster;
 
     [Header("State Machine")]
     public bool isStandardEnemy;
@@ -67,15 +68,15 @@ public class NPCStateManager : MonoBehaviour
     public bool canAttack = false;
     private bool isAttacking = false;
     private bool waitOneBeat = true;//when ready to attack wait one beat
+    public bool canHitPlayer = false;
 
     public float melleeDamage;
 
     public List<EnemyAttackSO> myAttacks;
 
-    public bool canHitPlayer = false;
     public EnemyAnimContext animContext;
     public GameObject attackingHitBox;
-    public MeshRenderer hitrender;
+    [SerializeField] private Health playerHealth;
 
     private void Awake()
     {
@@ -98,8 +99,6 @@ public class NPCStateManager : MonoBehaviour
     {
         if (isStandardEnemy)
         {
-            attackingHitBox.SetActive(false);//activated in anim context
-
             if (idleOnEntry)
             {
                 SetState(idleState);
@@ -143,7 +142,7 @@ public class NPCStateManager : MonoBehaviour
     }
     public NPCBaseState RandomState()//returns a random state
     {
-        int index = Random.RandomRange(0, 1);
+        int index = Random.Range(0, 1);
 
         if (index == 0)
         {
@@ -214,6 +213,7 @@ public class NPCStateManager : MonoBehaviour
             }
             else
             {
+                enemyMaster.quickTimeManager.PlayQuickTimeEvent(enemyMaster.quickTimeManager.blockEvent);
                 DoAttack();
             }
         }
@@ -227,6 +227,11 @@ public class NPCStateManager : MonoBehaviour
         isAttacking = true;
         waitOneBeat = true;
         canAttack = false;
+
+        if (canHitPlayer)//set in hit reg
+        {
+            playerHealth.TakeDamage(0f);
+        }
     }
     public void RegisterHit(float damage, AttackManager playerAttackManager, string hitBodyPoint)
     {
