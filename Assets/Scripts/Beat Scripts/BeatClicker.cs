@@ -29,8 +29,18 @@ public class BeatClicker : MonoBehaviour
     public string mehTag = "Meh!";
     public string failTag = "Offbeat!";
 
+    public enum Stage { Stage1, Stage2, Stage3, Stage4 }
+    public Stage currentStage = Stage.Stage1; // Current stage
+    public int beatsHitToProgress = 10; // Number of beats needed to progress to the next stage
+    public int missesThreshold = 3; // Number of misses allowed before stage decrease
+    public int missesToDecreaseStage = 4; // Number of misses to decrease the stage
+    private int beatsHit = 0; // Number of beats hit by the player
+
+
     public Text offsetText; // (Can remove if you dont want Offset Adjust UI)
     public float offsetMilliseconds = 0f;
+
+
 
     void Start()
     {
@@ -78,6 +88,36 @@ public class BeatClicker : MonoBehaviour
 
     }
 
+    void UpdateStage()
+    {
+        if (beatsHit >= beatsHitToProgress)
+        {
+            // Increase stage if player hits beats enough times
+            if (currentStage != Stage.Stage4)
+            {
+                currentStage++;
+                Debug.Log("Stage Up: " + currentStage);
+            }
+
+            // Reset beatsHit for the next stage
+            beatsHit = 0;
+            failCounter = 0;
+        }
+        else if (failCounter >= missesThreshold)
+        {
+            // Decrease stage if player misses enough beats
+            if (currentStage != Stage.Stage1)
+            {
+                currentStage--;
+                Debug.Log("Stage Down: " + currentStage);
+            }
+
+            // Reset beatsHit for the next stage
+            beatsHit = 0;
+            failCounter = 0;
+        }
+    }
+
     void CheckBeat()//ashleys code for beat ckeck
     {
         float timingDifference = Mathf.Abs(beatTimer);
@@ -85,8 +125,7 @@ public class BeatClicker : MonoBehaviour
         if (timingDifference <= perfectTimingThreshold) // Perfect Timing Threshold
         {
             recentHitState = perfectTag;
-            //Debug.Log(perfectTag);
-
+            beatsHit++; // Increment beatsHit
             score += streakMultiplier;
             IncreaseStreakMultiplier();
             scoreDisplay.UpdateScore(score);
@@ -94,29 +133,28 @@ public class BeatClicker : MonoBehaviour
         else if (timingDifference <= goodTimingThreshold) // Good Timing Threshold
         {
             recentHitState = goodTag;
-            //Debug.Log(goodTag);
-
+            beatsHit++; // Increment beatsHit
             score += streakMultiplier;
             scoreDisplay.UpdateScore(score);
         }
         else if (timingDifference <= mehTimingThreshold) // Meh Timing Threshold
         {
             recentHitState = mehTag;
-            //Debug.Log(mehTag);
+            beatsHit++; // Increment beatsHit
             score += streakMultiplier;
             scoreDisplay.UpdateScore(score);
         }
-        else
+        else  // Add your off-beat action here
         {
             recentHitState = failTag;
-            //Debug.Log(failTag); // Add your off-beat action here
-
             failCounter++;
-
             ResetStreakMultiplier();// Reset streak multiplier if off-beat
         }
 
         beatTimer = beatInterval; // Reset the beat timer for the next beat
+
+        // Update stage based on performance
+        UpdateStage();
     }
     // Method to increase the streak multiplier, up to a maximum of 8x
     void IncreaseStreakMultiplier()
