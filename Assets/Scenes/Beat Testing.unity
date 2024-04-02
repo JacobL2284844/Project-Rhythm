@@ -1251,6 +1251,11 @@ MonoBehaviour:
   goodTag: Good!
   mehTag: Meh!
   failTag: Offbeat!
+  currentStage: 0
+  beatsHitToProgress: 10
+  missesToReset: 3
+  missesToDecreaseStage: 5
+  beatsHit: 0
   offsetText: {fileID: 2022499531}
   offsetMilliseconds: 0
 --- !u!4 &867941067

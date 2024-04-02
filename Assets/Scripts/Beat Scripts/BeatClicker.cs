@@ -32,9 +32,10 @@ public class BeatClicker : MonoBehaviour
     public enum Stage { Stage1, Stage2, Stage3, Stage4 }
     public Stage currentStage = Stage.Stage1; // Current stage
     public int beatsHitToProgress = 10; // Number of beats needed to progress to the next stage
-    public int missesThreshold = 3; // Number of misses allowed before stage decrease
-    public int missesToDecreaseStage = 4; // Number of misses to decrease the stage
-    private int beatsHit = 0; // Number of beats hit by the player
+    public int missesToReset = 3; // Number of misses allowed before stage decrease
+    public int missesToDecreaseStage = 5; // Number of misses to decrease the stage
+    public int beatsHit = 0; // Number of beats hit by the player
+    private float misses = 0;
 
 
     public Text offsetText; // (Can remove if you dont want Offset Adjust UI)
@@ -86,35 +87,35 @@ public class BeatClicker : MonoBehaviour
             offsetText.text = "Offset: " + offsetMilliseconds.ToString("F2") + "ms";
         }
 
+        // Update stage based on performance
+        UpdateStage();
+
     }
 
     void UpdateStage()
     {
-        if (beatsHit >= beatsHitToProgress)
-        {
-            // Increase stage if player hits beats enough times
-            if (currentStage != Stage.Stage4)
-            {
-                currentStage++;
-                Debug.Log("Stage Up: " + currentStage);
-            }
 
-            // Reset beatsHit for the next stage
+        if (misses >= missesToDecreaseStage && currentStage != Stage.Stage1)
+        {
+            // Decrease stage if player misses enough beats and not at Stage1
+            currentStage--;
+            Debug.Log("Stage Down: " + currentStage);
             beatsHit = 0;
-            failCounter = 0;
+            misses = 0;
         }
-        else if (failCounter >= missesThreshold)
+        else if (beatsHit >= beatsHitToProgress && currentStage != Stage.Stage4)
         {
-            // Decrease stage if player misses enough beats
-            if (currentStage != Stage.Stage1)
-            {
-                currentStage--;
-                Debug.Log("Stage Down: " + currentStage);
-            }
-
-            // Reset beatsHit for the next stage
+            // Increase stage if player hits beats enough times and not at Stage4
+            currentStage++;
+            Debug.Log("Stage Up: " + currentStage);
             beatsHit = 0;
-            failCounter = 0;
+            misses = 0;
+        }
+        else if (misses == missesToReset)
+        {
+            // Resets BeatHit if player reaches misses Threshold
+            beatsHit = 0;
+            misses = misses + 0.1f;
         }
     }
 
@@ -125,7 +126,7 @@ public class BeatClicker : MonoBehaviour
         if (timingDifference <= perfectTimingThreshold) // Perfect Timing Threshold
         {
             recentHitState = perfectTag;
-            beatsHit++; // Increment beatsHit
+            beatsHit++;
             score += streakMultiplier;
             IncreaseStreakMultiplier();
             scoreDisplay.UpdateScore(score);
@@ -133,14 +134,14 @@ public class BeatClicker : MonoBehaviour
         else if (timingDifference <= goodTimingThreshold) // Good Timing Threshold
         {
             recentHitState = goodTag;
-            beatsHit++; // Increment beatsHit
+            beatsHit++;
             score += streakMultiplier;
             scoreDisplay.UpdateScore(score);
         }
         else if (timingDifference <= mehTimingThreshold) // Meh Timing Threshold
         {
             recentHitState = mehTag;
-            beatsHit++; // Increment beatsHit
+            beatsHit++;
             score += streakMultiplier;
             scoreDisplay.UpdateScore(score);
         }
@@ -148,13 +149,11 @@ public class BeatClicker : MonoBehaviour
         {
             recentHitState = failTag;
             failCounter++;
+            misses++;
             ResetStreakMultiplier();// Reset streak multiplier if off-beat
         }
 
         beatTimer = beatInterval; // Reset the beat timer for the next beat
-
-        // Update stage based on performance
-        UpdateStage();
     }
     // Method to increase the streak multiplier, up to a maximum of 8x
     void IncreaseStreakMultiplier()
