@@ -99,7 +99,7 @@ public class BeatClicker : MonoBehaviour
         {
             // Decrease stage if player misses enough beats and not at Stage1
             currentStage--;
-            Debug.Log("Stage Down: " + currentStage);
+            Debug.Log("Stage Down: " + currentStage); // Remove (Only For Testing)
             beatsHit = 0;
             misses = 0;
         }
@@ -107,7 +107,7 @@ public class BeatClicker : MonoBehaviour
         {
             // Increase stage if player hits beats enough times and not at Stage4
             currentStage++;
-            Debug.Log("Stage Up: " + currentStage);
+            Debug.Log("Stage Up: " + currentStage);// Remove (Only For Testing
             beatsHit = 0;
             misses = 0;
         }
