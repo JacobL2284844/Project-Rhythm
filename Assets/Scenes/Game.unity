@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.2867493, g: 0.1582896, b: 0.18290375, a: 1}
+  m_IndirectSpecularColor: {r: 0.2866887, g: 0.15831533, b: 0.18290581, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6189,6 +6189,43 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &134347089 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1485978802329741388, guid: f51d1d1feeacdcc428528edf68656cb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1594753086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &134347093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134347089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1001 &148064043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25748,7 +25785,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595497955}
-  m_LocalRotation: {x: 0.024936115, y: -0.99155235, z: 0.08880958, w: -0.09118685}
+  m_LocalRotation: {x: 0.024936115, y: -0.99155235, z: 0.08880957, w: -0.09118685}
   m_LocalPosition: {x: 0.22143078, y: 1.5365453, z: 17.031223}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -49043,8 +49080,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007279902}
-  m_LocalRotation: {x: -0.03898431, y: 0.9572027, z: -0.15441512, w: -0.24165957}
-  m_LocalPosition: {x: 9.322718, y: 4.5, z: -76.83887}
+  m_LocalRotation: {x: -0.063288935, y: 0.9059362, z: -0.1461449, w: -0.39232114}
+  m_LocalPosition: {x: 11.105341, y: 4.5, z: -78.2109}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96982,6 +97019,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1485978802329741388, guid: f51d1d1feeacdcc428528edf68656cb9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 134347093}
     - targetCorrespondingSourceObject: {fileID: 4449680829415892353, guid: f51d1d1feeacdcc428528edf68656cb9,
         type: 3}
       insertIndex: -1
