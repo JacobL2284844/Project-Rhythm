@@ -7,7 +7,6 @@ using FMODUnity;
 public class BeatController : MonoBehaviour
 {
     [SerializeField] private float _bpm;
-    [SerializeField] private AudioSource _audioSource;
     [SerializeField] private StudioEventEmitter _eventEmitter;
     [SerializeField] private Intervals[] _intervals;
 

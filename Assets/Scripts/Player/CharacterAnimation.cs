@@ -8,6 +8,8 @@ public class CharacterAnimation : MonoBehaviour
     [SerializeField]
     private Animator animator;
     [SerializeField]
+    private Animator hitboxAnimator;
+    [SerializeField]
     private Rigidbody rigidbody;
     private float maxSpeed = 5f;
 
@@ -33,6 +35,7 @@ public class CharacterAnimation : MonoBehaviour
         if (context.started)
         {
             animator.SetTrigger("Slide");
+            hitboxAnimator.SetTrigger("Slide");
         }
     }
     public void WallRun(bool onWallLeft, bool onWallRight)
