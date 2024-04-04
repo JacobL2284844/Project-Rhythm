@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2344128853930985207}
   - component: {fileID: 9094506281425834625}
   - component: {fileID: 1719291442389570392}
+  - component: {fileID: 6401379677772999820}
   m_Layer: 0
   m_Name: BeatController
   m_TagString: Untagged
@@ -44,7 +45,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 5707460587101946092, guid: f77ccce27d13ed544aa0f07d214a5335,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 377e63f2f1ab095478c49b1549860566, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ead727fdbaae0874da6d526d6ad206db, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -142,8 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3393db5e30e6741ae14ca9a28044ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bpm: 110
+  _bpm: 135
   _audioSource: {fileID: 9094506281425834625}
+  _eventEmitter: {fileID: 6401379677772999820}
   _intervals:
   - _steps: 1
     _trigger:
@@ -161,6 +163,61 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: EnemyMaster, Assembly-CSharp
+          m_MethodName: UpdateAllEnemyBeatCheck
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1719291442389570392}
+          m_TargetAssemblyTypeName: BeatController, Assembly-CSharp
+          m_MethodName: TestBeat
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &6401379677772999820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485978802329741388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -658079242
+      Data2: 1170776211
+      Data3: 1115700651
+      Data4: -1147211174
+    Path: event:/LEVEL 1/BGM/BGM
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &3347230633240021045
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,6 +329,7 @@ GameObject:
   - component: {fileID: 1294485302813158057}
   - component: {fileID: 7956356756462155230}
   - component: {fileID: 7613231538755310943}
+  - component: {fileID: 3055331102548971050}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -364,6 +422,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &3055331102548971050
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4449680829415892353}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4583446760491714294
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +443,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4270043455046248905}
-  - component: {fileID: 2940935993795550098}
   - component: {fileID: 6729331974795792742}
   m_Layer: 0
   m_Name: BeatChecker
@@ -397,20 +466,6 @@ Transform:
   m_Father: {fileID: 445079073300087325}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2940935993795550098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4583446760491714294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65ced89aefa3a6240afb96d992fff3b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 9094506281425834625}
-  bpm: 0
 --- !u!114 &6729331974795792742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,14 +479,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inGameAsset: 1
-  bpm: 110
+  bpm: 135
   perfectTimingThreshold: 0.03
   goodTimingThreshold: 0.07
   mehTimingThreshold: 0.1
+  failCounter: 0
+  failCounterThreshold: 3
+  recentHitState: tbd
   perfectTag: Perfect!
   goodTag: Good!
   mehTag: Meh!
   failTag: Offbeat!
+  currentStage: 0
+  beatsHitToProgress: 10
+  missesToReset: 3
+  missesToDecreaseStage: 5
+  beatsHit: 0
+  offsetText: {fileID: 0}
+  offsetMilliseconds: 0
 --- !u!1 &8047732485593875906
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +614,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8084857859186689605}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.204, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
