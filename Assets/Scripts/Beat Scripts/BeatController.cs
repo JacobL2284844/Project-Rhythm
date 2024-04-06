@@ -7,27 +7,27 @@ using FMODUnity;
 public class BeatController : MonoBehaviour
 {
     [SerializeField] private float _bpm;
+    [SerializeField] private AudioSource _audioSource;
     [SerializeField] private StudioEventEmitter _eventEmitter;
     [SerializeField] private Intervals[] _intervals;
 
+    private FMOD.Studio.EventInstance fmodMusicEventInstance;
+    [SerializeField] private int sampleRate = 48000;
+
+    private void Start()
+    {
+        if (_eventEmitter != null)
+        {
+            fmodMusicEventInstance = _eventEmitter.EventInstance;
+        }
+    }
+    //best solution ? https://qa.fmod.com/t/gettimelineposition-accuracy-for-rhythm-game/20202
     private void Update()
     {
-        if (_eventEmitter.IsPlaying())
+        foreach (Intervals interval in _intervals)
         {
-            int timelinePosition = 0;
-            _eventEmitter.EventInstance.getTimelinePosition(out timelinePosition);
-
-            float eventSampleRate = 0f;
-
-            // Get the FMOD System instance and retrieve the sample rate
-            FMODUnity.RuntimeManager.CoreSystem.getSoftwareFormat(out int sampleRate, out _, out _);
-            eventSampleRate = sampleRate;
-
-            foreach (Intervals interval in _intervals)
-            {
-                float sampledTime = (timelinePosition / (eventSampleRate * interval.GetIntervalLength(_bpm)));
-                interval.CheckForNewInterval(sampledTime);
-            }
+            float sampledTime = (_audioSource.timeSamples / (_audioSource.clip.frequency * interval.GetIntervalLength(_bpm)));
+            interval.CheckForNewInterval(sampledTime);
         }
     }
     public void TestBeat()
@@ -35,7 +35,6 @@ public class BeatController : MonoBehaviour
         Debug.Log("Test Beat Working");
     }
 }
-
 [System.Serializable]
 public class Intervals
 {
