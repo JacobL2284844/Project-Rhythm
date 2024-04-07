@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0295afba78635bf488a4b85eec84bed3, type: 3}
+  m_Name: Punch Low R
+  m_EditorClassIdentifier: 
+  animatorOverride: {fileID: 22100000, guid: e1d7f4cf642526f46bb4f5d6e252725e, type: 2}
+  attackDistanceToEnemy: 1.5
+  pointInAnimationToSkipPerfectHit: 0
+  enemyReactions:
+  - {fileID: 22100000, guid: 93728352feac9244294e4067f0698605, type: 2}
+  - {fileID: 22100000, guid: 30c78925b3b13e141bd05b20fb8543eb, type: 2}
+  - {fileID: 22100000, guid: 00160c11e93a96948ba505a3b946a697, type: 2}
+  hitOnBodyLocation: Head
