@@ -15,4 +15,10 @@ public class QuickTimeManager : MonoBehaviour
         quickTimeEvent.sprite = eventImage.sprite;
         hudAnimator.SetTrigger("QuickTimeEvent");
     }
+
+
+    public void PlayBeatHitTiming(string timing)
+    {
+        hudAnimator.SetTrigger(timing);
+    }
 }

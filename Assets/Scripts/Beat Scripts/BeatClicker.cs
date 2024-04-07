@@ -28,7 +28,7 @@ public class BeatClicker : MonoBehaviour
     public string goodTag = "Good!";
     public string mehTag = "Meh!";
     public string failTag = "Offbeat!";
-
+    public QuickTimeManager quickTimeUIManager;
     public enum Stage { Stage1, Stage2, Stage3, Stage4 }
     public Stage currentStage = Stage.Stage1; // Current stage
     public int beatsHitToProgress = 10; // Number of beats needed to progress to the next stage
@@ -71,10 +71,10 @@ public class BeatClicker : MonoBehaviour
 
         beatTimer -= Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0) && ! inGameAsset) // Mouse button input
-        {
-            CheckBeat();
-        }
+        //if (Input.GetMouseButtonDown(0) && ! inGameAsset) // Mouse button input
+        //{
+        //    CheckBeat();
+        //}
 
         streakText.SetStreakMultiplier(streakMultiplier); // Update streak text
 
@@ -89,7 +89,6 @@ public class BeatClicker : MonoBehaviour
 
         // Update stage based on performance
         UpdateStage();
-
     }
 
     void UpdateStage()
@@ -130,6 +129,8 @@ public class BeatClicker : MonoBehaviour
             score += streakMultiplier;
             IncreaseStreakMultiplier();
             scoreDisplay.UpdateScore(score);
+
+            quickTimeUIManager.PlayBeatHitTiming("HitTimePerfect");
         }
         else if (timingDifference <= goodTimingThreshold) // Good Timing Threshold
         {
@@ -137,6 +138,8 @@ public class BeatClicker : MonoBehaviour
             beatsHit++;
             score += streakMultiplier;
             scoreDisplay.UpdateScore(score);
+
+            quickTimeUIManager.PlayBeatHitTiming("HitTimeGood");
         }
         else if (timingDifference <= mehTimingThreshold) // Meh Timing Threshold
         {
@@ -144,6 +147,8 @@ public class BeatClicker : MonoBehaviour
             beatsHit++;
             score += streakMultiplier;
             scoreDisplay.UpdateScore(score);
+
+            quickTimeUIManager.PlayBeatHitTiming("HitTimeGood");
         }
         else  // Add your off-beat action here
         {
@@ -151,6 +156,8 @@ public class BeatClicker : MonoBehaviour
             failCounter++;
             misses++;
             ResetStreakMultiplier();// Reset streak multiplier if off-beat
+
+            quickTimeUIManager.PlayBeatHitTiming("HitTimeMiss");
         }
 
         beatTimer = beatInterval; // Reset the beat timer for the next beat
