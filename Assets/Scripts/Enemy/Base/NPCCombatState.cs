@@ -43,7 +43,11 @@ public class NPCCombatState : NPCBaseState
     }
     public override void UpdateState(NPCStateManager npcContext)
     {
-        //need checks
-        //beat checks
+        float distance = Vector3.Distance(stateManager.transform.position, stateManager.player.position);
+        if (distance > stateManager.maxAttackDIstance)
+        {
+            stateManager.canHitPlayer = false;
+            stateManager.canAttack = false;
+        }
     }
 }

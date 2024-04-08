@@ -70,7 +70,8 @@ public class NPCStateManager : MonoBehaviour
     public bool waitOneBeat = true;//when ready to attack wait one beat
     public bool canHitPlayer = false;
 
-    public float melleeDamage;
+    public float maxAttackDIstance = 3;
+    public float attackDamage;
 
     public List<EnemyAttackSO> myAttacks;
 
@@ -220,8 +221,8 @@ public class NPCStateManager : MonoBehaviour
     }
 
     private void DoAttack()//enemy attack start
-    {
-        currant_animator.runtimeAnimatorController = myAttacks[0].animatorOverride;
+    {//random attack
+        currant_animator.runtimeAnimatorController = myAttacks[Random.Range(0, myAttacks.Count)].animatorOverride;
         currant_animator.Play("CombatEmpty", 1, 0);
 
         isAttacking = true;
@@ -233,13 +234,20 @@ public class NPCStateManager : MonoBehaviour
 
         if (canHitPlayer)//set in hit reg
         {
-            playerHealth.TakeDamage(0f);
+            playerHealth.TakeDamage(attackDamage);
         }
     }
     IEnumerator ExitAttack()
     {
+        bool attackagain = canHitPlayer; //if last attack succesful attack again
         yield return new WaitForSeconds(0.5f);
+
         isAttacking = false;
+
+        if (attackagain)
+        {
+            canAttack = true;
+        }
     }
     public void RegisterHit(float damage, AttackManager playerAttackManager, string hitBodyPoint)
     {

@@ -31,7 +31,7 @@ public class EnemyAnimContext : MonoBehaviour
     {//damage enemys regestered in specific collider
         if (stateManager.canHitPlayer)
         {
-            playerHealth.TakeDamage(stateManager.melleeDamage);
+            playerHealth.TakeDamage(stateManager.attackDamage);
         }
     }
     public void DoRandomMelleeAttack()
