@@ -61,7 +61,7 @@ public class BeatClicker : MonoBehaviour
 
     public void PerfromCheckBeat(InputAction.CallbackContext context)//from input provider
     {
-        if(context.started)
+        if (context.started)
         {
             CheckBeat();
         }
@@ -101,6 +101,8 @@ public class BeatClicker : MonoBehaviour
             Debug.Log("Stage Down: " + currentStage); // Remove (Only For Testing)
             beatsHit = 0;
             misses = 0;
+
+            CheckNewStage();
         }
         else if (beatsHit >= beatsHitToProgress && currentStage != Stage.Stage4)
         {
@@ -109,15 +111,41 @@ public class BeatClicker : MonoBehaviour
             Debug.Log("Stage Up: " + currentStage);// Remove (Only For Testing
             beatsHit = 0;
             misses = 0;
+
+            CheckNewStage();
         }
         else if (misses == missesToReset)
         {
             // Resets BeatHit if player reaches misses Threshold
             beatsHit = 0;
             misses = misses + 0.1f;
+
+            CheckNewStage();
         }
     }
-
+    void CheckNewStage()
+    {
+        if(currentStage == Stage.Stage1)
+        {
+            quickTimeUIManager.SetStage(1);//update ui
+            return;
+        }
+        else if (currentStage == Stage.Stage2)
+        {
+            quickTimeUIManager.SetStage(2);//update ui
+            return;
+        }
+        else if (currentStage == Stage.Stage3)
+        {
+            quickTimeUIManager.SetStage(3);//update ui
+            return;
+        }
+        else if (currentStage == Stage.Stage4)
+        {
+            quickTimeUIManager.SetStage(4);//update ui
+            return;
+        }
+    }
     void CheckBeat()//ashleys code for beat ckeck
     {
         float timingDifference = Mathf.Abs(beatTimer);
