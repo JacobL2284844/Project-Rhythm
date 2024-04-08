@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
 
     public bool isEnemy = true;
 
+    public Animator playerAnimator;
     public ParticleSystem playerHitEffect;
     public float healthSmoothDecreaseDuration;
     //public GameObject deathMenu;
@@ -45,7 +46,7 @@ public class Health : MonoBehaviour
             //float fillAmount_B = currentHealth / maxHealth;
 
             playerHitEffect.Play();
-
+            playerAnimator.SetTrigger("HitReact");
              //StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
         }
         if (currentHealth <= 0f)

@@ -66,8 +66,8 @@ public class NPCStateManager : MonoBehaviour
 
     [Header("Attack")]
     public bool canAttack = false;
-    private bool isAttacking = false;
-    private bool waitOneBeat = true;//when ready to attack wait one beat
+    public bool isAttacking = false;
+    public bool waitOneBeat = true;//when ready to attack wait one beat
     public bool canHitPlayer = false;
 
     public float melleeDamage;
@@ -209,11 +209,11 @@ public class NPCStateManager : MonoBehaviour
             if (waitOneBeat)
             {
                 waitOneBeat = false;
+                canHitPlayer = true;
                 //check if player blocks
             }
             else
             {
-                enemyMaster.quickTimeManager.PlayQuickTimeEvent(enemyMaster.quickTimeManager.blockEvent);
                 DoAttack();
             }
         }
@@ -228,10 +228,18 @@ public class NPCStateManager : MonoBehaviour
         waitOneBeat = true;
         canAttack = false;
 
+
+        StartCoroutine(ExitAttack());
+
         if (canHitPlayer)//set in hit reg
         {
             playerHealth.TakeDamage(0f);
         }
+    }
+    IEnumerator ExitAttack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isAttacking = false;
     }
     public void RegisterHit(float damage, AttackManager playerAttackManager, string hitBodyPoint)
     {

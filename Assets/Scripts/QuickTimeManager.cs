@@ -10,13 +10,6 @@ public class QuickTimeManager : MonoBehaviour
 
     public Image blockEvent;//called in enemy attack
 
-    public void PlayQuickTimeEvent(Image eventImage)
-    {
-        quickTimeEvent.sprite = eventImage.sprite;
-        hudAnimator.SetTrigger("QuickTimeEvent");
-    }
-
-
     public void PlayBeatHitTiming(string timing)
     {
         hudAnimator.SetTrigger(timing);

@@ -149,7 +149,7 @@ public class AttackManager : MonoBehaviour
 
             if (Time.time - lastAttackInputTime >= timeBetweenAttacks)
             {
-                if(CheckBeatAccuracy() != 0 && currentEnemyTarget.GetComponent<NPCStateManager>().canAttack)
+                if (CheckBeatAccuracy() != 0 && currentEnemyTarget.GetComponent<NPCStateManager>().canAttack)
                 {//if enemy attacking and player blocked on beat
                     Debug.Log("BlockOnBeat");
 
@@ -157,10 +157,10 @@ public class AttackManager : MonoBehaviour
                     {
                         currentEnemyTarget.GetComponent<NPCStateManager>().canHitPlayer = false;
                     }
-
                 }
                 else
                 {
+                    currentEnemyTarget.GetComponent<NPCStateManager>().canHitPlayer = true;
                     Debug.Log("Block Failed");
                 }
                 isAttacking = true;
@@ -237,11 +237,25 @@ public class AttackManager : MonoBehaviour
             {//combo timing
                 if (Time.time - lastComboEnd > timeBetweenCombos && comboCount <= currentCombo.Count)
                 {
-                    //set attack positioner position to specific attack
-                    attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+                    NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
 
-                    //do attack
-                    Attack(currentCombo);
+                    if (stateManager.canAttack)//enemy is attacking
+                    {
+                        //set attack positioner position to specific attack
+                        attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+
+                        //do block
+                        Block();
+                    }
+                    else
+                    {
+                        //set attack positioner position to specific attack
+                        attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+                        //do attack
+                        Attack(currentCombo);
+                    }
+
+
 
                     //set position
                     float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
@@ -260,29 +274,7 @@ public class AttackManager : MonoBehaviour
             }
         }
     }
-    public void PerformBlock(InputAction.CallbackContext context)
-    {
-        if (context.started && currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
-        {
-            //do block
-            Block();
-            //set attack positioner position to specific attack
-            attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
 
-            //check position
-            float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
-            if (distance > 0.1f)
-            {
-                //rotate player
-                Vector3 directionToTarget = transform.position - attackPositioner.position;
-                directionToTarget.y = 0f;
-
-                thirdPersonController.forceDirection = -directionToTarget;
-                thirdPersonController.rigidbody.velocity = -directionToTarget;
-                transform.rotation = Quaternion.LookRotation(-directionToTarget);
-            }
-        }
-    }
     IEnumerator LerpToTargetPosition()
     {
         Vector3 initialPosition = transform.position;
