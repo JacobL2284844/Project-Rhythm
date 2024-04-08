@@ -274,7 +274,6 @@ public class AttackManager : MonoBehaviour
             }
         }
     }
-
     IEnumerator LerpToTargetPosition()
     {
         Vector3 initialPosition = transform.position;

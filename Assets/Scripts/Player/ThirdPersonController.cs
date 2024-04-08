@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -44,6 +45,11 @@ public class ThirdPersonController : MonoBehaviour
     private bool isSprinting = false;
     [SerializeField]
     private float sprintDuration = 5f;
+    public BeatClicker beatClicker;
+    [SerializeField] float sprintCurrentDuration;
+    [SerializeField] Image sprintFillImageR;
+    [SerializeField] Image sprintFillImageL;
+
 
     [Header("Camera")]
     [SerializeField] private CameraController cameraController;
@@ -158,6 +164,20 @@ public class ThirdPersonController : MonoBehaviour
 
             CheckWallRun();
         }
+
+        //sprint duration timer and ui
+        if (isSprinting)
+        {
+            sprintCurrentDuration -= Time.deltaTime;
+            float fillAmount = Mathf.Clamp01(sprintCurrentDuration / sprintDuration);
+            sprintFillImageR.fillAmount = fillAmount;
+            sprintFillImageL.fillAmount = fillAmount;
+
+            if (sprintCurrentDuration <= 0.1f)
+            {
+                ExitSprint();
+            }
+        }
     }
     //-----------------
     private void LookAt(Vector3 direction)
@@ -236,6 +256,8 @@ public class ThirdPersonController : MonoBehaviour
                 forceDirection += Vector3.up * doubleJumpForce;
             }
         }
+
+        TryResetSprintTimer();
     }
     //-----------------
     public void DoSlide(InputAction.CallbackContext context)
@@ -251,6 +273,8 @@ public class ThirdPersonController : MonoBehaviour
 
         currentMaxSpeed = currentMaxSpeed * slideVelocityMultiplier;
         rigidbody.AddForce(transform.forward * slideBoostForce, ForceMode.Impulse);
+
+        TryResetSprintTimer();
 
         yield return new WaitForSeconds(slideDuration);
         isSliding = false;
@@ -273,25 +297,46 @@ public class ThirdPersonController : MonoBehaviour
         {
             if (movementForce < (og_movementForce * sprintMultiplier))
             {
-                isSprinting = true;
-                StartCoroutine(PerformSprint());
+                StartSprint();
             }
         }
+        if(context.started && isSprinting)
+        {
+            TryResetSprintTimer();
+        }
     }
-    IEnumerator PerformSprint()
+    void StartSprint()
     {
         movementForce = og_movementForce * sprintMultiplier;
-
         cameraController.maxFOV = cameraController.maxFOV + sprintFovCamIncrease;
-        yield return new WaitForSeconds(sprintDuration);
+        sprintCurrentDuration = sprintDuration;
 
-        cameraController.maxFOV = cameraController.maxFOV - sprintFovCamIncrease;
-        ExitSprint();
+        isSprinting = true;
+
+        sprintFillImageR.fillAmount = 1;
+        sprintFillImageL.fillAmount = 1;
     }
-    void ExitSprint()
+    void TryResetSprintTimer()//called in jump and slide, if performed on beat then reset sprint timer
     {
+        if(isSprinting && beatClicker.recentHitState != beatClicker.failTag)
+        {
+            movementForce = og_movementForce * sprintMultiplier;
+            sprintCurrentDuration = sprintDuration;
+
+            isSprinting = true;
+
+            sprintFillImageR.fillAmount = 1;
+            sprintFillImageL.fillAmount = 1;
+        }
+    }
+    public void ExitSprint()
+    {
+        cameraController.maxFOV = cameraController.maxFOV - sprintFovCamIncrease;
         movementForce = og_movementForce;
         isSprinting = false;
+
+        sprintFillImageR.fillAmount = 1;
+        sprintFillImageL.fillAmount = 1;
     }
     //-----------------
     private bool IsGrounded()//overrideGroundedState set in attack lerp
@@ -405,15 +450,21 @@ public class ThirdPersonController : MonoBehaviour
         canDoubleJump = true;
         isWallRunning = false;
 
-        ExitSprint();
-
-        if (canExitWallRun)
-        {
+        //if (canExitWallRun)
+        //{
             canExitWallRun = false;
-            movementForce = og_movementForce;
+
+            if(isSprinting)
+            {
+                movementForce = og_movementForce * sprintMultiplier;
+            }
+            else
+            {
+                movementForce = og_movementForce;
+            }
 
             StartCoroutine(DoWallRunCooDdown());
-        }
+       // }
     }
     public void WallJump()
     {
@@ -437,7 +488,7 @@ public class ThirdPersonController : MonoBehaviour
             yield return new WaitForSeconds(wallRunCooldown);
 
             wallNormal = Vector3.zero;
-            canExitWallRun = true;
+            //canExitWallRun = true;
             canWallRun = true;
         }
     }
