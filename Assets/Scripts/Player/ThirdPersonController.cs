@@ -67,7 +67,6 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private float wallRunCooldown = 0.5f;
     private bool canWallRun = true;
-    private bool canExitWallRun = true;
     [SerializeField]
     private float wallRunExitJumpForce;
     [SerializeField] private Transform wallJumpDirection_left;
@@ -300,7 +299,7 @@ public class ThirdPersonController : MonoBehaviour
                 StartSprint();
             }
         }
-        if(context.started && isSprinting)
+        if (context.started && isSprinting)
         {
             TryResetSprintTimer();
         }
@@ -318,7 +317,7 @@ public class ThirdPersonController : MonoBehaviour
     }
     void TryResetSprintTimer()//called in jump and slide, if performed on beat then reset sprint timer
     {
-        if(isSprinting && beatClicker.recentHitState != beatClicker.failTag)
+        if (isSprinting && beatClicker.recentHitState != beatClicker.failTag)
         {
             movementForce = og_movementForce * sprintMultiplier;
             sprintCurrentDuration = sprintDuration;
@@ -450,21 +449,16 @@ public class ThirdPersonController : MonoBehaviour
         canDoubleJump = true;
         isWallRunning = false;
 
-        //if (canExitWallRun)
-        //{
-            canExitWallRun = false;
+        if (isSprinting)
+        {
+            movementForce = og_movementForce * sprintMultiplier;
+        }
+        else
+        {
+            movementForce = og_movementForce;
+        }
 
-            if(isSprinting)
-            {
-                movementForce = og_movementForce * sprintMultiplier;
-            }
-            else
-            {
-                movementForce = og_movementForce;
-            }
-
-            StartCoroutine(DoWallRunCooDdown());
-       // }
+        StartCoroutine(DoWallRunCooDdown());
     }
     public void WallJump()
     {
@@ -488,7 +482,6 @@ public class ThirdPersonController : MonoBehaviour
             yield return new WaitForSeconds(wallRunCooldown);
 
             wallNormal = Vector3.zero;
-            //canExitWallRun = true;
             canWallRun = true;
         }
     }
