@@ -8,18 +8,18 @@ public class BeatController : MonoBehaviour
 {
     [SerializeField] private float _bpm;
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private StudioEventEmitter _eventEmitter;
+    //[SerializeField] private StudioEventEmitter _eventEmitter;
     [SerializeField] private Intervals[] _intervals;
 
-    private FMOD.Studio.EventInstance fmodMusicEventInstance;
-    [SerializeField] private int sampleRate = 48000;
+    //private FMOD.Studio.EventInstance fmodMusicEventInstance;
+    //[SerializeField] private int sampleRate = 48000;
 
     private void Start()
     {
-        if (_eventEmitter != null)
-        {
-            fmodMusicEventInstance = _eventEmitter.EventInstance;
-        }
+        //if (_eventEmitter != null)
+        //{
+        //    fmodMusicEventInstance = _eventEmitter.EventInstance;
+        //}
     }
     //best solution ? https://qa.fmod.com/t/gettimelineposition-accuracy-for-rhythm-game/20202
     private void Update()
