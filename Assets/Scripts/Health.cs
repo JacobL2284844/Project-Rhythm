@@ -8,11 +8,13 @@ public class Health : MonoBehaviour
 {
     public float currentHealth = 0f;
     public float maxHealth = 100f;
-    public Image healthBar;
+    public Image healthBarR;
+    public Image healthBarL;
 
     public bool isEnemy = true;
 
     public Animator playerAnimator;
+    public AnimatorOverrideController[] playerHitReaction;
     public ParticleSystem playerHitEffect;
     public float healthSmoothDecreaseDuration;
     //public GameObject deathMenu;
@@ -42,12 +44,14 @@ public class Health : MonoBehaviour
         }
         else if (gameObject.tag == "Player")
         {
-            //float fillAmount_A = healthBeforAttack / maxHealth;
-            //float fillAmount_B = currentHealth / maxHealth;
+            float fillAmount_A = healthBeforAttack / maxHealth;
+            float fillAmount_B = currentHealth / maxHealth;
 
             playerHitEffect.Play();
+            //random hit react
+            playerAnimator.runtimeAnimatorController = playerHitReaction[Random.Range(0, playerHitReaction.Length)];
             playerAnimator.SetTrigger("HitReact");
-             //StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
+            StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
         }
         if (currentHealth <= 0f)
         {
@@ -79,7 +83,8 @@ public class Health : MonoBehaviour
 
             float currentValue = Mathf.Lerp(startAmount, endAmount, t);
 
-            healthBar.fillAmount = currentValue;
+            healthBarR.fillAmount = currentValue;
+            healthBarL.fillAmount = currentValue;
 
             yield return null;
         }
