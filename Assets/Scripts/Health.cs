@@ -62,6 +62,10 @@ public class Health : MonoBehaviour
     {
         if (gameObject.tag == "Enemy")
         {
+            NPCStateManager stateManager = GetComponent<NPCStateManager>();
+            stateManager.enemyMaster.enemys.Remove(stateManager);
+            stateManager.mySpawner.myActiveEnemies.Remove(gameObject);
+
             Destroy(gameObject);
         }
         if (gameObject.tag == "Player")

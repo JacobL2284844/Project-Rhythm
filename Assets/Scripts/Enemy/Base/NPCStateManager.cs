@@ -25,6 +25,7 @@ public class NPCStateManager : MonoBehaviour
     public float npcMood = 1f;// set in spawner
     public Health health;
     public Transform npcMesh;
+    public EnemySpawner mySpawner;
 
     [Header("Animation")]
     public Animator currant_animator;
@@ -50,7 +51,6 @@ public class NPCStateManager : MonoBehaviour
     public Transform currantTargetDestination;
     public NavigationWanderPoints navigationWanderPoints;
 
-    [Header("Wander")]
     public float minDestinationDistance = 0.5f;
 
     [Header("Chase")]
