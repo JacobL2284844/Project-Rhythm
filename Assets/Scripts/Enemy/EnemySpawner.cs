@@ -32,6 +32,7 @@ public class EnemySpawner : MonoBehaviour
                     stateManager.navigationWanderPoints = navigationWanderPoints;
                     stateManager.enemyMaster = enemyMaster;
                     stateManager.player = enemyMaster.player;
+                    stateManager.playerHealth = enemyMaster.player.GetComponent<Health>();
                     stateManager.mySpawner = this;
                     enemyMaster.enemys.Add(stateManager);
                     myActiveEnemies.Add(enemy);

@@ -391,12 +391,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currantStateStr: tbd
+  enemyMaster: {fileID: 0}
   isStandardEnemy: 1
   canChangeState: 1
   idleOnEntry: 0
   npcMood: 1
   health: {fileID: 8992906891370149581}
   npcMesh: {fileID: 1439402991798687511}
+  mySpawner: {fileID: 0}
   currant_animator: {fileID: 3000413193908305385}
   resetCombatAnimOverrideController: {fileID: 22100000, guid: dc28d4b001628e241822715fbec63035,
     type: 2}
@@ -419,9 +421,17 @@ MonoBehaviour:
   runNavAgentSpeed: 1.2
   nav_chaseRunSpeed: 1.2
   canAttack: 0
+  isAttacking: 0
+  waitOneBeat: 1
   canHitPlayer: 0
-  melleeDamage: 0
-  myAttacks: []
+  maxAttackDIstance: 3
+  attackDamage: 20
+  myAttacks:
+  - {fileID: 11400000, guid: e58813008bbe3cb49acd21bfdb34c259, type: 2}
+  - {fileID: 11400000, guid: 14ae35fa64413cc4eb5c5f9eb79fd802, type: 2}
+  - {fileID: 11400000, guid: bec7c05bd622e6e47b86de75d0b5dc94, type: 2}
+  - {fileID: 11400000, guid: 7f099c863bae4b240a6956b007ae2a65, type: 2}
+  - {fileID: 11400000, guid: bfe55a28a39b7b44a85725ff2d3e3f55, type: 2}
   animContext: {fileID: 5402710276311102817}
   attackingHitBox: {fileID: 2747713002466217717}
   playerHealth: {fileID: 0}
@@ -439,8 +449,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 100
-  healthBar: {fileID: 0}
+  healthBarR: {fileID: 0}
+  healthBarL: {fileID: 0}
   isEnemy: 1
+  playerAnimator: {fileID: 0}
+  playerHitReaction: []
   playerHitEffect: {fileID: 0}
   healthSmoothDecreaseDuration: 0
 --- !u!195 &8616041486020427476

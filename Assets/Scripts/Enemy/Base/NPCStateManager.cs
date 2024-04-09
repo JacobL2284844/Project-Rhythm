@@ -77,7 +77,7 @@ public class NPCStateManager : MonoBehaviour
 
     public EnemyAnimContext animContext;
     public GameObject attackingHitBox;
-    [SerializeField] private Health playerHealth;
+    public Health playerHealth;
 
     private void Awake()
     {
