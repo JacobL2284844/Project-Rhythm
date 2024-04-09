@@ -50,6 +50,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (myActiveEnemies.Count == 0)
         {
+            enemyMaster.currentSpawnerInUse = null;
             Destroy(gameObject);
         }
     }

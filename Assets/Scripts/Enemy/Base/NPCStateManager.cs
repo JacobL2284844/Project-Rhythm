@@ -106,11 +106,17 @@ public class NPCStateManager : MonoBehaviour
             }
             else
             {
-                SetState(RandomState());
+                StartCoroutine(SpawnInDelayState());
             }
         }
     }
-
+    IEnumerator SpawnInDelayState()
+    {
+        SetState(idleState);
+        yield return new WaitForSeconds(Random.RandomRange(1, 3));
+        currentIdleDuration = 0f;
+        SetState(RandomState());
+    }
     private void Update()
     {
         if (isStandardEnemy)
