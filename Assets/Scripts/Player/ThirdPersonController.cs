@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 
 public class ThirdPersonController : MonoBehaviour
 {
-    [SerializeField] private CharacterAnimation characterAnimation;
+    public CharacterAnimation characterAnimation;
 
     //input
     private ThirdPersonInput playerInputActionAsset;
@@ -21,28 +21,30 @@ public class ThirdPersonController : MonoBehaviour
     private float movementForce = 1f;
     private float og_movementForce = 1f;
     [SerializeField]
+    private float currentMaxSpeed = 4f;
+    private float baseMaxSpeed = 4f;
+    public Vector3 forceDirection = Vector3.zero;
+
+    [Header("Jump/ Gravity")]
+    [SerializeField]
     private float jumpForce = 5f;
     [SerializeField]
     private float doubleJumpForce = 5f;
     private bool canDoubleJump = true;
     [SerializeField]
-    private float currentMaxSpeed = 4f;
-    private float baseMaxSpeed = 4f;
-    public Vector3 forceDirection = Vector3.zero;
-    [SerializeField]
-    private float fallForce = 65f;
-    [SerializeField]
-    private Camera playerCamera;
-    [SerializeField]
     private float groundcheckRaycastDistance = 0.5f;
 
     public bool isGroundedState;
+    [SerializeField]
+    private float fallForce = 65f;
+    private float current_timeBeforeHardFall = 1f;
+    [SerializeField] private float timeBeforeHardFall = 1f;
 
     [Header("Sprint")]
     [SerializeField]
     private float sprintMultiplier = 1.5f;
     [SerializeField]
-    private bool isSprinting = false;
+    public bool isSprinting = false;
     [SerializeField]
     private float sprintDuration = 5f;
     public BeatClicker beatClicker;
@@ -50,8 +52,9 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] Image sprintFillImageR;
     [SerializeField] Image sprintFillImageL;
 
-
     [Header("Camera")]
+    [SerializeField]
+    private Camera playerCamera;
     [SerializeField] private CameraController cameraController;
     [SerializeField] private float sprintFovCamIncrease = 5f;
 
@@ -155,15 +158,23 @@ public class ThirdPersonController : MonoBehaviour
             }
 
             //if falling check ground
-            if (rigidbody.velocity.y < 0f)
+            if (rigidbody.velocity.y < 0f && !isGroundedState)
             {
-                //fix gravity
-                rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
+                current_timeBeforeHardFall -= Time.deltaTime;//lower time before hard fall
+
+                if (current_timeBeforeHardFall <= 0)//if timed out
+                {
+                    //fix gravity
+                    rigidbody.velocity += Vector3.down * fallForce * Time.fixedDeltaTime;
+                }
+            }
+            else
+            {
+                current_timeBeforeHardFall = timeBeforeHardFall;//reset hard fall
             }
 
             CheckWallRun();
         }
-
         //sprint duration timer and ui
         if (isSprinting)
         {

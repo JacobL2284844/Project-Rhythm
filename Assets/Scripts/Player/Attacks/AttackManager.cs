@@ -61,7 +61,7 @@ public class AttackManager : MonoBehaviour
             isAttacking = true;
             attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -combo[comboCount].attackDistanceToEnemy);
             animator.runtimeAnimatorController = combo[comboCount].animatorOverride;
-            animator.Play("AttackState", 1, 0);
+            animator.Play("AttackState", 2, 0);
 
             thirdPersonController.DisableMovement();
 
@@ -166,7 +166,7 @@ public class AttackManager : MonoBehaviour
                 isAttacking = true;
                 attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -block.attackDistanceToEnemy);
                 animator.runtimeAnimatorController = block.animatorOverride;
-                animator.Play("AttackState", 1, 0);
+                animator.Play("AttackState", 2, 0);
 
                 thirdPersonController.DisableMovement();
 
