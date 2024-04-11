@@ -7,7 +7,7 @@ using FMODUnity;
 public class BeatController : MonoBehaviour
 {
     [SerializeField] private float _bpm;
-    [SerializeField] private AudioSource _audioSource;
+    private float _timeSinceStart;
     //[SerializeField] private StudioEventEmitter _eventEmitter;
     [SerializeField] private Intervals[] _intervals;
 
@@ -24,35 +24,34 @@ public class BeatController : MonoBehaviour
     //best solution ? https://qa.fmod.com/t/gettimelineposition-accuracy-for-rhythm-game/20202
     private void Update()
     {
+        _timeSinceStart += Time.deltaTime;
+
+        float currentBeat = GetCurrentBeat();
         foreach (Intervals interval in _intervals)
         {
-            float sampledTime = (_audioSource.timeSamples / (_audioSource.clip.frequency * interval.GetIntervalLength(_bpm)));
-            interval.CheckForNewInterval(sampledTime);
+            interval.CheckForNewInterval(currentBeat);
         }
     }
-    public void TestBeat()
-    {
-        Debug.Log("Test Beat Working");
-    }
-}
-[System.Serializable]
-public class Intervals
-{
-    [SerializeField] private float _steps;
-    [SerializeField] private UnityEvent _trigger;
-    private int _lastInterval;
 
-    public float GetIntervalLength(float bpm)
+    private float GetCurrentBeat()
     {
-        return 60f / (bpm * _steps);
+        return _timeSinceStart * (_bpm / 60f);
     }
 
-    public void CheckForNewInterval(float interval)
+    [System.Serializable]
+    public class Intervals
     {
-        if (Mathf.FloorToInt(interval) != _lastInterval)
+        [SerializeField] private float _steps;
+        [SerializeField] private UnityEvent _trigger;
+        private int _lastInterval;
+
+        public void CheckForNewInterval(float interval)
         {
-            _lastInterval = Mathf.FloorToInt(interval);
-            _trigger.Invoke();
+            if (Mathf.FloorToInt(interval) != _lastInterval)
+            {
+                _lastInterval = Mathf.FloorToInt(interval);
+                _trigger.Invoke();
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using FMODUnity;
 
 public class StageManager : MonoBehaviour
 {
@@ -17,10 +18,19 @@ public class StageManager : MonoBehaviour
     private bool stage3ActionExecuted = false;
     private bool stage4ActionExecuted = false;
 
+    [FMODUnity.EventRef]
+    public string bgmEventPath = "event:/LEVEL 1/BGM/BGM"; // FMOD event path
+
+    private FMOD.Studio.EventInstance bgmEventInstance; // FMOD event instance
+
     void Start()
     {
         // Check all visuals are initially inactive
         SetAllVisualsInactive();
+
+        // Initialize FMOD event instance
+        bgmEventInstance = FMODUnity.RuntimeManager.CreateInstance(bgmEventPath);
+        bgmEventInstance.start(); // Start the FMOD event
     }
 
     void Update()
@@ -43,6 +53,9 @@ public class StageManager : MonoBehaviour
                 {
                     Stage1Action();
                     stage1ActionExecuted = true;
+                    stage2ActionExecuted = false;
+                    stage3ActionExecuted = false;
+                    stage4ActionExecuted = false;
                 }
                 break;
             case BeatClicker.Stage.Stage2:
@@ -53,6 +66,8 @@ public class StageManager : MonoBehaviour
                     stage1ActionExecuted = false;
                     Stage2Action();
                     stage2ActionExecuted = true;
+                    stage3ActionExecuted = false;
+                    stage4ActionExecuted = false;
                 }
                 break;
             case BeatClicker.Stage.Stage3:
@@ -65,6 +80,7 @@ public class StageManager : MonoBehaviour
                     stage2ActionExecuted = false;
                     Stage3Action();
                     stage3ActionExecuted = true;
+                    stage4ActionExecuted = false;
                 }
                 break;
             case BeatClicker.Stage.Stage4:
@@ -98,23 +114,43 @@ public class StageManager : MonoBehaviour
     {
         // Add actions for Stage 1 here
         Debug.Log("Stage 1 Action");
+
+        // Set parameter for Stage 1
+        bgmEventInstance.setParameterByName("COMBOS", 0f); // Change the value as needed
     }
 
     void Stage2Action()
     {
         // Add actions for Stage 2 here
         Debug.Log("Stage 2 Action");
+
+        // Set parameter for Stage 2
+        bgmEventInstance.setParameterByName("COMBOS", 2f); // Change the value as needed
     }
 
     void Stage3Action()
     {
         // Add actions for Stage 3 here
         Debug.Log("Stage 3 Action");
+
+        // Set parameter for Stage 3
+        bgmEventInstance.setParameterByName("COMBOS", 2f); // Change the value as needed
     }
 
     void Stage4Action()
     {
         // Add actions for Stage 4 here
         Debug.Log("Stage 4 Action");
+
+        // Set parameter for Stage 4
+        bgmEventInstance.setParameterByName("COMBOS", 2f); // Change the value as needed
+    }
+
+    // Call this method when the stage manager is destroyed
+    private void OnDestroy()
+    {
+        // Release the FMOD event instance
+        bgmEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT); // Stop the FMOD event with fade out
+        bgmEventInstance.release();
     }
 }
