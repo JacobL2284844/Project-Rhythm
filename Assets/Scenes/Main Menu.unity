@@ -10386,16 +10386,16 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1362883871
-      Data2: 1331970652
-      Data3: -1116132164
-      Data4: -1877427550
-    Path: event:/LEVEL 1/UI/UIselect
+      Data1: -678085241
+      Data2: 1130002589
+      Data3: -230283366
+      Data4: -1846548562
+    Path: event:/LEVEL 1/UI/UImove
   Event: 
   PlayEvent: 17
   StopEvent: 0
   AllowFadeout: 1
-  TriggerOnce: 1
+  TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
@@ -10409,7 +10409,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753017494}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
@@ -10417,16 +10417,16 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -678085241
-      Data2: 1130002589
-      Data3: -230283366
-      Data4: -1846548562
-    Path: event:/LEVEL 1/UI/UImove
+      Data1: 1362883871
+      Data2: 1331970652
+      Data3: -1116132164
+      Data4: -1877427550
+    Path: event:/LEVEL 1/UI/UIselect
   Event: 
   PlayEvent: 13
   StopEvent: 0
   AllowFadeout: 1
-  TriggerOnce: 1
+  TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
@@ -16875,16 +16875,16 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1362883871
-      Data2: 1331970652
-      Data3: -1116132164
-      Data4: -1877427550
-    Path: event:/LEVEL 1/UI/UIselect
+      Data1: -678085241
+      Data2: 1130002589
+      Data3: -230283366
+      Data4: -1846548562
+    Path: event:/LEVEL 1/UI/UImove
   Event: 
   PlayEvent: 17
   StopEvent: 0
   AllowFadeout: 1
-  TriggerOnce: 1
+  TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
@@ -16898,7 +16898,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1053942269}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
@@ -16906,16 +16906,16 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -678085241
-      Data2: 1130002589
-      Data3: -230283366
-      Data4: -1846548562
-    Path: event:/LEVEL 1/UI/UImove
+      Data1: 1362883871
+      Data2: 1331970652
+      Data3: -1116132164
+      Data4: -1877427550
+    Path: event:/LEVEL 1/UI/UIselect
   Event: 
   PlayEvent: 13
   StopEvent: 0
   AllowFadeout: 1
-  TriggerOnce: 1
+  TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
@@ -17084,16 +17084,16 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1362883871
-      Data2: 1331970652
-      Data3: -1116132164
-      Data4: -1877427550
-    Path: event:/LEVEL 1/UI/UIselect
+      Data1: -678085241
+      Data2: 1130002589
+      Data3: -230283366
+      Data4: -1846548562
+    Path: event:/LEVEL 1/UI/UImove
   Event: 
   PlayEvent: 17
   StopEvent: 0
   AllowFadeout: 1
-  TriggerOnce: 1
+  TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
@@ -17107,7 +17107,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061435696}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
@@ -17115,16 +17115,16 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -678085241
-      Data2: 1130002589
-      Data3: -230283366
-      Data4: -1846548562
-    Path: event:/LEVEL 1/UI/UImove
+      Data1: 1362883871
+      Data2: 1331970652
+      Data3: -1116132164
+      Data4: -1877427550
+    Path: event:/LEVEL 1/UI/UIselect
   Event: 
   PlayEvent: 13
   StopEvent: 0
   AllowFadeout: 1
-  TriggerOnce: 1
+  TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
@@ -18512,11 +18512,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1362883871
-      Data2: 1331970652
-      Data3: -1116132164
-      Data4: -1877427550
-    Path: event:/LEVEL 1/UI/UIselect
+      Data1: -678085241
+      Data2: 1130002589
+      Data3: -230283366
+      Data4: -1846548562
+    Path: event:/LEVEL 1/UI/UImove
   Event: 
   PlayEvent: 17
   StopEvent: 0
@@ -18535,7 +18535,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1084249663}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
@@ -18543,11 +18543,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -678085241
-      Data2: 1130002589
-      Data3: -230283366
-      Data4: -1846548562
-    Path: event:/LEVEL 1/UI/UImove
+      Data1: 1362883871
+      Data2: 1331970652
+      Data3: -1116132164
+      Data4: -1877427550
+    Path: event:/LEVEL 1/UI/UIselect
   Event: 
   PlayEvent: 13
   StopEvent: 0
