@@ -29,6 +29,7 @@ public class BeatClicker : MonoBehaviour
     public string mehTag = "Meh!";
     public string failTag = "Offbeat!";
     public QuickTimeManager quickTimeUIManager;
+    public AttackManager playerAttackManager;
     public enum Stage { Stage1, Stage2, Stage3, Stage4 }
     public Stage currentStage = Stage.Stage1; // Current stage
     [SerializeField] int current_beatHitsToProgress = 10; // Number of beats needed to progress to the next stage
@@ -45,8 +46,6 @@ public class BeatClicker : MonoBehaviour
     public Text offsetText; // (Can remove if you dont want Offset Adjust UI)
     public float offsetMilliseconds = 0f;
 
-
-
     void Start()
     {
         // Load offset from PlayerPrefs when the game starts
@@ -61,7 +60,7 @@ public class BeatClicker : MonoBehaviour
         scoreDisplay = FindObjectOfType<ScoreDisplay>();
         streakText = FindObjectOfType<StreakText>();
 
-        current_beatHitsToProgress = beatHitsToProgress_Stage2;
+        CheckNewStage();
     }
 
     public void PerfromCheckBeat(InputAction.CallbackContext context)//from input provider
@@ -98,7 +97,6 @@ public class BeatClicker : MonoBehaviour
 
     void UpdateStage()
     {
-
         if (misses >= missesToDecreaseStage && currentStage != Stage.Stage1)
         {
             // Decrease stage if player misses enough beats and not at Stage1
@@ -134,23 +132,27 @@ public class BeatClicker : MonoBehaviour
         {
             quickTimeUIManager.SetStage(1);//update ui
             current_beatHitsToProgress = beatHitsToProgress_Stage2;
+            playerAttackManager.activeCombos = playerAttackManager.combos_Stage1;
             return;
         }
         else if (currentStage == Stage.Stage2)
         {
             quickTimeUIManager.SetStage(2);//update ui
             current_beatHitsToProgress = beatHitsToProgress_Stage3;
+            playerAttackManager.activeCombos = playerAttackManager.combos_Stage2;
             return;
         }
         else if (currentStage == Stage.Stage3)
         {
             quickTimeUIManager.SetStage(3);//update ui
             current_beatHitsToProgress = beatHitsToProgress_Stage4;
+            playerAttackManager.activeCombos = playerAttackManager.combos_Stage3;
             return;
         }
         else if (currentStage == Stage.Stage4)
         {
             quickTimeUIManager.SetStage(4);//update ui
+            playerAttackManager.activeCombos = playerAttackManager.combos_Stage4;
             return;
         }
     }
