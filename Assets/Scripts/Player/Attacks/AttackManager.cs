@@ -24,8 +24,14 @@ public class AttackManager : MonoBehaviour
 
     [Header("Attack Combos")]
     public bool isAttacking = false;
-    public List<AttackSO> currentCombo;
-    public List<ComboSO> combos;
+    public List<AttackSO> currentActiveCombo;
+    public List<ComboSO> currentCombos;
+    
+    public List<ComboSO> stage1_Combos;
+    public List<ComboSO> stage2_Combos;
+    public List<ComboSO> stage3_Combos;
+    public List<ComboSO> stage4_Combos;
+    
     public AttackSO block;
 
     public BeatClicker beatClicker;
@@ -39,6 +45,7 @@ public class AttackManager : MonoBehaviour
 
     private void Start()
     {
+        currentCombos = stage1_Combos;
         SetRandomCombo();
     }
     // Update is called once per frame
@@ -212,13 +219,13 @@ public class AttackManager : MonoBehaviour
     void SetRandomCombo()
     {
         //Debug.Log("Random combo");
-        currentCombo.Clear();
+        currentActiveCombo.Clear();
 
-        int index = Random.Range(0, combos.Count);
+        int index = Random.Range(0, currentCombos.Count);
 
-        foreach (var attack in combos[index].combo)//random combo
+        foreach (var attack in currentCombos[index].combo)//random combo
         {
-            currentCombo.Add(attack);
+            currentActiveCombo.Add(attack);
         }
     }
     //attack dash when attack is first called from input
@@ -235,14 +242,14 @@ public class AttackManager : MonoBehaviour
             //once locked
             if (currentEnemyTarget != null && cameraController.currentCam == cameraController.cinemachine_LockOn)
             {//combo timing
-                if (Time.time - lastComboEnd > timeBetweenCombos && comboCount <= currentCombo.Count)
+                if (Time.time - lastComboEnd > timeBetweenCombos && comboCount <= currentActiveCombo.Count)
                 {
                     NPCStateManager stateManager = currentEnemyTarget.GetComponent<NPCStateManager>();
 
                     if (stateManager.canAttack)//enemy is attacking
                     {
                         //set attack positioner position to specific attack
-                        attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+                        attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentActiveCombo[comboCount].attackDistanceToEnemy);
 
                         //do block
                         Block();
@@ -250,9 +257,9 @@ public class AttackManager : MonoBehaviour
                     else
                     {
                         //set attack positioner position to specific attack
-                        attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentCombo[comboCount].attackDistanceToEnemy);
+                        attackPositioner.GetChild(0).localPosition = new Vector3(0, 0, -currentActiveCombo[comboCount].attackDistanceToEnemy);
                         //do attack
-                        Attack(currentCombo);
+                        Attack(currentActiveCombo);
                     }
 
 
