@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class EnemyMaster : MonoBehaviour
 {
+    public EnemySpawner currentSpawnerInUse;
     public List<NPCStateManager> enemys;
     public QuickTimeManager quickTimeManager;
     public Transform player;
-    public EnemySpawner currentSpawnerInUse;
-
+    public BeatClicker beatClicker;
     public void UpdateAllEnemyBeatCheck()
     {
         foreach(NPCStateManager enemy in enemys)

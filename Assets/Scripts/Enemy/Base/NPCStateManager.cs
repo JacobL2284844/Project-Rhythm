@@ -223,7 +223,12 @@ public class NPCStateManager : MonoBehaviour
             {
                 DoAttack();
             }
-        }
+        }//if player does no input for too long
+        //else if(combatState == currantState && enemyMaster.beatClicker.beatsSinceLastInputCheck >= emptyBeatsBeforeAttack && ! canAttack)
+        //{
+        //    canAttack = true;
+        //    waitOneBeat = true;
+        //}
     }
 
     private void DoAttack()//enemy attack start
