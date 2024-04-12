@@ -62,6 +62,7 @@ public class ThirdPersonController : MonoBehaviour
     private LayerMask wallMask;
     [SerializeField]
     private bool isWallRunning;
+    [SerializeField] float wallRayCastDistance = 0.7f;
     [SerializeField]
     private float wallRunSpeedMultiplier;
     [SerializeField]
@@ -382,8 +383,8 @@ public class ThirdPersonController : MonoBehaviour
     private bool wasWallrunning = false;
     private void CheckWallRun()
     {
-        onWall_left = Physics.Raycast(transform.position, -transform.right, out leftWall_rayHit, 0.7f, wallMask);
-        onWall_right = Physics.Raycast(transform.position, transform.right, out rightWall_rayHit, 0.7f, wallMask);
+        onWall_left = Physics.Raycast(transform.position, -transform.right, out leftWall_rayHit, wallRayCastDistance, wallMask);
+        onWall_right = Physics.Raycast(transform.position, transform.right, out rightWall_rayHit, wallRayCastDistance, wallMask);
 
         if (canWallRun)
         {
@@ -518,7 +519,7 @@ public class ThirdPersonController : MonoBehaviour
         float time = 0;
         Vector3 startPosition = transform.position;
 
-        targetPosition = new Vector3(transform.position.x, targetPosition.y + 0.3f, transform.position.z);
+        targetPosition = new Vector3(transform.position.x, targetPosition.y + 1.3f, transform.position.z);
 
         while (time < duration)
         {

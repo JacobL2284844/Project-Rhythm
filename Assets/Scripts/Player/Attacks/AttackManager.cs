@@ -262,8 +262,6 @@ public class AttackManager : MonoBehaviour
                         Attack(currentCombo);
                     }
 
-
-
                     //set position
                     float distance = Vector3.Distance(transform.position, currentEnemyTarget.transform.position);
                     if (distance > 0.1f)
