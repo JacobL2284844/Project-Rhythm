@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
     [Header("Dynamic FOV")]
     public float minFOV = 40f;
     public float maxFOV = 55f;
+    public float definateMinFOV = 25f;
     public float minVelocity = 0f;
     public float maxVelocity = 10f;
     public float transitionSpeed = 5f; // Adjust the transition speed as needed
@@ -62,10 +63,13 @@ public class CameraController : MonoBehaviour
         float targetNormalizedVelocity = Mathf.Clamp01((targetRigidbody.velocity.magnitude - minVelocity) / (maxVelocity - minVelocity));
         float targetFOV = Mathf.Lerp(minFOV, maxFOV, targetNormalizedVelocity);
 
-        // Smoothly transition the current FOV towards the target FOV
-        float smoothedFOV = Mathf.SmoothDamp(currentCam.m_Lens.FieldOfView, targetFOV, ref currentVelocity, transitionSpeed * Time.deltaTime);
+        if (currentCam.m_Lens.FieldOfView >= definateMinFOV)
+        {
+            // Smoothly transition the current FOV towards the target FOV
+            float smoothedFOV = Mathf.SmoothDamp(currentCam.m_Lens.FieldOfView, targetFOV, ref currentVelocity, transitionSpeed * Time.deltaTime);
 
-        currentCam.m_Lens.FieldOfView = smoothedFOV;
+            currentCam.m_Lens.FieldOfView = smoothedFOV;
+        }
     }
 
     public void ToggleLockOn(InputAction.CallbackContext context)
@@ -147,7 +151,7 @@ public class CameraController : MonoBehaviour
 
             if (currentEnemyLockedIndex < 0)
             {
-                currentEnemyLockedIndex = enemyChecker.enemiesInRange.Count -1;
+                currentEnemyLockedIndex = enemyChecker.enemiesInRange.Count - 1;
             }
             targetToLock = enemyChecker.enemiesInRange[currentEnemyLockedIndex];
             targetGroup.m_Targets[1].target = targetToLock;

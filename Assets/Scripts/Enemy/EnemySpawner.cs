@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public int amountOfEnemys;
     bool spawnEnemysOnEntry = true;
     public List<GameObject> myActiveEnemies;
-
+    public CameraController cameraController;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -52,6 +52,7 @@ public class EnemySpawner : MonoBehaviour
         if (myActiveEnemies.Count == 0)
         {
             enemyMaster.currentSpawnerInUse = null;
+            cameraController.SwitchCamera(cameraController.cinemachineFL);
             Destroy(gameObject);
         }
     }

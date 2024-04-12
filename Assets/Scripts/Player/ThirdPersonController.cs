@@ -33,7 +33,6 @@ public class ThirdPersonController : MonoBehaviour
     private bool canDoubleJump = true;
     [SerializeField]
     private float groundcheckRaycastDistance = 0.5f;
-
     public bool isGroundedState;
     [SerializeField]
     private float fallForce = 65f;
