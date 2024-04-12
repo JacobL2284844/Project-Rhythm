@@ -37,6 +37,7 @@ public class BeatClicker : MonoBehaviour
     [SerializeField] int beatHitsToProgress_Stage3 = 8;
     [SerializeField] int beatHitsToProgress_Stage4 = 12;
 
+    public int beatsSinceLastInputCheck = 0; // Number of beats since the last input check
     public int missesToReset = 3; // Number of misses allowed before stage decrease
     public int missesToDecreaseStage = 5; // Number of misses to decrease the stage
     public int beatsHit = 0; // Number of beats hit by the player
@@ -63,11 +64,12 @@ public class BeatClicker : MonoBehaviour
         CheckNewStage();
     }
 
-    public void PerfromCheckBeat(InputAction.CallbackContext context)//from input provider
+    public void PerfromCheckBeat(InputAction.CallbackContext context)
     {
         if (context.started)
         {
             CheckBeat();
+            beatsSinceLastInputCheck = 0; // Reset the count when input is checked
         }
     }
     void Update()
@@ -89,6 +91,15 @@ public class BeatClicker : MonoBehaviour
         if (offsetText != null)
         {
             offsetText.text = "Offset: " + offsetMilliseconds.ToString("F2") + "ms";
+        }
+
+        // Increment the count of beats since the last input check
+        if (beatTimer <= 0)
+        {
+            beatsSinceLastInputCheck++;
+
+            // Reset the beat timer for the next beat
+            beatTimer = beatInterval;
         }
 
         // Update stage based on performance
