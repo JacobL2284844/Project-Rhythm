@@ -30,6 +30,7 @@ public class BeatClicker : MonoBehaviour
     public string failTag = "Offbeat!";
     public QuickTimeManager quickTimeUIManager;
     public AttackManager playerAttackManager;
+    public EnemyMaster enemyMaster;
     public enum Stage { Stage1, Stage2, Stage3, Stage4 }
     public Stage currentStage = Stage.Stage1; // Current stage
     [SerializeField] int current_beatHitsToProgress = 10; // Number of beats needed to progress to the next stage
@@ -37,7 +38,6 @@ public class BeatClicker : MonoBehaviour
     [SerializeField] int beatHitsToProgress_Stage3 = 8;
     [SerializeField] int beatHitsToProgress_Stage4 = 12;
 
-    public int beatsSinceLastInputCheck = 0; // Number of beats since the last input check
     public int missesToReset = 3; // Number of misses allowed before stage decrease
     public int missesToDecreaseStage = 5; // Number of misses to decrease the stage
     public int beatsHit = 0; // Number of beats hit by the player
@@ -64,12 +64,12 @@ public class BeatClicker : MonoBehaviour
         CheckNewStage();
     }
 
-    public void PerfromCheckBeat(InputAction.CallbackContext context)
+    public void PerfromCheckBeat(InputAction.CallbackContext context)//from input provider
     {
         if (context.started)
         {
             CheckBeat();
-            beatsSinceLastInputCheck = 0; // Reset the count when input is checked
+            enemyMaster.beatsSincePlayerInput = 0;
         }
     }
     void Update()
@@ -91,15 +91,6 @@ public class BeatClicker : MonoBehaviour
         if (offsetText != null)
         {
             offsetText.text = "Offset: " + offsetMilliseconds.ToString("F2") + "ms";
-        }
-
-        // Increment the count of beats since the last input check
-        if (beatTimer <= 0)
-        {
-            beatsSinceLastInputCheck++;
-
-            // Reset the beat timer for the next beat
-            beatTimer = beatInterval;
         }
 
         // Update stage based on performance
@@ -139,7 +130,7 @@ public class BeatClicker : MonoBehaviour
     }
     void CheckNewStage()
     {
-        if(currentStage == Stage.Stage1)
+        if (currentStage == Stage.Stage1)
         {
             quickTimeUIManager.SetStage(1);//update ui
             current_beatHitsToProgress = beatHitsToProgress_Stage2;

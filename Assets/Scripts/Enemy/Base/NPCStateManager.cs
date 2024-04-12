@@ -69,6 +69,7 @@ public class NPCStateManager : MonoBehaviour
     public bool isAttacking = false;
     public bool waitOneBeat = true;//when ready to attack wait one beat
     public bool canHitPlayer = false;
+    public int emptyBeatsBeforeAttack = 3;
 
     public float maxAttackDIstance = 3;
     public float attackDamage;
@@ -224,11 +225,11 @@ public class NPCStateManager : MonoBehaviour
                 DoAttack();
             }
         }//if player does no input for too long
-        //else if(combatState == currantState && enemyMaster.beatClicker.beatsSinceLastInputCheck >= emptyBeatsBeforeAttack && ! canAttack)
-        //{
-        //    canAttack = true;
-        //    waitOneBeat = true;
-        //}
+        else if (combatState == currantState && enemyMaster.beatsSincePlayerInput >= emptyBeatsBeforeAttack && !canAttack)
+        {
+            canAttack = true;
+            waitOneBeat = true;
+        }
     }
 
     private void DoAttack()//enemy attack start

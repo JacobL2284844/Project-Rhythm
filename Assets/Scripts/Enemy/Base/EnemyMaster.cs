@@ -9,6 +9,7 @@ public class EnemyMaster : MonoBehaviour
     public QuickTimeManager quickTimeManager;
     public Transform player;
     public BeatClicker beatClicker;
+    public int beatsSincePlayerInput = 0;
     public void UpdateAllEnemyBeatCheck()
     {
         foreach(NPCStateManager enemy in enemys)
@@ -19,5 +20,7 @@ public class EnemyMaster : MonoBehaviour
         {
             currentSpawnerInUse.CheckBeat();
         }
+
+        beatsSincePlayerInput++;
     }
 }
