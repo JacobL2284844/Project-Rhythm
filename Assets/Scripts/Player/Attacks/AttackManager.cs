@@ -25,7 +25,13 @@ public class AttackManager : MonoBehaviour
     [Header("Attack Combos")]
     public bool isAttacking = false;
     public List<AttackSO> currentCombo;
-    public List<ComboSO> combos;
+    public List<ComboSO> activeCombos;
+    
+    public List<ComboSO> combos_Stage1;
+    public List<ComboSO> combos_Stage2;
+    public List<ComboSO> combos_Stage3;
+    public List<ComboSO> combos_Stage4;
+
     public AttackSO block;
 
     public BeatClicker beatClicker;
@@ -39,6 +45,7 @@ public class AttackManager : MonoBehaviour
 
     private void Start()
     {
+        activeCombos = combos_Stage1;
         SetRandomCombo();
     }
     // Update is called once per frame
@@ -214,9 +221,9 @@ public class AttackManager : MonoBehaviour
         //Debug.Log("Random combo");
         currentCombo.Clear();
 
-        int index = Random.Range(0, combos.Count);
+        int index = Random.Range(0, activeCombos.Count);
 
-        foreach (var attack in combos[index].combo)//random combo
+        foreach (var attack in activeCombos[index].combo)//random combo
         {
             currentCombo.Add(attack);
         }

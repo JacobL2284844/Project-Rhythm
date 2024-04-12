@@ -31,7 +31,11 @@ public class BeatClicker : MonoBehaviour
     public QuickTimeManager quickTimeUIManager;
     public enum Stage { Stage1, Stage2, Stage3, Stage4 }
     public Stage currentStage = Stage.Stage1; // Current stage
-    public int beatsHitToProgress = 10; // Number of beats needed to progress to the next stage
+    [SerializeField] int current_beatHitsToProgress = 10; // Number of beats needed to progress to the next stage
+    [SerializeField] int beatHitsToProgress_Stage2 = 4;
+    [SerializeField] int beatHitsToProgress_Stage3 = 8;
+    [SerializeField] int beatHitsToProgress_Stage4 = 12;
+
     public int missesToReset = 3; // Number of misses allowed before stage decrease
     public int missesToDecreaseStage = 5; // Number of misses to decrease the stage
     public int beatsHit = 0; // Number of beats hit by the player
@@ -45,7 +49,6 @@ public class BeatClicker : MonoBehaviour
 
     void Start()
     {
-
         // Load offset from PlayerPrefs when the game starts
         if (PlayerPrefs.HasKey("Offset"))
         {
@@ -57,6 +60,8 @@ public class BeatClicker : MonoBehaviour
 
         scoreDisplay = FindObjectOfType<ScoreDisplay>();
         streakText = FindObjectOfType<StreakText>();
+
+        current_beatHitsToProgress = beatHitsToProgress_Stage2;
     }
 
     public void PerfromCheckBeat(InputAction.CallbackContext context)//from input provider
@@ -104,7 +109,7 @@ public class BeatClicker : MonoBehaviour
 
             CheckNewStage();
         }
-        else if (beatsHit >= beatsHitToProgress && currentStage != Stage.Stage4)
+        else if (beatsHit >= current_beatHitsToProgress && currentStage != Stage.Stage4)
         {
             // Increase stage if player hits beats enough times and not at Stage4
             currentStage++;
@@ -128,16 +133,19 @@ public class BeatClicker : MonoBehaviour
         if(currentStage == Stage.Stage1)
         {
             quickTimeUIManager.SetStage(1);//update ui
+            current_beatHitsToProgress = beatHitsToProgress_Stage2;
             return;
         }
         else if (currentStage == Stage.Stage2)
         {
             quickTimeUIManager.SetStage(2);//update ui
+            current_beatHitsToProgress = beatHitsToProgress_Stage3;
             return;
         }
         else if (currentStage == Stage.Stage3)
         {
             quickTimeUIManager.SetStage(3);//update ui
+            current_beatHitsToProgress = beatHitsToProgress_Stage4;
             return;
         }
         else if (currentStage == Stage.Stage4)
