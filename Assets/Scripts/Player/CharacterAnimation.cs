@@ -25,10 +25,12 @@ public class CharacterAnimation : MonoBehaviour
     public void DoFallAnimation()
     {
         animator.SetBool("IsGrounded", false);
+        hitboxAnimator.SetBool("IsGrounded", false);
     }
     public void ExitFallAnimation()
     {
         animator.SetBool("IsGrounded", true);
+        hitboxAnimator.SetBool("IsGrounded", true);
     }
     public void DoSlideAnimation(InputAction.CallbackContext context)
     {
