@@ -31,12 +31,13 @@ public class BeatClicker : MonoBehaviour
     public QuickTimeManager quickTimeUIManager;
     public AttackManager playerAttackManager;
     public EnemyMaster enemyMaster;
-    public enum Stage { Stage1, Stage2, Stage3, Stage4 }
+    public enum Stage { Stage1, Stage2, Stage3, Stage4, Stage5 }
     public Stage currentStage = Stage.Stage1; // Current stage
     [SerializeField] int current_beatHitsToProgress = 10; // Number of beats needed to progress to the next stage
     [SerializeField] int beatHitsToProgress_Stage2 = 4;
     [SerializeField] int beatHitsToProgress_Stage3 = 8;
     [SerializeField] int beatHitsToProgress_Stage4 = 12;
+    [SerializeField] int beatHitsToProgress_Stage5 = 16;
 
     public int missesToReset = 3; // Number of misses allowed before stage decrease
     public int missesToDecreaseStage = 5; // Number of misses to decrease the stage
@@ -109,9 +110,9 @@ public class BeatClicker : MonoBehaviour
 
             CheckNewStage();
         }
-        else if (beatsHit >= current_beatHitsToProgress && currentStage != Stage.Stage4)
+        else if (beatsHit >= current_beatHitsToProgress && currentStage != Stage.Stage5)
         {
-            // Increase stage if player hits beats enough times and not at Stage4
+            // Increase stage if player hits beats enough times and not at Stage5
             currentStage++;
             Debug.Log("Stage Up: " + currentStage);// Remove (Only For Testing
             beatsHit = 0;
@@ -154,6 +155,12 @@ public class BeatClicker : MonoBehaviour
         else if (currentStage == Stage.Stage4)
         {
             quickTimeUIManager.SetStage(4);//update ui
+            playerAttackManager.activeCombos = playerAttackManager.combos_Stage4;
+            return;
+        }
+        else if (currentStage == Stage.Stage5)
+        {
+            quickTimeUIManager.SetStage(5);//update ui
             playerAttackManager.activeCombos = playerAttackManager.combos_Stage4;
             return;
         }
