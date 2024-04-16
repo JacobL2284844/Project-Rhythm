@@ -136,6 +136,15 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""990b32bb-4998-44f6-9b06-792db63c8fe8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -501,6 +510,50 @@ namespace UnityEngine.InputSystem
                     ""action"": ""TargetPreviusInList"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3518a99e-7dcd-48b8-ae35-97c521ffcddc"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bdeed284-c57e-4274-bd7b-e4a75c300df1"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f331ae1c-dfcf-425b-a8de-f56c9b65dbc4"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ebd35de-0606-486f-bf36-ece82d011e7a"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1098,6 +1151,7 @@ namespace UnityEngine.InputSystem
             m_Player_PlayMusic1 = m_Player.FindAction("PlayMusic 1", throwIfNotFound: true);
             m_Player_TargetNextInList = m_Player.FindAction("TargetNextInList", throwIfNotFound: true);
             m_Player_TargetPreviusInList = m_Player.FindAction("TargetPreviusInList", throwIfNotFound: true);
+            m_Player_PauseToggle = m_Player.FindAction("PauseToggle", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1183,6 +1237,7 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_PlayMusic1;
         private readonly InputAction m_Player_TargetNextInList;
         private readonly InputAction m_Player_TargetPreviusInList;
+        private readonly InputAction m_Player_PauseToggle;
         public struct PlayerActions
         {
             private @ThirdPersonInput m_Wrapper;
@@ -1199,6 +1254,7 @@ namespace UnityEngine.InputSystem
             public InputAction @PlayMusic1 => m_Wrapper.m_Player_PlayMusic1;
             public InputAction @TargetNextInList => m_Wrapper.m_Player_TargetNextInList;
             public InputAction @TargetPreviusInList => m_Wrapper.m_Player_TargetPreviusInList;
+            public InputAction @PauseToggle => m_Wrapper.m_Player_PauseToggle;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1244,6 +1300,9 @@ namespace UnityEngine.InputSystem
                 @TargetPreviusInList.started += instance.OnTargetPreviusInList;
                 @TargetPreviusInList.performed += instance.OnTargetPreviusInList;
                 @TargetPreviusInList.canceled += instance.OnTargetPreviusInList;
+                @PauseToggle.started += instance.OnPauseToggle;
+                @PauseToggle.performed += instance.OnPauseToggle;
+                @PauseToggle.canceled += instance.OnPauseToggle;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1284,6 +1343,9 @@ namespace UnityEngine.InputSystem
                 @TargetPreviusInList.started -= instance.OnTargetPreviusInList;
                 @TargetPreviusInList.performed -= instance.OnTargetPreviusInList;
                 @TargetPreviusInList.canceled -= instance.OnTargetPreviusInList;
+                @PauseToggle.started -= instance.OnPauseToggle;
+                @PauseToggle.performed -= instance.OnPauseToggle;
+                @PauseToggle.canceled -= instance.OnPauseToggle;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1478,6 +1540,7 @@ namespace UnityEngine.InputSystem
             void OnPlayMusic1(InputAction.CallbackContext context);
             void OnTargetNextInList(InputAction.CallbackContext context);
             void OnTargetPreviusInList(InputAction.CallbackContext context);
+            void OnPauseToggle(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

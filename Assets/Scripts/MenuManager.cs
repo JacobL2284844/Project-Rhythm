@@ -1,9 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 public class MenuManager : MonoBehaviour
 {
+    public EventSystem eventSystem;
+
+    [Header("Pause Menu")]
+    public bool gameIsPaused = false;
+    public GameObject pauseMenu;
+    public GameObject hud;
+
+    private void Start()
+    {
+        ResumeGame();
+    }
     //button universal
     public void ButtonSelect()
     {
@@ -15,13 +28,40 @@ public class MenuManager : MonoBehaviour
     }
 
     //pause menu
-    public void PauseGame()
+    public void PauseGame(InputAction.CallbackContext context)
     {
+        Debug.Log("Pause");
+        if (!gameIsPaused && context.started)
+        {
+            gameIsPaused = true;
+            pauseMenu.SetActive(true);
+            hud.SetActive(false);
 
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            Time.timeScale = 0f;
+            return;
+        }
+        if (gameIsPaused && context.started)
+        {
+            ResumeGame();
+        }
     }
     public void ResumeGame()
     {
+        Debug.Log("Resume");
+        if (gameIsPaused)
+        {
+            gameIsPaused = false;
+            pauseMenu.SetActive(false);
+            hud.SetActive(true);
 
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            Time.timeScale = 1.0f;
+        }
     }
 
     //options

@@ -37,9 +37,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private PostProcessVolumeControl postProcessControll;
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         currentCam = startCam;
         for (int i = 0; i < cameras.Length; i++)
         {
