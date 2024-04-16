@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
@@ -12,7 +13,7 @@ public class MenuManager : MonoBehaviour
     public bool gameIsPaused = false;
     public GameObject pauseMenu;
     public GameObject hud;
-
+    public Button resumeButton;
     private void Start()
     {
         ResumeGame();
@@ -41,6 +42,8 @@ public class MenuManager : MonoBehaviour
             Cursor.visible = true;
 
             Time.timeScale = 0f;
+
+            resumeButton.Select();
             return;
         }
         if (gameIsPaused && context.started)
@@ -50,7 +53,6 @@ public class MenuManager : MonoBehaviour
     }
     public void ResumeGame()
     {
-        Debug.Log("Resume");
         if (gameIsPaused)
         {
             gameIsPaused = false;
