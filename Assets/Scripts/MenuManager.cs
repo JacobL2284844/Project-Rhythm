@@ -9,11 +9,15 @@ public class MenuManager : MonoBehaviour
 {
     public EventSystem eventSystem;
 
-    [Header("Pause Menu")]
+    [Header("Playmode Pause Menu")]
     public bool gameIsPaused = false;
     public GameObject pauseMenu;
     public GameObject hud;
     public Button resumeButton;
+
+    [Header("Options")]
+    public OptionsMenu optionsMenuManager;
+    public GameObject optionsUI;
     private void Start()
     {
         ResumeGame();
@@ -69,11 +73,11 @@ public class MenuManager : MonoBehaviour
     //options
     public void ShowOptions()
     {
-
+        optionsUI.SetActive(true);
     }
     public void HideOptions()
     {
-
+        optionsUI.SetActive(false);
     }
 
     //main menu
