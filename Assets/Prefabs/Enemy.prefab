@@ -321,7 +321,7 @@ MonoBehaviour:
   canHitPlayer: 0
   emptyBeatsBeforeAttack: 3
   maxAttackDIstance: 3
-  attackDamage: 20
+  attackDamage: 10
   myAttacks:
   - {fileID: 11400000, guid: e58813008bbe3cb49acd21bfdb34c259, type: 2}
   - {fileID: 11400000, guid: 14ae35fa64413cc4eb5c5f9eb79fd802, type: 2}
@@ -352,6 +352,7 @@ MonoBehaviour:
   playerHitReaction: []
   playerHitEffect: {fileID: 0}
   healthSmoothDecreaseDuration: 0
+  menuManager: {fileID: 0}
   regenAmountPerBeat: 5
   beatClicker: {fileID: 0}
 --- !u!195 &8616041486020427476

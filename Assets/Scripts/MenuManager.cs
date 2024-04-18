@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class MenuManager : MonoBehaviour
 {
     public EventSystem eventSystem;
+    public GameObject deathMenu;
 
     [Header("Playmode Pause Menu")]
     public bool gameIsPaused = false;
@@ -92,5 +93,19 @@ public class MenuManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    //game death
+    public void ShowDeathMenu()
+    {
+        deathMenu.SetActive(true);
+
+        pauseMenu.SetActive(false);
+        hud.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Time.timeScale = 0f;
     }
 }

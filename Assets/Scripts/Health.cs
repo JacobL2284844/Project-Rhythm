@@ -17,7 +17,8 @@ public class Health : MonoBehaviour
     public AnimatorOverrideController[] playerHitReaction;
     public ParticleSystem playerHitEffect;
     public float healthSmoothDecreaseDuration;
-    //public GameObject deathMenu;
+
+    public MenuManager menuManager;
 
     [Header("Player Health Regen")]
     public int regenAmountPerBeat = 5;//only takes place at stage 5
@@ -64,7 +65,7 @@ public class Health : MonoBehaviour
                 StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
             }
         }
-        if (currentHealth <= 0f)
+        if (currentHealth <= 0f && gameObject.tag == "Enemy")
         {
             Die();
         }
@@ -81,7 +82,7 @@ public class Health : MonoBehaviour
         }
         if (gameObject.tag == "Player")
         {
-
+            menuManager.ShowDeathMenu();
         }
     }
 
@@ -100,6 +101,11 @@ public class Health : MonoBehaviour
 
             healthBarR.fillAmount = currentValue;
             healthBarL.fillAmount = currentValue;
+
+            if(healthBarL.fillAmount <= 0f)
+            {
+                Die();
+            }
 
             yield return null;
         }
