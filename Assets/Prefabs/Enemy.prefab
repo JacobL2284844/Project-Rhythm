@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 10000
+  maxHealth: 100
   healthBarR: {fileID: 0}
   healthBarL: {fileID: 0}
   isEnemy: 1
