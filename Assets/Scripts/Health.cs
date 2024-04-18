@@ -18,6 +18,10 @@ public class Health : MonoBehaviour
     public ParticleSystem playerHitEffect;
     public float healthSmoothDecreaseDuration;
     //public GameObject deathMenu;
+
+    [Header("Player Health Regen")]
+    public int regenAmountPerBeat = 5;//only takes place at stage 5
+    public BeatClicker beatClicker;
     void Start()
     {
         currentHealth = maxHealth;
@@ -26,32 +30,39 @@ public class Health : MonoBehaviour
     {
         float healthBeforAttack = currentHealth;
 
-        currentHealth -= amount;
-        if (gameObject.tag == "Enemy")
+        if (maxHealth > (currentHealth -= amount))//on heal !> max
         {
-            NPCStateManager stateManager = GetComponent<NPCStateManager>();
+            currentHealth -= amount;
+            if (gameObject.tag == "Enemy")
+            {
+                NPCStateManager stateManager = GetComponent<NPCStateManager>();
 
-            //if (stateManager != null)
-            //{
-            //    if (stateManager.currantStateStr != "Chase" || stateManager.currantStateStr != "Attack")
-            //    {
-            //        if (stateManager.isStandardEnemy)
-            //        {
-            //            stateManager.SetState(stateManager.chaseState);
-            //        }
-            //    }
-            //}
-        }
-        else if (gameObject.tag == "Player")
-        {
-            float fillAmount_A = healthBeforAttack / maxHealth;
-            float fillAmount_B = currentHealth / maxHealth;
+                //if (stateManager != null)
+                //{
+                //    if (stateManager.currantStateStr != "Chase" || stateManager.currantStateStr != "Attack")
+                //    {
+                //        if (stateManager.isStandardEnemy)
+                //        {
+                //            stateManager.SetState(stateManager.chaseState);
+                //        }
+                //    }
+                //}
+            }
+            else if (gameObject.tag == "Player")
+            {
+                float fillAmount_A = healthBeforAttack / maxHealth;//apply
+                float fillAmount_B = currentHealth / maxHealth;
 
-            playerHitEffect.Play();
-            //random hit react
-            playerAnimator.runtimeAnimatorController = playerHitReaction[Random.Range(0, playerHitReaction.Length)];
-            playerAnimator.SetTrigger("HitReact");
-            StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
+                if (amount > 0f)
+                {
+                    //random hit react
+                    playerHitEffect.Play();
+                    playerAnimator.runtimeAnimatorController = playerHitReaction[Random.Range(0, playerHitReaction.Length)];
+                    playerAnimator.SetTrigger("HitReact");
+                }
+
+                StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
+            }
         }
         if (currentHealth <= 0f)
         {
@@ -91,6 +102,14 @@ public class Health : MonoBehaviour
             healthBarL.fillAmount = currentValue;
 
             yield return null;
+        }
+    }
+
+    public void TryHealPlayerStage5()
+    {
+        if (beatClicker.currentStage == BeatClicker.Stage.Stage5)
+        {
+            TakeDamage(-regenAmountPerBeat);
         }
     }
 }

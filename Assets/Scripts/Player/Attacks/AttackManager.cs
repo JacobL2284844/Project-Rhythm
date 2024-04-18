@@ -20,7 +20,7 @@ public class AttackManager : MonoBehaviour
     [Header("Attack Damage")]
     public float damageForHit = 10;
     public float damageForPerfectHit = 20;
-
+    public Health playerHealth;
 
     [Header("Attack Combos")]
     public bool isAttacking = false;
@@ -93,6 +93,8 @@ public class AttackManager : MonoBehaviour
             {
                 HitEnemy(combo);
             }
+
+            playerHealth.TryHealPlayerStage5();
         }
     }
 

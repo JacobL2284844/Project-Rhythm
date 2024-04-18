@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 100
+  maxHealth: 10000
   healthBarR: {fileID: 0}
   healthBarL: {fileID: 0}
   isEnemy: 1
@@ -352,6 +352,8 @@ MonoBehaviour:
   playerHitReaction: []
   playerHitEffect: {fileID: 0}
   healthSmoothDecreaseDuration: 0
+  regenAmountPerBeat: 5
+  beatClicker: {fileID: 0}
 --- !u!195 &8616041486020427476
 NavMeshAgent:
   m_ObjectHideFlags: 0
