@@ -23,6 +23,8 @@ public class Health : MonoBehaviour
     [Header("Player Health Regen")]
     public int regenAmountPerBeat = 5;//only takes place at stage 5
     public BeatClicker beatClicker;
+    [Header("Player Health Music")]
+    public int healthThresholdforMusic = 50;
     void Start()
     {
         currentHealth = maxHealth;
@@ -69,6 +71,19 @@ public class Health : MonoBehaviour
         {
             Die();
         }
+
+        //music paramaters
+        if (gameObject.tag == "Player")
+        {
+            if (currentHealth <= healthThresholdforMusic)
+            {
+                beatClicker.SetMusicParamaterHealth(0);
+            }
+            else
+            {
+                beatClicker.SetMusicParamaterHealth(100);
+            }
+        }
     }
     void Die()
     {
@@ -102,7 +117,7 @@ public class Health : MonoBehaviour
             healthBarR.fillAmount = currentValue;
             healthBarL.fillAmount = currentValue;
 
-            if(healthBarL.fillAmount <= 0f)
+            if (healthBarL.fillAmount <= 0f)
             {
                 Die();
             }

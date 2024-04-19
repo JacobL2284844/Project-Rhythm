@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using FMODUnity;
 
 public class BeatClicker : MonoBehaviour
 {
+    [Header("Beat System")]
     public bool inGameAsset = false;//allow ashleys tests ??
 
     public float bpm = 135f; // Beats per minute
@@ -31,8 +33,16 @@ public class BeatClicker : MonoBehaviour
     public QuickTimeManager quickTimeUIManager;
     public AttackManager playerAttackManager;
     public EnemyMaster enemyMaster;
+
+    [Header("Music")]
+    public FMODUnity.EventReference eventReference;
+    private FMOD.Studio.EventInstance bgmEventInstance; // FMOD event instance
+    public int[] musicParameterPerStage = {1, 2, 2, 2, 13 };
+    
     public enum Stage { Stage1, Stage2, Stage3, Stage4, Stage5 }
     public Stage currentStage = Stage.Stage1; // Current stage
+
+    [Header("Stage system")]
     [SerializeField] int current_beatHitsToProgress = 10; // Number of beats needed to progress to the next stage
     [SerializeField] int beatHitsToProgress_Stage2 = 4;
     [SerializeField] int beatHitsToProgress_Stage3 = 8;
@@ -61,6 +71,10 @@ public class BeatClicker : MonoBehaviour
 
         scoreDisplay = FindObjectOfType<ScoreDisplay>();
         streakText = FindObjectOfType<StreakText>();
+
+        // Initialize FMOD event instance
+        bgmEventInstance = FMODUnity.RuntimeManager.CreateInstance(eventReference);
+        bgmEventInstance.start(); // Start the FMOD event
 
         CheckNewStage();
     }
@@ -136,6 +150,8 @@ public class BeatClicker : MonoBehaviour
             quickTimeUIManager.SetStage(1);//update ui
             current_beatHitsToProgress = beatHitsToProgress_Stage2;
             playerAttackManager.activeCombos = playerAttackManager.combos_Stage1;
+
+            SetMusicParamaterStage(musicParameterPerStage[0]);
             return;
         }
         else if (currentStage == Stage.Stage2)
@@ -143,6 +159,8 @@ public class BeatClicker : MonoBehaviour
             quickTimeUIManager.SetStage(2);//update ui
             current_beatHitsToProgress = beatHitsToProgress_Stage3;
             playerAttackManager.activeCombos = playerAttackManager.combos_Stage2;
+
+            SetMusicParamaterStage(musicParameterPerStage[1]);
             return;
         }
         else if (currentStage == Stage.Stage3)
@@ -150,18 +168,24 @@ public class BeatClicker : MonoBehaviour
             quickTimeUIManager.SetStage(3);//update ui
             current_beatHitsToProgress = beatHitsToProgress_Stage4;
             playerAttackManager.activeCombos = playerAttackManager.combos_Stage3;
+
+            SetMusicParamaterStage(musicParameterPerStage[2]);
             return;
         }
         else if (currentStage == Stage.Stage4)
         {
             quickTimeUIManager.SetStage(4);//update ui
             playerAttackManager.activeCombos = playerAttackManager.combos_Stage4;
+
+            SetMusicParamaterStage(musicParameterPerStage[3]);
             return;
         }
         else if (currentStage == Stage.Stage5)
         {
             quickTimeUIManager.SetStage(5);//update ui
             playerAttackManager.activeCombos = playerAttackManager.combos_Stage4;
+
+            SetMusicParamaterStage(musicParameterPerStage[4]);
             return;
         }
     }
@@ -208,6 +232,15 @@ public class BeatClicker : MonoBehaviour
         }
 
         beatTimer = beatInterval; // Reset the beat timer for the next beat
+    }
+    void SetMusicParamaterStage(float paramaterValue)
+    {
+        // Set parameter for Stage
+        bgmEventInstance.setParameterByName("COMBOS", paramaterValue); // Change the value as needed
+    }
+    public void SetMusicParamaterHealth(float paramaterValue)
+    {
+        bgmEventInstance.setParameterByName("Health", paramaterValue);
     }
     // Method to increase the streak multiplier, up to a maximum of 8x
     void IncreaseStreakMultiplier()
