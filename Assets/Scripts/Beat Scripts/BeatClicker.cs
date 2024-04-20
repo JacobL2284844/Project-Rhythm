@@ -34,6 +34,8 @@ public class BeatClicker : MonoBehaviour
     public AttackManager playerAttackManager;
     public EnemyMaster enemyMaster;
 
+    public BeatController beatController;
+
     [Header("Music")]
     public FMODUnity.EventReference eventReference;
     private FMOD.Studio.EventInstance bgmEventInstance; // FMOD event instance
@@ -58,25 +60,35 @@ public class BeatClicker : MonoBehaviour
     public Text offsetText; // (Can remove if you dont want Offset Adjust UI)
     public float offsetMilliseconds = 0f;
 
+    private void Awake()
+    {
+        // Initialize FMOD event instance
+        bgmEventInstance = FMODUnity.RuntimeManager.CreateInstance(eventReference);
+        bgmEventInstance.start(); // Start the FMOD event
+    }
+
     void Start()
     {
+        scoreDisplay = FindObjectOfType<ScoreDisplay>();
+        streakText = FindObjectOfType<StreakText>();
+
         // Load offset from PlayerPrefs when the game starts
         if (PlayerPrefs.HasKey("Offset"))
         {
             offsetMilliseconds = PlayerPrefs.GetFloat("Offset");
         }
 
-        beatInterval = 60f / bpm + offsetMilliseconds;
-        beatTimer = beatInterval; // Start the beat timer
-
-        scoreDisplay = FindObjectOfType<ScoreDisplay>();
-        streakText = FindObjectOfType<StreakText>();
-
-        // Initialize FMOD event instance
-        bgmEventInstance = FMODUnity.RuntimeManager.CreateInstance(eventReference);
-        bgmEventInstance.start(); // Start the FMOD event
+        SetOffset(offsetMilliseconds);
 
         CheckNewStage();
+    }
+
+    public void SetOffset(float newOffset)
+    {
+        beatInterval = 60f / bpm + newOffset;
+        beatTimer = beatInterval; // Start the beat timer
+
+        beatTimer -= Time.deltaTime;
     }
 
     public void PerfromCheckBeat(InputAction.CallbackContext context)//from input provider

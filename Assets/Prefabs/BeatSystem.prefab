@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2344128853930985207}
   - component: {fileID: 1719291442389570392}
-  - component: {fileID: 6401379677772999820}
   m_Layer: 0
   m_Name: BeatController
   m_TagString: Untagged
@@ -46,12 +45,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bpm: 135
-  _eventEmitter: {fileID: 6401379677772999820}
   _intervals:
   - _steps: 1
     _trigger:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: EnemyMaster, Assembly-CSharp
+          m_MethodName: UpdateAllEnemyBeatCheck
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 6555354953569441082}
           m_TargetAssemblyTypeName: PulseToBeat, Assembly-CSharp
           m_MethodName: Pulse2
@@ -65,8 +75,8 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: EnemyMaster, Assembly-CSharp
-          m_MethodName: UpdateAllEnemyBeatCheck
+          m_TargetAssemblyTypeName: PulseToBeat, Assembly-CSharp
+          m_MethodName: Pulse
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -76,9 +86,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1719291442389570392}
-          m_TargetAssemblyTypeName: BeatController, Assembly-CSharp
-          m_MethodName: TestBeat
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: PulseToBeat, Assembly-CSharp
+          m_MethodName: Pulse
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -88,37 +98,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &6401379677772999820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1485978802329741388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -658079242
-      Data2: 1170776211
-      Data3: 1115700651
-      Data4: -1147211174
-    Path: event:/LEVEL 1/BGM/BGM
-  Event: 
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &3347230633240021045
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed2be13f3e6ef345904982efbe83539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useTestBeat: 0
   _pulseSize: 1
   _returnSpeed: 10
 --- !u!1 &4449680829415892353
@@ -391,10 +369,26 @@ MonoBehaviour:
   goodTag: Good!
   mehTag: Meh!
   failTag: Offbeat!
+  quickTimeUIManager: {fileID: 0}
+  playerAttackManager: {fileID: 0}
+  enemyMaster: {fileID: 0}
+  beatController: {fileID: 0}
+  eventReference:
+    Guid:
+      Data1: -658079242
+      Data2: 1170776211
+      Data3: 1115700651
+      Data4: -1147211174
+    Path: event:/LEVEL 1/BGM/BGM
+  musicParameterPerStage: 010000000200000002000000020000000d000000
   currentStage: 0
-  beatsHitToProgress: 10
+  current_beatHitsToProgress: 10
+  beatHitsToProgress_Stage2: 4
+  beatHitsToProgress_Stage3: 8
+  beatHitsToProgress_Stage4: 12
+  beatHitsToProgress_Stage5: 16
   missesToReset: 3
-  missesToDecreaseStage: 5
+  missesToDecreaseStage: 1
   beatsHit: 0
   offsetText: {fileID: 0}
   offsetMilliseconds: 0

@@ -77,7 +77,7 @@ public class Health : MonoBehaviour
         {
             if (currentHealth <= healthThresholdforMusic)
             {
-                beatClicker.SetMusicParamaterHealth(0);
+                beatClicker.SetMusicParamaterHealth(50);//fix
             }
             else
             {
