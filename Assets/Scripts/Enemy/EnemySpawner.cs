@@ -11,6 +11,12 @@ public class EnemySpawner : MonoBehaviour
     bool spawnEnemysOnEntry = true;
     public List<GameObject> myActiveEnemies;
     public CameraController cameraController;
+
+    public bool destructable = false;
+
+    public GameObject spawnerMesh;
+    public GameObject spawner_CrackedMesh;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -51,9 +57,26 @@ public class EnemySpawner : MonoBehaviour
     {
         if (myActiveEnemies.Count == 0)
         {
-            enemyMaster.currentSpawnerInUse = null;
-            cameraController.SwitchCamera(cameraController.cinemachineFL);
-            Destroy(gameObject);
+            if (!destructable)
+            {
+                enemyMaster.currentSpawnerInUse = null;
+                cameraController.SwitchCamera(cameraController.cinemachineFL);
+                Destroy(gameObject);
+            }
+            else
+            {
+                DestroySpawner();
+            }
         }
+    }
+
+    void DestroySpawner()
+    {
+        enemyMaster.currentSpawnerInUse = null;
+        cameraController.SwitchCamera(cameraController.cinemachineFL);
+
+        spawnerMesh.SetActive(false);
+
+        spawner_CrackedMesh.SetActive(true);
     }
 }
