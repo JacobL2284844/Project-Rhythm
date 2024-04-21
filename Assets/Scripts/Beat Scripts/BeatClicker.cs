@@ -38,7 +38,7 @@ public class BeatClicker : MonoBehaviour
 
     [Header("Music")]
     public FMODUnity.EventReference eventReference;
-    private FMOD.Studio.EventInstance bgmEventInstance; // FMOD event instance
+    public FMOD.Studio.EventInstance bgmEventInstance; // FMOD event instance
     public int[] musicParameterPerStage = {1, 2, 2, 2, 13 };
     
     public enum Stage { Stage1, Stage2, Stage3, Stage4, Stage5 }
@@ -65,6 +65,7 @@ public class BeatClicker : MonoBehaviour
         // Initialize FMOD event instance
         bgmEventInstance = FMODUnity.RuntimeManager.CreateInstance(eventReference);
         bgmEventInstance.start(); // Start the FMOD event
+        beatController.beatClicker = this;
     }
 
     void Start()

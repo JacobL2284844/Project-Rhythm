@@ -7,6 +7,7 @@ using FMODUnity;
 public class BeatController : MonoBehaviour
 {
     [SerializeField] private float _bpm;
+    public BeatClicker beatClicker;
     private float _timeSinceStart;
     //[SerializeField] private StudioEventEmitter _eventEmitter;
     [SerializeField] private Intervals[] _intervals;
@@ -20,6 +21,9 @@ public class BeatController : MonoBehaviour
         //{
         //    fmodMusicEventInstance = _eventEmitter.EventInstance;
         //}
+
+        beatClicker.bgmEventInstance.getTimelinePosition(out int position);
+        _timeSinceStart = position;
     }
     //best solution ? https://qa.fmod.com/t/gettimelineposition-accuracy-for-rhythm-game/20202
     private void Update()
