@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
     public CinemachineFreeLook currentCam;
 
     [Header("Dynamic FOV")]
+    public float hardmaxMinFOV = 20f;
     public float minFOV = 40f;
     public float maxFOV = 55f;
     public float definateMinFOV = 25f;
@@ -66,6 +67,10 @@ public class CameraController : MonoBehaviour
             float smoothedFOV = Mathf.SmoothDamp(currentCam.m_Lens.FieldOfView, targetFOV, ref currentVelocity, transitionSpeed * Time.deltaTime);
 
             currentCam.m_Lens.FieldOfView = smoothedFOV;
+        }
+        if (currentCam.m_Lens.FieldOfView < hardmaxMinFOV)
+        {
+            currentCam.m_Lens.FieldOfView = hardmaxMinFOV;
         }
     }
 
