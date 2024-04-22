@@ -19,6 +19,9 @@ public class AudioManager : MonoBehaviour
     public EventReference uiMoveSound;
     public EventReference uiBackSound;
 
+    [Header("Main Menu")]
+    public EventReference mainMenuMusic;
+
     [Header("Volume")]
     [Range(0, 1)]
     private Bus masterBus;
@@ -33,6 +36,7 @@ public class AudioManager : MonoBehaviour
         masterBus = RuntimeManager.GetBus("bus:/");
 
         SetMasterVolume(PlayerPrefs.GetFloat("MasterVolume", 1));
+        //RuntimeManager.PlayOneShot(mainMenuMusic);
     }
     public void SetMasterVolume(float volume)
     {

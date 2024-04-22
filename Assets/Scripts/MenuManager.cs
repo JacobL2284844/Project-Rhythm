@@ -111,15 +111,29 @@ public class MenuManager : MonoBehaviour
     //main menu
     public void LoadLevel()
     {
+        RemoveBeatClicker();
         SceneManager.LoadScene(1);
     }
     public void LoadMainMenu()
     {
+        Time.timeScale = 1.0f;
+        AudioManager.instance.PLayOneShot(AudioManager.instance.uiBackSound, camera.transform.position);
+        beatClicker.SetMusicParamaterCombat(musicCombatHealthValueDuringPlay);
+
+        RemoveBeatClicker();
         SceneManager.LoadScene(0);
     }
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void RemoveBeatClicker()
+    {
+        if(beatClicker)
+        {
+            beatClicker.ReleaseMusicAndDestroy();
+        }
     }
 
     //game death

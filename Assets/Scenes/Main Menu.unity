@@ -3435,69 +3435,6 @@ Transform:
   m_Father: {fileID: 923358656}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -159.388, z: 0}
---- !u!1 &299643288
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 299643290}
-  - component: {fileID: 299643289}
-  m_Layer: 0
-  m_Name: MainMenuBGM
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &299643289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299643288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -143909557
-      Data2: 1263835249
-      Data3: -518200138
-      Data4: 2102509899
-    Path: event:/LEVEL 1/MAIN MENU/MenuMusic
-  Event: 
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 1
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
---- !u!4 &299643290
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299643288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.802414, y: 2.8603086, z: -8.990078}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!850595691 &335842035
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -14548,7 +14485,7 @@ PrefabInstance:
     - target: {fileID: 5220212242492397236, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5220212242492397236, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
         type: 3}
@@ -14899,6 +14836,7 @@ MonoBehaviour:
   menusActive: 0
   gameIsPaused: 0
   pauseMenu: {fileID: 0}
+  pauseMenuMenu: {fileID: 0}
   hud: {fileID: 0}
   resumeButton: {fileID: 0}
   beatClicker: {fileID: 0}
