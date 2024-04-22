@@ -31,4 +31,8 @@ public class PlayerAnimationEvents : MonoBehaviour
 
         instrament.SetActive(false);
     }
+    public void PlayFootstepSound()
+    {
+        AudioManager.instance.PLayOneShot(AudioManager.instance.footstepSound, transform.position);
+    }
 }

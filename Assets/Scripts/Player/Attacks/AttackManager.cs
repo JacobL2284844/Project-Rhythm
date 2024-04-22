@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FMODUnity;
 
 public class AttackManager : MonoBehaviour
 {
@@ -70,6 +71,7 @@ public class AttackManager : MonoBehaviour
             animator.runtimeAnimatorController = combo[comboCount].animatorOverride;
             animator.Play("AttackState", 2, 0);
 
+            AudioManager.instance.PLayOneShot(AudioManager.instance.attackSwingSound, this.transform.position);
             thirdPersonController.DisableMovement();
 
             comboCount++;

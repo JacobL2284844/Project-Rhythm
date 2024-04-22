@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
 {
     public EventSystem eventSystem;
     public GameObject deathMenu;
+    public Camera camera;
 
     [Header("Playmode Pause Menu")]
     public bool gameIsPaused = false;
@@ -30,7 +31,7 @@ public class MenuManager : MonoBehaviour
     }
     public void ButtonClick()
     {
-
+        AudioManager.instance.PLayOneShot(AudioManager.instance.uiClickSound, camera.transform.position);
     }
 
     //pause menu
@@ -49,6 +50,7 @@ public class MenuManager : MonoBehaviour
             Time.timeScale = 0f;
 
             resumeButton.Select();
+            AudioManager.instance.PLayOneShot(AudioManager.instance.uiPauseSound, camera.transform.position);
             return;
         }
         if (gameIsPaused && context.started)
@@ -68,6 +70,7 @@ public class MenuManager : MonoBehaviour
             Cursor.visible = false;
 
             Time.timeScale = 1.0f;
+            AudioManager.instance.PLayOneShot(AudioManager.instance.uiBackSound, camera.transform.position);
         }
     }
 

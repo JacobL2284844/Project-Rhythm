@@ -284,6 +284,8 @@ public class ThirdPersonController : MonoBehaviour
         currentMaxSpeed = currentMaxSpeed * slideVelocityMultiplier;
         rigidbody.AddForce(transform.forward * slideBoostForce, ForceMode.Impulse);
 
+        AudioManager.instance.PLayOneShot(AudioManager.instance.slideSound, transform.position);
+
         TryResetSprintTimer();
 
         yield return new WaitForSeconds(slideDuration);

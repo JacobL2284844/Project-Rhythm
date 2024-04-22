@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5671563965300057188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5220212242492397236}
+  - component: {fileID: 340487087885291502}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5220212242492397236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5671563965300057188}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &340487087885291502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5671563965300057188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f483976d86d9a4cac8b7b2fe995503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSwingSound:
+    Guid:
+      Data1: 563703346
+      Data2: 1238722076
+      Data3: -75564398
+      Data4: -1421071623
+    Path: event:/LEVEL 1/PLAYER/WEAPON SWING
+  footstepSound:
+    Guid:
+      Data1: 1335706655
+      Data2: 1194534816
+      Data3: 1509902976
+      Data4: -591901951
+    Path: event:/LEVEL 1/PLAYER/PLAYER MOVEMENT
+  slideSound:
+    Guid:
+      Data1: 889436474
+      Data2: 1124056485
+      Data3: 207900033
+      Data4: 855140354
+    Path: event:/LEVEL 1/PLAYER/PLAYER SLIDE
+  uiClickSound:
+    Guid:
+      Data1: 1362883871
+      Data2: 1331970652
+      Data3: -1116132164
+      Data4: -1877427550
+    Path: event:/LEVEL 1/UI/UIselect
+  uiPauseSound:
+    Guid:
+      Data1: 1882816691
+      Data2: 1202848349
+      Data3: -39964007
+      Data4: -790943624
+    Path: event:/LEVEL 1/UI/UIpause
+  uiMoveSound:
+    Guid:
+      Data1: -678085241
+      Data2: 1130002589
+      Data3: -230283366
+      Data4: -1846548562
+    Path: event:/LEVEL 1/UI/UImove
+  uiBackSound:
+    Guid:
+      Data1: -767734125
+      Data2: 1233440259
+      Data3: 332082597
+      Data4: -1497939438
+    Path: event:/LEVEL 1/UI/UIback
