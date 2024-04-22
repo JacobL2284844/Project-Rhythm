@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Metronome : MonoBehaviour
 {
     public float tempo = 100f; // Default tempo
-    public float offsetMilliseconds = 0f; // Default offset in milliseconds
+    public float offsetSeconds = 0f; // Default offset in seconds
     public bool isPlaying = true;
 
     public Text offsetText; // Reference to the UI Text component
@@ -19,9 +18,12 @@ public class Metronome : MonoBehaviour
     public float goodTimingThreshold = 0.2f;
     public float mehTimingThreshold = 0.3f;
 
+    public Image beatIndicator; // Reference to the beat indicator image
+
     private float nextBeatTime;
     private float lastBeatTime;
     private bool playerHitOnBeat = false;
+    private Vector3 defaultScale; // The default scale of the beat indicator image
 
     private string offsetPrefsKey = "Offset"; // PlayerPrefs key for storing offset
 
@@ -30,11 +32,17 @@ public class Metronome : MonoBehaviour
         // Load offset from PlayerPrefs
         if (PlayerPrefs.HasKey("Offset"))
         {
-            offsetMilliseconds = PlayerPrefs.GetFloat("Offset");
+            offsetSeconds = PlayerPrefs.GetFloat("Offset");
         }
 
         nextBeatTime = Time.time;
         lastBeatTime = Time.time;
+
+        // Store the default scale of the beat indicator
+        if (beatIndicator != null)
+        {
+            defaultScale = beatIndicator.transform.localScale;
+        }
     }
 
     void Update()
@@ -47,39 +55,40 @@ public class Metronome : MonoBehaviour
                 if (tickSound != null)
                     tickSound.Play(); // Play the ticking sound
 
+                // Animate beat indicator
+                if (beatIndicator != null)
+                {
+                    StartCoroutine(PulseBeatIndicator(0.2f)); // Start the pulsating animation
+                }
+
                 // Calculate the time for the next beat
                 nextBeatTime += 60f / tempo;
 
                 // Apply the offset
-                nextBeatTime += offsetMilliseconds / 1000f;
+                nextBeatTime += offsetSeconds;
 
-                // Check if the player hit on the beat
-                if (playerHitOnBeat)
-                {
-                    float accuracy = Mathf.Abs((Time.time - lastBeatTime) * 1000f); // Calculate accuracy in milliseconds
-                    if (accuracyText != null)
-                        accuracyText.text = "Accuracy: " + accuracy.ToString("F2") + "ms";
-                    playerHitOnBeat = false; // Reset player hit flag
-                }
-
-                lastBeatTime = nextBeatTime - (offsetMilliseconds / 1000f);
+                lastBeatTime = nextBeatTime - offsetSeconds;
             }
         }
 
         // Update Offset Text
         if (offsetText != null)
         {
-            offsetText.text = "Offset: " + offsetMilliseconds.ToString("F2") + "ms";
+            offsetText.text = "Offset: " + offsetSeconds.ToString("F2") + "s";
         }
 
         // Check for player input
         if (Input.GetKeyDown(hitKey))
         {
-
             playerHitOnBeat = true;
             float timeSinceLastBeat = Time.time - lastBeatTime;
 
             float timingDifference = Mathf.Abs(timeSinceLastBeat);
+            float accuracy = timingDifference; // Timing difference is already in seconds
+
+            // Display accuracy text
+            if (accuracyText != null)
+                accuracyText.text = "Accuracy: " + accuracy.ToString("F2") + "s";
 
             if (timingDifference <= perfectTimingThreshold) // Perfect Timing Threshold
             {
@@ -101,7 +110,7 @@ public class Metronome : MonoBehaviour
             lastBeatTime = Time.time; // Update the last beat time
         }
 
-        PlayerPrefs.SetFloat("Offset", offsetMilliseconds);// Save the offset to PlayerPrefs whenever it changes
+        PlayerPrefs.SetFloat("Offset", offsetSeconds); // Save the offset to PlayerPrefs whenever it changes
     }
 
     // Method to start/stop the metronome
@@ -112,19 +121,37 @@ public class Metronome : MonoBehaviour
         if (isPlaying)
         {
             // Set the next beat time to the current time plus the offset
-            nextBeatTime = Time.time + (offsetMilliseconds / 1000f);
+            nextBeatTime = Time.time + offsetSeconds;
             lastBeatTime = Time.time;
         }
     }
 
 
-    // Method to adjust the offset in milliseconds
+    // Method to adjust the offset in seconds
     public void AdjustOffset(float offsetChange)
     {
-        offsetMilliseconds += offsetChange;
+        offsetSeconds += offsetChange;
 
-        PlayerPrefs.SetFloat("Offset", offsetMilliseconds);// Save the offset to PlayerPrefs whenever it changes
-
+        PlayerPrefs.SetFloat("Offset", offsetSeconds);// Save the offset to PlayerPrefs whenever it changes
     }
 
+    IEnumerator PulseBeatIndicator(float duration)
+    {
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            // Calculate the scale factor using a sinusoidal function to create a pulsating effect
+            float scale = Mathf.Lerp(1f, 1.2f, Mathf.PingPong(timer / duration * 2f, 1f));
+
+            // Apply the scale factor to the beat indicator
+            beatIndicator.transform.localScale = defaultScale * scale;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Reset the scale to the default scale when the animation is finished
+        beatIndicator.transform.localScale = defaultScale;
+    }
 }
