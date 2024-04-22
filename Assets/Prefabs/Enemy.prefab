@@ -1777,6 +1777,7 @@ GameObject:
   - component: {fileID: 422119368839681860}
   - component: {fileID: 8992906891370149581}
   - component: {fileID: 8616041486020427476}
+  - component: {fileID: 6609019002918793437}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -1959,6 +1960,44 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6609019002918793437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8187574714729958789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b36824de0079d4696f24e65fb04a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMaterials:
+  - {fileID: 2100000, guid: d110184baf0b898428007bafa06ed85d, type: 2}
+  - {fileID: 2100000, guid: 632eedeae354e80489b299a6b95c0fe9, type: 2}
+  - {fileID: 2100000, guid: ef0ba50ab763a524b82e63f3b19c0bf1, type: 2}
+  meshRenderers:
+  - {fileID: 1240162431610116992}
+  - {fileID: 832014805366394024}
+  - {fileID: 5543587823336989417}
+  - {fileID: 399038830778105815}
+  - {fileID: 7782627859537239504}
+  - {fileID: 2035990806261895807}
+  - {fileID: 3216346588427940274}
+  - {fileID: 6203145463170211639}
+  - {fileID: 5133397909301967535}
+  - {fileID: 18378855882725924}
+  - {fileID: 6539798616160972963}
+  - {fileID: 5623356452739655602}
+  - {fileID: 4268110952072411954}
+  - {fileID: 4575766899806348207}
+  - {fileID: 6998972979450353703}
+  - {fileID: 1559298639677879455}
+  - {fileID: 1216546300566774418}
+  - {fileID: 6007518264181545362}
+  - {fileID: 2735366069010487415}
+  - {fileID: 1520794095055322175}
+  - {fileID: 1430686985783020928}
 --- !u!1 &8445828076023571405
 GameObject:
   m_ObjectHideFlags: 0
