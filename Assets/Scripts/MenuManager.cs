@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     [Header("Playmode Pause Menu")]
     public bool gameIsPaused = false;
     public GameObject pauseMenu;
+    public GameObject pauseMenuMenu;
     public GameObject hud;
     public Button resumeButton;
 
@@ -24,6 +25,10 @@ public class MenuManager : MonoBehaviour
     [Header("Options")]
     public OptionsMenu optionsMenuManager;
     public GameObject optionsUI;
+    private void Awake()
+    {
+        AudioManager.instance.SetMasterVolume(PlayerPrefs.GetFloat("MasterVolume", 1));
+    }
     private void Start()
     {
         ResumeGame();
@@ -52,9 +57,9 @@ public class MenuManager : MonoBehaviour
 
             resumeButton.Select();
             AudioManager.instance.PLayOneShot(AudioManager.instance.uiPauseSound, camera.transform.position);
-            
+
             //music
-            beatClicker.bgmEventInstance.getParameterByName("Health",out float value);
+            beatClicker.bgmEventInstance.getParameterByName("Health", out float value);
             musicCombatHealthValueDuringPlay = value;
 
             beatClicker.SetMusicParamaterCombat(0);
@@ -72,6 +77,7 @@ public class MenuManager : MonoBehaviour
             gameIsPaused = false;
             pauseMenu.SetActive(false);
             hud.SetActive(true);
+            HideOptions();
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -86,10 +92,20 @@ public class MenuManager : MonoBehaviour
     public void ShowOptions()
     {
         optionsUI.SetActive(true);
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            pauseMenuMenu.SetActive(false);
+        }
     }
     public void HideOptions()
     {
         optionsUI.SetActive(false);
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            pauseMenuMenu.SetActive(true);
+        }
     }
 
     //main menu
