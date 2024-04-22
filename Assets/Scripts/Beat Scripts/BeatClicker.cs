@@ -232,7 +232,7 @@ public class BeatClicker : MonoBehaviour
             score += streakMultiplier;
             scoreDisplay.UpdateScore(score);
 
-            quickTimeUIManager.PlayBeatHitTiming("HitTimeGood");
+            quickTimeUIManager.PlayBeatHitTiming("HitTimeMeh");
         }
         else  // Add your off-beat action here
         {
