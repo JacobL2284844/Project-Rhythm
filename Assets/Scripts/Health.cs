@@ -20,11 +20,12 @@ public class Health : MonoBehaviour
 
     public MenuManager menuManager;
 
+    public float lowHealthMusicThreshold = 40;
+
     [Header("Player Health Regen")]
     public int regenAmountPerBeat = 5;//only takes place at stage 5
     public BeatClicker beatClicker;
-    [Header("Player Health Music")]
-    public int healthThresholdforMusic = 50;
+    
     void Start()
     {
         currentHealth = maxHealth;
@@ -38,21 +39,12 @@ public class Health : MonoBehaviour
             currentHealth -= amount;
             if (gameObject.tag == "Enemy")
             {
-                NPCStateManager stateManager = GetComponent<NPCStateManager>();
-
-                //if (stateManager != null)
-                //{
-                //    if (stateManager.currantStateStr != "Chase" || stateManager.currantStateStr != "Attack")
-                //    {
-                //        if (stateManager.isStandardEnemy)
-                //        {
-                //            stateManager.SetState(stateManager.chaseState);
-                //        }
-                //    }
-                //}
+                
             }
             else if (gameObject.tag == "Player")
             {
+                AudioManager.instance.PLayOneShot(AudioManager.instance.takeDamage, transform.position);
+
                 float fillAmount_A = healthBeforAttack / maxHealth;//apply
                 float fillAmount_B = currentHealth / maxHealth;
 
@@ -64,25 +56,17 @@ public class Health : MonoBehaviour
                     playerAnimator.SetTrigger("HitReact");
                 }
 
+                if(currentHealth <= lowHealthMusicThreshold)
+                {
+                    beatClicker.SetMusicParamaterCombat(0.5f);
+                }
+
                 StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
             }
         }
         if (currentHealth <= 0f && gameObject.tag == "Enemy")
         {
             Die();
-        }
-
-        //music paramaters
-        if (gameObject.tag == "Player")
-        {
-            if (currentHealth <= healthThresholdforMusic)
-            {
-                beatClicker.SetMusicParamaterHealth(50);//fix
-            }
-            else
-            {
-                beatClicker.SetMusicParamaterHealth(100);
-            }
         }
     }
     void Die()
@@ -131,6 +115,7 @@ public class Health : MonoBehaviour
         if (beatClicker.currentStage == BeatClicker.Stage.Stage5)
         {
             TakeDamage(-regenAmountPerBeat);
+            beatClicker.SetMusicParamaterCombat(10);
         }
     }
 }

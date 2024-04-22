@@ -44,6 +44,10 @@ public class EnemySpawner : MonoBehaviour
                     myActiveEnemies.Add(enemy);
                 }
             }
+            if(myActiveEnemies.Count != 0)
+            {
+                enemyMaster.beatClicker.SetMusicParamaterCombat(15);//combat music
+            }
         }
     }
     private void OnTriggerExit(Collider other)
@@ -51,6 +55,7 @@ public class EnemySpawner : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             enemyMaster.currentSpawnerInUse = null;
+            enemyMaster.beatClicker.SetMusicParamaterCombat(19);//combat music
         }
     }
     public void CheckBeat()//destroy spawner on beat
@@ -72,6 +77,8 @@ public class EnemySpawner : MonoBehaviour
 
     void DestroySpawner()
     {
+        enemyMaster.beatClicker.SetMusicParamaterCombat(19);//combat music
+
         enemyMaster.currentSpawnerInUse = null;
         cameraController.SwitchCamera(cameraController.cinemachineFL);
 

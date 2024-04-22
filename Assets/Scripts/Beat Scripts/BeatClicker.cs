@@ -251,7 +251,7 @@ public class BeatClicker : MonoBehaviour
         // Set parameter for Stage
         bgmEventInstance.setParameterByName("COMBOS", paramaterValue); // Change the value as needed
     }
-    public void SetMusicParamaterHealth(float paramaterValue)
+    public void SetMusicParamaterCombat(float paramaterValue)
     {
         bgmEventInstance.setParameterByName("Health", paramaterValue);
     }

@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &340487087885291502
 MonoBehaviour:
@@ -65,6 +65,13 @@ MonoBehaviour:
       Data3: 207900033
       Data4: 855140354
     Path: event:/LEVEL 1/PLAYER/PLAYER SLIDE
+  takeDamage:
+    Guid:
+      Data1: -890731704
+      Data2: 1092280271
+      Data3: 575519362
+      Data4: 1245056248
+    Path: event:/LEVEL 1/ENEMY/ENEMYMOVEMENT
   uiClickSound:
     Guid:
       Data1: 1362883871

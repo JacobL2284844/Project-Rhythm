@@ -10,12 +10,16 @@ public class MenuManager : MonoBehaviour
     public EventSystem eventSystem;
     public GameObject deathMenu;
     public Camera camera;
+    public bool menusActive;
 
     [Header("Playmode Pause Menu")]
     public bool gameIsPaused = false;
     public GameObject pauseMenu;
     public GameObject hud;
     public Button resumeButton;
+
+    public BeatClicker beatClicker;
+    private float musicCombatHealthValueDuringPlay = 100;
 
     [Header("Options")]
     public OptionsMenu optionsMenuManager;
@@ -25,10 +29,6 @@ public class MenuManager : MonoBehaviour
         ResumeGame();
     }
     //button universal
-    public void ButtonSelect()
-    {
-
-    }
     public void ButtonClick()
     {
         AudioManager.instance.PLayOneShot(AudioManager.instance.uiClickSound, camera.transform.position);
@@ -49,8 +49,15 @@ public class MenuManager : MonoBehaviour
 
             Time.timeScale = 0f;
 
+
             resumeButton.Select();
             AudioManager.instance.PLayOneShot(AudioManager.instance.uiPauseSound, camera.transform.position);
+            
+            //music
+            beatClicker.bgmEventInstance.getParameterByName("Health",out float value);
+            musicCombatHealthValueDuringPlay = value;
+
+            beatClicker.SetMusicParamaterCombat(0);
             return;
         }
         if (gameIsPaused && context.started)
@@ -71,6 +78,7 @@ public class MenuManager : MonoBehaviour
 
             Time.timeScale = 1.0f;
             AudioManager.instance.PLayOneShot(AudioManager.instance.uiBackSound, camera.transform.position);
+            beatClicker.SetMusicParamaterCombat(musicCombatHealthValueDuringPlay);
         }
     }
 

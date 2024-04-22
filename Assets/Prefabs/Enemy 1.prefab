@@ -2091,7 +2091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 200
+  maxHealth: 150
   healthBarR: {fileID: 0}
   healthBarL: {fileID: 0}
   isEnemy: 1
@@ -2102,7 +2102,6 @@ MonoBehaviour:
   menuManager: {fileID: 0}
   regenAmountPerBeat: 5
   beatClicker: {fileID: 0}
-  healthThresholdforMusic: 50
 --- !u!195 &8616041486020427476
 NavMeshAgent:
   m_ObjectHideFlags: 0

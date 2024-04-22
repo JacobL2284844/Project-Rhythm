@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     public EventReference attackSwingSound;//called in attack manager
     public EventReference footstepSound;//called in anim events
     public EventReference slideSound;//called in anim events
+    public EventReference takeDamage;//called in anim events
 
     [Header("UI")]
     public EventReference uiClickSound;//called in menu manager
