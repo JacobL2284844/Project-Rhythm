@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &340487087885291502
 MonoBehaviour:
@@ -100,3 +100,10 @@ MonoBehaviour:
       Data3: 332082597
       Data4: -1497939438
     Path: event:/LEVEL 1/UI/UIback
+  mainMenuMusic:
+    Guid:
+      Data1: -143909557
+      Data2: 1263835249
+      Data3: -518200138
+      Data4: 2102509899
+    Path: event:/LEVEL 1/MAIN MENU/MENUMUSIC
