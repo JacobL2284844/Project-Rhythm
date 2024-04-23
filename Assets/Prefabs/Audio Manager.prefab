@@ -100,3 +100,10 @@ MonoBehaviour:
       Data3: 332082597
       Data4: -1497939438
     Path: event:/LEVEL 1/UI/UIback
+  mainMenuMusic:
+    Guid:
+      Data1: -143909557
+      Data2: 1263835249
+      Data3: -518200138
+      Data4: 2102509899
+    Path: event:/LEVEL 1/MAIN MENU/MENUMUSIC
