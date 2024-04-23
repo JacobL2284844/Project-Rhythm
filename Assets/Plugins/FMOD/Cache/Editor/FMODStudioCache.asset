@@ -39,7 +39,7 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 638494113063638787
+  lastModified: 638494675277977170
   FileSizes: []
   Exists: 1
 --- !u!114 &-6483007844147168057
@@ -138,7 +138,7 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/PLAYER.bank
   Name: PLAYER
   StudioPath: bank:/PLAYER
-  lastModified: 638494113063618762
+  lastModified: 638494675277967196
   FileSizes: []
   Exists: 1
 --- !u!114 &-2906545013012883014
@@ -210,7 +210,7 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/BGM.bank
   Name: BGM
   StudioPath: bank:/BGM
-  lastModified: 638494113063568726
+  lastModified: 638494675277927306
   FileSizes: []
   Exists: 1
 --- !u!114 &11400000
@@ -251,7 +251,7 @@ MonoBehaviour:
   - {fileID: 2589504305180674393}
   StringsBanks:
   - {fileID: 8492983464312911586}
-  cacheTime: 638494113063638787
+  cacheTime: 638494675277977170
   cacheVersion: 131608
 --- !u!114 &65371734248872125
 MonoBehaviour:
@@ -322,7 +322,7 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638494113063578726
+  lastModified: 638494675277937277
   FileSizes: []
   Exists: 1
 --- !u!114 &3451343636855024618
@@ -421,7 +421,7 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/ENEMY.bank
   Name: ENEMY
   StudioPath: bank:/ENEMY
-  lastModified: 638484453389237342
+  lastModified: 638483404286697611
   FileSizes: []
   Exists: 1
 --- !u!114 &6010366657569925129
@@ -519,7 +519,7 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638494113063588746
+  lastModified: 638494675277937277
   FileSizes:
   - Name: 
     Value: 1600
@@ -539,6 +539,6 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/AMBIENCES.bank
   Name: AMBIENCES
   StudioPath: bank:/AMBIENCES
-  lastModified: 638484453388640073
+  lastModified: 638483404286178987
   FileSizes: []
   Exists: 1
