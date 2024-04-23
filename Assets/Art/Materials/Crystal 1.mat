@@ -25,11 +25,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8d26527cc1d76d34e8e48ee45ae8fe78, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Mask_R_Emission:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8d26527cc1d76d34e8e48ee45ae8fe78, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -128,7 +128,7 @@ Material:
     m_Colors:
     - Toon_Ramp_Tint: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
     - _BaseColor: {r: 1, g: 0.6239673, b: 0.3915094, a: 1}
-    - _Color: {r: 0.5943396, g: 0.44188783, b: 0.43454075, a: 1}
+    - _Color: {r: 0.9922505, g: 0.9009434, b: 1, a: 1}
     - _EmissionColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
