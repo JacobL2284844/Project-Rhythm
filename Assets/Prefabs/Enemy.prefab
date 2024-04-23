@@ -1935,9 +1935,9 @@ MonoBehaviour:
   playerHitEffect: {fileID: 0}
   healthSmoothDecreaseDuration: 0
   menuManager: {fileID: 0}
+  lowHealthMusicThreshold: 40
   regenAmountPerBeat: 5
   beatClicker: {fileID: 0}
-  healthThresholdforMusic: 50
 --- !u!195 &8616041486020427476
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1972,6 +1972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b36824de0079d4696f24e65fb04a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyEnemyBonePhysics: 1
   myMaterials:
   - {fileID: 2100000, guid: d110184baf0b898428007bafa06ed85d, type: 2}
   - {fileID: 2100000, guid: 632eedeae354e80489b299a6b95c0fe9, type: 2}
@@ -1998,6 +1999,7 @@ MonoBehaviour:
   - {fileID: 2735366069010487415}
   - {fileID: 1520794095055322175}
   - {fileID: 1430686985783020928}
+  enemyMask: {fileID: 8865751932130893514}
 --- !u!1 &8445828076023571405
 GameObject:
   m_ObjectHideFlags: 0

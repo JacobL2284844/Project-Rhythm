@@ -43,7 +43,6 @@ public class EnemyAnimContext : MonoBehaviour
         stateManager.currant_animator.SetTrigger(attackTriggers[randomIndex]);
     }
 
-
     public void StandUpStart()
     {
         stateManager.navMeshAgent.speed = 0f;

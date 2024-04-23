@@ -22,6 +22,8 @@ public class Health : MonoBehaviour
 
     public float lowHealthMusicThreshold = 40;
 
+    private Colouration colourationForStartDisolve;
+
     [Header("Player Health Regen")]
     public int regenAmountPerBeat = 5;//only takes place at stage 5
     public BeatClicker beatClicker;
@@ -29,6 +31,11 @@ public class Health : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+
+        if(gameObject.tag == "Enemy")
+        {
+            colourationForStartDisolve = GetComponent<Colouration>();
+        }
     }
     public void TakeDamage(float amount)
     {
@@ -77,7 +84,8 @@ public class Health : MonoBehaviour
             stateManager.enemyMaster.enemys.Remove(stateManager);
             stateManager.mySpawner.myActiveEnemies.Remove(gameObject);
 
-            Destroy(gameObject);
+            colourationForStartDisolve.ApplyDestructionToElements();
+            Destroy(gameObject, 0.5f);
         }
         if (gameObject.tag == "Player")
         {
