@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
 {
     public EventSystem eventSystem;
     public GameObject deathMenu;
+    public GameObject winMenu;
     public Camera camera;
     public bool menusActive;
 
@@ -140,6 +141,18 @@ public class MenuManager : MonoBehaviour
     public void ShowDeathMenu()
     {
         deathMenu.SetActive(true);
+
+        pauseMenu.SetActive(false);
+        hud.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Time.timeScale = 0f;
+    }
+    public void ShowWinMenu()
+    {
+        winMenu.SetActive(true);
 
         pauseMenu.SetActive(false);
         hud.SetActive(false);

@@ -10,7 +10,7 @@ public class FinishLine : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Debug.Log("Finish Level");
+            menuManager.ShowWinMenu();
         }
     }
 }
