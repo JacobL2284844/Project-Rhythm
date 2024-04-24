@@ -13979,6 +13979,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7520133365149042433, guid: c88bb4ac5db5dd8449abaf7cbfda5fb5,
         type: 3}
+      propertyPath: fpsUI
+      value: 
+      objectReference: {fileID: 629063665}
+    - target: {fileID: 7520133365149042433, guid: c88bb4ac5db5dd8449abaf7cbfda5fb5,
+        type: 3}
+      propertyPath: sensX_slider
+      value: 
+      objectReference: {fileID: 7500999238730067796}
+    - target: {fileID: 7520133365149042433, guid: c88bb4ac5db5dd8449abaf7cbfda5fb5,
+        type: 3}
+      propertyPath: sensY_slider
+      value: 
+      objectReference: {fileID: 7500999238730067797}
+    - target: {fileID: 7520133365149042433, guid: c88bb4ac5db5dd8449abaf7cbfda5fb5,
+        type: 3}
       propertyPath: sceneMenuManager
       value: 
       objectReference: {fileID: 965427260}
@@ -14137,3 +14152,27 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c88bb4ac5db5dd8449abaf7cbfda5fb5, type: 3}
+--- !u!114 &7500999238730067796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 509825968486244353, guid: c88bb4ac5db5dd8449abaf7cbfda5fb5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7500999238730067795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7500999238730067797 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1040745915571587450, guid: c88bb4ac5db5dd8449abaf7cbfda5fb5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7500999238730067795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
