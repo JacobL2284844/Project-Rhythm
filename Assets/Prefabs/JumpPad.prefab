@@ -116,7 +116,7 @@ Transform:
   m_Children:
   - {fileID: 3100720485654841171}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &3621904255671602161
 BoxCollider:
@@ -167,7 +167,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ed6150d2ee17c81429df97e69e61475b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
