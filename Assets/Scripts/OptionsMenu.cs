@@ -13,6 +13,8 @@ public class OptionsMenu : MonoBehaviour
 
     [Header("Controls")]
     public GameObject controlsView;
+    [Header("Video")]
+    public GameObject videoView;
     [Header("Calibrate Delay")]
     public GameObject calibrationView;
 
@@ -30,37 +32,42 @@ public class OptionsMenu : MonoBehaviour
         ShowUI_ControlsView();
     }
     //audio
+    public void SetMasterVolume(float value)
+    {
+        AudioManager.instance.SetMasterVolume(value);
+        PlayerPrefs.SetFloat("MasterVolume", value);
+    }
     public void ShowUI_AudioView()
     {
         audioView.SetActive(true);
         controlsView.SetActive(false);
         calibrationView.SetActive(false);
-    }
-    public void SetMasterVolume(float value)
-    {
-        AudioManager.instance.SetMasterVolume(value);
-        PlayerPrefs.SetFloat("MasterVolume", value);
+        videoView.SetActive(false);
     }
     public void ShowUI_ControlsView()
     {
         audioView.SetActive(false);
         controlsView.SetActive(true);
         calibrationView.SetActive(false);
+        videoView.SetActive(false);
     }
-
+    public void ShowUI_VideoView()
+    {
+        audioView.SetActive(false);
+        controlsView.SetActive(false);
+        calibrationView.SetActive(false);
+        videoView.SetActive(true);
+    }
     public void ShowUI_CalibrationView()
     {
         audioView.SetActive(false);
         controlsView.SetActive(false);
         calibrationView.SetActive(true);
+        videoView.SetActive(false);
     }
 
     public void CloseOptions()
     {
         sceneMenuManager.HideOptions();
-    }
-    public void SaveChanges()
-    {
-
     }
 }
