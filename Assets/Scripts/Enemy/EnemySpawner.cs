@@ -46,7 +46,8 @@ public class EnemySpawner : MonoBehaviour
             }
             if(myActiveEnemies.Count != 0)
             {
-                enemyMaster.beatClicker.SetMusicParamaterCombat(15);//combat music
+                //set back after george
+                //enemyMaster.beatClicker.SetMusicParamaterCombat(15);//combat music
             }
         }
     }
@@ -55,7 +56,8 @@ public class EnemySpawner : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             enemyMaster.currentSpawnerInUse = null;
-            enemyMaster.beatClicker.SetMusicParamaterCombat(19);//combat music
+            //set back after george
+            //enemyMaster.beatClicker.SetMusicParamaterCombat(19);//combat music
         }
     }
     public void CheckBeat()//destroy spawner on beat
@@ -77,7 +79,8 @@ public class EnemySpawner : MonoBehaviour
 
     void DestroySpawner()
     {
-        enemyMaster.beatClicker.SetMusicParamaterCombat(19);//combat music
+        //set back after george
+        //enemyMaster.beatClicker.SetMusicParamaterCombat(19);//combat music
 
         enemyMaster.currentSpawnerInUse = null;
         cameraController.SwitchCamera(cameraController.cinemachineFL);

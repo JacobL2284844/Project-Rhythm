@@ -21,18 +21,20 @@ public class Health : MonoBehaviour
     public MenuManager menuManager;
 
     public float lowHealthMusicThreshold = 40;
+    public float lowHealthMusicThreshold2_george = 40;
+    public float lowHealthMusicThreshold3_george = 40;
 
     private Colouration colourationForStartDisolve;
 
     [Header("Player Health Regen")]
     public int regenAmountPerBeat = 5;//only takes place at stage 5
     public BeatClicker beatClicker;
-    
+
     void Start()
     {
         currentHealth = maxHealth;
 
-        if(gameObject.tag == "Enemy")
+        if (gameObject.tag == "Enemy")
         {
             colourationForStartDisolve = GetComponent<Colouration>();
         }
@@ -46,7 +48,7 @@ public class Health : MonoBehaviour
             currentHealth -= amount;
             if (gameObject.tag == "Enemy")
             {
-                
+
             }
             else if (gameObject.tag == "Player")
             {
@@ -63,9 +65,23 @@ public class Health : MonoBehaviour
                     playerAnimator.SetTrigger("HitReact");
                 }
 
-                if(currentHealth <= lowHealthMusicThreshold)
+
+                if(currentHealth > lowHealthMusicThreshold)//remove after george
                 {
-                    beatClicker.SetMusicParamaterCombat(0.5f);
+                    beatClicker.SetMusicParamaterCombat(100);//remove after george
+                }
+                else if(currentHealth <= lowHealthMusicThreshold)//set as to og if. after george
+                {
+                    beatClicker.SetMusicParamaterCombat(/*0.5f*/ 15);
+                }
+                else if (currentHealth <= lowHealthMusicThreshold2_george)//remove after george
+                {
+                    beatClicker.SetMusicParamaterCombat( 5);//remove after george
+                }
+
+                else if (currentHealth <= lowHealthMusicThreshold2_george)//remove after george
+                {
+                    beatClicker.SetMusicParamaterCombat( 0.5f);//remove after george
                 }
 
                 StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
@@ -123,7 +139,7 @@ public class Health : MonoBehaviour
         if (beatClicker.currentStage == BeatClicker.Stage.Stage5)
         {
             TakeDamage(-regenAmountPerBeat);
-            beatClicker.SetMusicParamaterCombat(10);
+            //beatClicker.SetMusicParamaterCombat(10);// reset after george
         }
     }
 }
