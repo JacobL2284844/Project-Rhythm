@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using FMODUnity;
 using FMOD.Studio;
 public class AudioManager : MonoBehaviour
@@ -36,7 +37,11 @@ public class AudioManager : MonoBehaviour
         masterBus = RuntimeManager.GetBus("bus:/");
 
         SetMasterVolume(PlayerPrefs.GetFloat("MasterVolume", 1));
-        //RuntimeManager.PlayOneShot(mainMenuMusic);
+
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            RuntimeManager.PlayOneShot(mainMenuMusic);
+        }
     }
     public void SetMasterVolume(float volume)
     {
@@ -45,5 +50,12 @@ public class AudioManager : MonoBehaviour
     public void PLayOneShot(EventReference sound, Vector3 worldPosition)
     {
         RuntimeManager.PlayOneShot(sound, worldPosition);
+    }
+    public void ReleaseMainMenuAudio()
+    {
+        FMOD.Studio.Bus masterBus;
+        masterBus = RuntimeManager.GetBus("Bus:/");
+
+        masterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 }

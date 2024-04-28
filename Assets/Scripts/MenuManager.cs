@@ -112,7 +112,7 @@ public class MenuManager : MonoBehaviour
     //main menu
     public void LoadLevel()
     {
-        RemoveBeatClicker();
+        AudioManager.instance.ReleaseMainMenuAudio();
         SceneManager.LoadScene(1);
     }
     public void LoadMainMenu()
