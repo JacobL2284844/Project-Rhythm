@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Enemy")]
     public EventReference enemyFootstep;//event anim
+    public EventReference enemyTakeDamage;
 
     [Header("UI")]
     public EventReference uiClickSound;//called in menu manager

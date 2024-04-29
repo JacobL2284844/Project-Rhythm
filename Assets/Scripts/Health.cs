@@ -48,7 +48,7 @@ public class Health : MonoBehaviour
             currentHealth -= amount;
             if (gameObject.tag == "Enemy")
             {
-
+                AudioManager.instance.PLayOneShot(AudioManager.instance.enemyTakeDamage, transform.position);
             }
             else if (gameObject.tag == "Player")
             {
