@@ -30,6 +30,7 @@ public class NPCStateManager : MonoBehaviour
     [Header("Animation")]
     public Animator currant_animator;
     public AnimatorOverrideController resetCombatAnimOverrideController;
+    public EnemyAnimContext animContext;
 
     [Header("Hit Effect")]
     public ParticleSystem hitEffect;
@@ -76,7 +77,6 @@ public class NPCStateManager : MonoBehaviour
 
     public List<EnemyAttackSO> myAttacks;
 
-    public EnemyAnimContext animContext;
     public GameObject attackingHitBox;
     public Health playerHealth;
 

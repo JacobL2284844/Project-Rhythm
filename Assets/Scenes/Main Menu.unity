@@ -5562,56 +5562,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: takeDamage.Path
-      value: event:/LEVEL 1/ENEMY/ENEMYDAMAGE
-      objectReference: {fileID: 0}
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: mainMenuMusic.Path
-      value: event:/LEVEL 1/MAIN MENU/MENUMUSIC
-      objectReference: {fileID: 0}
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: takeDamage.Guid.Data1
-      value: 971873399
-      objectReference: {fileID: 0}
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: takeDamage.Guid.Data2
-      value: 1132604365
-      objectReference: {fileID: 0}
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: takeDamage.Guid.Data3
-      value: -2088835140
-      objectReference: {fileID: 0}
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: takeDamage.Guid.Data4
-      value: 1365099081
-      objectReference: {fileID: 0}
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: mainMenuMusic.Guid.Data1
-      value: -143909557
-      objectReference: {fileID: 0}
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: mainMenuMusic.Guid.Data2
-      value: 1263835249
-      objectReference: {fileID: 0}
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: mainMenuMusic.Guid.Data3
-      value: -518200138
-      objectReference: {fileID: 0}
-    - target: {fileID: 340487087885291502, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
-        type: 3}
-      propertyPath: mainMenuMusic.Guid.Data4
-      value: 2102509899
-      objectReference: {fileID: 0}
     - target: {fileID: 5220212242492397236, guid: 8a53bfb8ac435b64fa0cfdd5bd7f0c23,
         type: 3}
       propertyPath: m_RootOrder

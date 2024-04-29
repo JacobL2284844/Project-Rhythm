@@ -13,6 +13,7 @@ public class EnemyAnimContext : MonoBehaviour
 
     public Health playerHealth;
 
+    public bool canHearFootstep = false; //set by enemy checker
     private void Start()
     {
         playerHealth = stateManager.player.GetComponent<Health>();
@@ -54,5 +55,13 @@ public class EnemyAnimContext : MonoBehaviour
         isAttacking = false;
 
         stateManager.attackingHitBox.SetActive(true);
+    }
+
+    public void PlayFootstep()
+    {
+        if(canHearFootstep)
+        {
+            AudioManager.instance.PLayOneShot(AudioManager.instance.enemyFootstep, transform.position);
+        }
     }
 }
