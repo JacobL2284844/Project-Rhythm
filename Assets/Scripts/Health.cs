@@ -21,8 +21,7 @@ public class Health : MonoBehaviour
     public MenuManager menuManager;
 
     public float lowHealthMusicThreshold = 40;
-    public float lowHealthMusicThreshold2_george = 40;
-    public float lowHealthMusicThreshold3_george = 40;
+    private float musicValueBeforeHealthEffect;
 
     private Colouration colourationForStartDisolve;
 
@@ -48,7 +47,8 @@ public class Health : MonoBehaviour
             currentHealth -= amount;
             if (gameObject.tag == "Enemy")
             {
-                AudioManager.instance.PLayOneShot(AudioManager.instance.enemyTakeDamage, transform.position);
+                //hit enemy sounds bad
+                //AudioManager.instance.PLayOneShot(AudioManager.instance.enemyTakeDamage, transform.position);
             }
             else if (gameObject.tag == "Player")
             {
@@ -65,23 +65,17 @@ public class Health : MonoBehaviour
                     playerAnimator.SetTrigger("HitReact");
                 }
 
+                //low health music logic
+                if (currentHealth <= lowHealthMusicThreshold)//low health music
+                {
+                    beatClicker.bgmEventInstance.getParameterByName("Health", out float musicHealthValue);
+                    musicValueBeforeHealthEffect = musicHealthValue;
 
-                if(currentHealth > lowHealthMusicThreshold)//remove after george
-                {
-                    beatClicker.SetMusicParamaterCombat(100);//remove after george
+                    beatClicker.SetMusicParamaterCombat(0.5f);
                 }
-                else if(currentHealth <= lowHealthMusicThreshold)//set as to og if. after george
+                else if(currentHealth > lowHealthMusicThreshold)//reset if heal
                 {
-                    beatClicker.SetMusicParamaterCombat(/*0.5f*/ 15);
-                }
-                else if (currentHealth <= lowHealthMusicThreshold2_george)//remove after george
-                {
-                    beatClicker.SetMusicParamaterCombat( 5);//remove after george
-                }
-
-                else if (currentHealth <= lowHealthMusicThreshold2_george)//remove after george
-                {
-                    beatClicker.SetMusicParamaterCombat( 0.5f);//remove after george
+                    beatClicker.SetMusicParamaterCombat(musicValueBeforeHealthEffect);
                 }
 
                 StartCoroutine(LowerHealthBar(fillAmount_A, fillAmount_B));
