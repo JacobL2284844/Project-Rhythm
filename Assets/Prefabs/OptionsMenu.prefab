@@ -3165,9 +3165,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: ButtonClick
+      - m_Target: {fileID: 7520133365149042433}
+        m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
+        m_MethodName: CloseOptions
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3693,7 +3693,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3960,7 +3960,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5509,7 +5509,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9518,8 +9518,8 @@ RectTransform:
   m_Father: {fileID: 3656986143230856459}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12039,7 +12039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8050864141202420331
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12107,17 +12107,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 8814231963292381038}
   m_HandleRect: {fileID: 317602117259540898}
   m_Direction: 0
-  m_MinValue: 0.5
+  m_MinValue: 0
   m_MaxValue: 6
-  m_WholeNumbers: 0
-  m_Value: 6
+  m_WholeNumbers: 1
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7520133365149042433}
         m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
         m_MethodName: SetSensitivityY
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12489,7 +12489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4468092201008648003
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12557,17 +12557,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 8230851135551787596}
   m_HandleRect: {fileID: 2586388564971298651}
   m_Direction: 0
-  m_MinValue: 150
-  m_MaxValue: 900
-  m_WholeNumbers: 0
-  m_Value: 150
+  m_MinValue: 0
+  m_MaxValue: 6
+  m_WholeNumbers: 1
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7520133365149042433}
         m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
         m_MethodName: SetSensitivityX
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14001,8 +14001,26 @@ MonoBehaviour:
   masterVolumeSlider: {fileID: 1226488030951942279}
   controlsView: {fileID: 6149084391193302322}
   cinemachineFreeLook: {fileID: 0}
-  sensX_slider: {fileID: 0}
-  sensY_slider: {fileID: 0}
+  sensX_slider: {fileID: 509825968486244353}
+  sensY_slider: {fileID: 1040745915571587450}
+  sensX_value: 5
+  sensY_value: 5
+  sensesArray_X:
+  - 250
+  - 300
+  - 350
+  - 400
+  - 550
+  - 600
+  - 650
+  sensesArray_Y:
+  - 0.75
+  - 1
+  - 1.25
+  - 1.5
+  - 1.75
+  - 2
+  - 2.25
   videoView: {fileID: 6317983736964296015}
   fpsUI: {fileID: 0}
   calibrationView: {fileID: 4660005862078361031}

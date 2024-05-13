@@ -16,6 +16,10 @@ public class OptionsMenu : MonoBehaviour
     public CinemachineFreeLook cinemachineFreeLook;
     public Slider sensX_slider;
     public Slider sensY_slider;
+    [SerializeField] private int sensX_value;// stage in array
+    [SerializeField] private int sensY_value; // stage in array
+    [SerializeField] private float[] sensesArray_X; // for each set sensitivity value
+    [SerializeField] private float[] sensesArray_Y;
 
     [Header("Video")]
     public GameObject videoView;
@@ -29,10 +33,14 @@ public class OptionsMenu : MonoBehaviour
         masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1);
         SetMasterVolume(PlayerPrefs.GetFloat("MasterVolume", 1));
 
-        sensX_slider.value = PlayerPrefs.GetFloat("SensX", 600);
-        sensY_slider.value = PlayerPrefs.GetFloat("SensY", 2);
-        SetSensitivityX(PlayerPrefs.GetFloat("SensX", 600));
-        SetSensitivityY(PlayerPrefs.GetFloat("SensY", 2));
+        sensX_value = PlayerPrefs.GetInt("SensX", sensX_value);
+        sensY_value = PlayerPrefs.GetInt("SensY", sensY_value);
+
+        sensX_slider.value = PlayerPrefs.GetFloat("SensX", sensX_value);
+        sensY_slider.value = PlayerPrefs.GetFloat("SensY", sensY_value);
+
+        SetSensitivityX(PlayerPrefs.GetFloat("SensX", sensX_value));
+        SetSensitivityY(PlayerPrefs.GetFloat("SensY", sensX_value));
 
         if(PlayerPrefs.GetInt("showFPS", 0) == 0)
         {
@@ -58,21 +66,25 @@ public class OptionsMenu : MonoBehaviour
         PlayerPrefs.SetFloat("MasterVolume", value);
     }
     //sensitivity
-    public void SetSensitivityX(float value)
+    public void SetSensitivityX(float selectedSenseFloat)
     {
+        sensX_value = Mathf.RoundToInt(selectedSenseFloat);
+
         if (cinemachineFreeLook)
         {
-            cinemachineFreeLook.m_XAxis.m_MaxSpeed = value;
+            cinemachineFreeLook.m_XAxis.m_MaxSpeed = sensesArray_X[sensX_value];
         }
-        PlayerPrefs.SetFloat("SensX", value);
+        PlayerPrefs.SetFloat("SensX", sensX_value);
     }
-    public void SetSensitivityY(float value)
+    public void SetSensitivityY(float selectedSenseFloat)
     {
+        sensX_value = Mathf.RoundToInt(selectedSenseFloat);
+
         if (cinemachineFreeLook)
         {
-            cinemachineFreeLook.m_YAxis.m_MaxSpeed = value;
+            cinemachineFreeLook.m_YAxis.m_MaxSpeed = sensesArray_Y[sensY_value];
         }
-        PlayerPrefs.SetFloat("SensY", value);
+        PlayerPrefs.SetFloat("SensY", sensY_value);
     }
 
     public void ToggleFullscreen()
