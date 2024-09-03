@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using TMPro;
 public class OptionsMenu : MonoBehaviour
 {
     public MenuManager sceneMenuManager;
@@ -20,6 +21,9 @@ public class OptionsMenu : MonoBehaviour
     [SerializeField] private int sensY_value; // stage in array
     [SerializeField] private float[] sensesArray_X; // for each set sensitivity value
     [SerializeField] private float[] sensesArray_Y;
+
+    bool invertYAxis;
+    public TextMeshProUGUI isInvertedText;
 
     [Header("Video")]
     public GameObject videoView;
@@ -42,7 +46,20 @@ public class OptionsMenu : MonoBehaviour
         SetSensitivityX(PlayerPrefs.GetFloat("SensX", sensX_value));
         SetSensitivityY(PlayerPrefs.GetFloat("SensY", sensX_value));
 
-        if(PlayerPrefs.GetInt("showFPS", 0) == 0)
+        if(PlayerPrefs.GetInt("SensYInverted", 0) == 0)
+        {
+            SetInvertYAxis(false);
+            invertYAxis = false;
+            isInvertedText.text = "No";
+        }
+        else
+        {
+            SetInvertYAxis(true);
+            invertYAxis = true;
+            isInvertedText.text = "Yes";
+        }
+
+        if (PlayerPrefs.GetInt("showFPS", 0) == 0)
         {
             fpsUI.SetActive(false);
         }
@@ -86,14 +103,44 @@ public class OptionsMenu : MonoBehaviour
         }
         PlayerPrefs.SetFloat("SensY", sensY_value);
     }
-
+    private void SetInvertYAxis(bool setIsInverted)
+    {
+        if (cinemachineFreeLook)
+        {
+            if (setIsInverted)
+            {
+                cinemachineFreeLook.m_YAxis.m_InvertInput = true;
+                PlayerPrefs.SetInt("SensYInverted", 1);
+                isInvertedText.text = "Yes";
+                invertYAxis = true;
+            }
+            else
+            {
+                cinemachineFreeLook.m_YAxis.m_InvertInput = false;
+                PlayerPrefs.SetInt("SensYInverted", 0);
+                isInvertedText.text = "No";
+                invertYAxis = false;
+            }
+        }
+    }
+    public void ToggleInvertYaxis()
+    {
+        if (invertYAxis)
+        {
+            SetInvertYAxis(false);
+        }
+        else
+        {
+            SetInvertYAxis(true);
+        }
+    }
     public void ToggleFullscreen()
     {
         Screen.fullScreen = !Screen.fullScreen;
     }
     public void ToggleFPS()
     {
-        if(fpsUI.activeInHierarchy)
+        if (fpsUI.activeInHierarchy)
         {
             fpsUI.SetActive(false);
         }
